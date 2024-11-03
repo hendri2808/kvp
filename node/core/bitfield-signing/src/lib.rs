@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The bitfield signing subsystem produces `SignedAvailabilityBitfield`s once per block.
 
@@ -26,7 +26,7 @@ use futures::{
 	lock::Mutex,
 	FutureExt,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	errors::RuntimeApiError,
 	jaeger,
 	messages::{
@@ -35,8 +35,8 @@ use polkadot_node_subsystem::{
 	overseer, ActivatedLeaf, FromOrchestra, LeafStatus, OverseerSignal, PerLeafSpan,
 	SpawnedSubsystem, SubsystemError, SubsystemResult, SubsystemSender,
 };
-use polkadot_node_subsystem_util::{self as util, Validator};
-use polkadot_primitives::{AvailabilityBitfield, CoreState, Hash, ValidatorIndex};
+use kvp_node_subsystem_util::{self as util, Validator};
+use kvp_primitives::{AvailabilityBitfield, CoreState, Hash, ValidatorIndex};
 use sp_keystore::{Error as KeystoreError, KeystorePtr};
 use std::{collections::HashMap, iter::FromIterator, time::Duration};
 use wasm_timer::{Delay, Instant};
@@ -51,7 +51,7 @@ mod tests;
 const SPAWNED_TASK_DELAY: Duration = Duration::from_millis(1500);
 const LOG_TARGET: &str = "parachain::bitfield-signing";
 
-// TODO: use `fatality` (https://github.com/paritytech/polkadot/issues/5540).
+// TODO: use `fatality` (https://github.com/paritytech/kvp/issues/5540).
 /// Errors we may encounter in the course of executing the `BitfieldSigningSubsystem`.
 #[derive(Debug, thiserror::Error)]
 #[allow(missing_docs)]

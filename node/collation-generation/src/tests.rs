@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use assert_matches::assert_matches;
@@ -21,14 +21,14 @@ use futures::{
 	task::{Context as FuturesContext, Poll},
 	Future,
 };
-use polkadot_node_primitives::{BlockData, Collation, CollationResult, MaybeCompressedPoV, PoV};
-use polkadot_node_subsystem::{
+use kvp_node_primitives::{BlockData, Collation, CollationResult, MaybeCompressedPoV, PoV};
+use kvp_node_subsystem::{
 	errors::RuntimeApiError,
 	messages::{AllMessages, RuntimeApiMessage, RuntimeApiRequest},
 };
-use polkadot_node_subsystem_test_helpers::{subsystem_test_harness, TestSubsystemContextHandle};
-use polkadot_node_subsystem_util::TimeoutExt;
-use polkadot_primitives::{
+use kvp_node_subsystem_test_helpers::{subsystem_test_harness, TestSubsystemContextHandle};
+use kvp_node_subsystem_util::TimeoutExt;
+use kvp_primitives::{
 	CollatorPair, HeadData, Id as ParaId, PersistedValidationData, ScheduledCore, ValidationCode,
 };
 use sp_keyring::sr25519::Keyring as Sr25519Keyring;
@@ -40,7 +40,7 @@ type VirtualOverseer = TestSubsystemContextHandle<CollationGenerationMessage>;
 fn test_harness<T: Future<Output = VirtualOverseer>>(test: impl FnOnce(VirtualOverseer) -> T) {
 	let pool = sp_core::testing::TaskExecutor::new();
 	let (context, virtual_overseer) =
-		polkadot_node_subsystem_test_helpers::make_subsystem_context(pool);
+		kvp_node_subsystem_test_helpers::make_subsystem_context(pool);
 	let subsystem = async move {
 		let subsystem = crate::CollationGenerationSubsystem::new(Metrics::default());
 

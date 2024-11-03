@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-core-prospective-parachains"
+name = "kvp-node-core-prospective-parachains"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -13,16 +13,16 @@ thiserror = "1.0.30"
 fatality = "0.0.6"
 bitvec = "1"
 
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-node-primitives = { path = "../../primitives" }
-polkadot-node-subsystem = { path = "../../subsystem" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util" }
+kvp-primitives = { path = "../../../primitives" }
+kvp-node-primitives = { path = "../../primitives" }
+kvp-node-subsystem = { path = "../../subsystem" }
+kvp-node-subsystem-util = { path = "../../subsystem-util" }
 
 [dev-dependencies]
 assert_matches = "1"
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
-polkadot-node-subsystem-types = { path = "../../subsystem-types" }
-polkadot-primitives-test-helpers = { path = "../../../primitives/test-helpers" }
+kvp-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+kvp-node-subsystem-types = { path = "../../subsystem-types" }
+kvp-primitives-test-helpers = { path = "../../../primitives/test-helpers" }
 sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }

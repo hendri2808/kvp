@@ -1,22 +1,22 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use futures::{executor, stream::BoxStream};
-use polkadot_node_subsystem_util::TimeoutExt;
+use kvp_node_subsystem_util::TimeoutExt;
 
 use async_trait::async_trait;
 use parking_lot::Mutex;
@@ -24,20 +24,20 @@ use std::collections::HashSet;
 
 use sc_network::{Event as NetworkEvent, IfDisconnected, ProtocolName, ReputationChange};
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	peer_set::PeerSetProtocolNames,
 	request_response::{outgoing::Requests, ReqProtocolNames},
 	ObservedRole, Versioned,
 };
-use polkadot_node_subsystem::{FromOrchestra, OverseerSignal};
-use polkadot_node_subsystem_test_helpers::TestSubsystemContextHandle;
-use polkadot_node_subsystem_util::metered;
-use polkadot_primitives::{AuthorityDiscoveryId, Hash};
-use polkadot_primitives_test_helpers::dummy_collator_signature;
+use kvp_node_subsystem::{FromOrchestra, OverseerSignal};
+use kvp_node_subsystem_test_helpers::TestSubsystemContextHandle;
+use kvp_node_subsystem_util::metered;
+use kvp_primitives::{AuthorityDiscoveryId, Hash};
+use kvp_primitives_test_helpers::dummy_collator_signature;
 use sc_network::Multiaddr;
 use sp_keyring::Sr25519Keyring;
 
-const TIMEOUT: std::time::Duration = polkadot_node_subsystem_test_helpers::TestSubsystemContextHandle::<NetworkBridgeTxMessage>::TIMEOUT;
+const TIMEOUT: std::time::Duration = kvp_node_subsystem_test_helpers::TestSubsystemContextHandle::<NetworkBridgeTxMessage>::TIMEOUT;
 
 use crate::{network::Network, validator_discovery::AuthorityDiscovery};
 
@@ -211,7 +211,7 @@ fn test_harness<T: Future<Output = VirtualOverseer>>(test: impl FnOnce(TestHarne
 	let (network, network_handle, discovery) = new_test_network(peerset_protocol_names.clone());
 
 	let (context, virtual_overseer) =
-		polkadot_node_subsystem_test_helpers::make_subsystem_context(pool);
+		kvp_node_subsystem_test_helpers::make_subsystem_context(pool);
 
 	let bridge_out = NetworkBridgeTx::new(
 		network,

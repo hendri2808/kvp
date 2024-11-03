@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-subsystem-test-helpers"
+name = "kvp-node-subsystem-test-helpers"
 description = "Subsystem traits and message definitions"
 publish = false
 version.workspace = true
@@ -11,9 +11,9 @@ license.workspace = true
 async-trait = "0.1.57"
 futures = "0.3.21"
 parking_lot = "0.12.0"
-polkadot-node-subsystem = { path = "../subsystem" }
-polkadot-node-subsystem-util = { path = "../subsystem-util" }
-polkadot-primitives = { path = "../../primitives" }
+kvp-node-subsystem = { path = "../subsystem" }
+kvp-node-subsystem-util = { path = "../subsystem-util" }
+kvp-primitives = { path = "../../primitives" }
 sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
@@ -21,4 +21,4 @@ sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master
 sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
 [dev-dependencies]
-polkadot-overseer = { path = "../overseer" }
+kvp-overseer = { path = "../overseer" }

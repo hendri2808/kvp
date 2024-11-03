@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Memory stats for preparation.
 //!
@@ -24,7 +24,7 @@
 //!
 //! Currently we are only logging these for the purposes of gathering data. In the future, we may
 //! use these stats to reject PVFs during pre-checking. See
-//! <https://github.com/paritytech/polkadot/issues/6472#issuecomment-1381941762> for more
+//! <https://github.com/paritytech/kvp/issues/6472#issuecomment-1381941762> for more
 //! background.
 
 /// Module for the memory tracker. The memory tracker runs in its own thread, where it polls memory
@@ -34,7 +34,7 @@
 #[cfg(any(target_os = "linux", feature = "jemalloc-allocator"))]
 pub mod memory_tracker {
 	use crate::LOG_TARGET;
-	use polkadot_node_core_pvf_common::{
+	use kvp_node_core_pvf_common::{
 		prepare::MemoryAllocationStats,
 		worker::{stringify_panic_payload, thread},
 	};

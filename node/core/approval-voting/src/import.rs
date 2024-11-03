@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Block import logic for the approval voting subsystem.
 //!
@@ -28,20 +28,20 @@
 //!
 //! We maintain a rolling window of session indices. This starts as empty
 
-use polkadot_node_jaeger as jaeger;
-use polkadot_node_primitives::{
+use kvp_node_jaeger as jaeger;
+use kvp_node_primitives::{
 	approval::{self as approval_types, BlockApprovalMeta, RelayVRFStory},
 	MAX_FINALITY_LAG,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	messages::{
 		ApprovalDistributionMessage, ChainApiMessage, ChainSelectionMessage, RuntimeApiMessage,
 		RuntimeApiRequest,
 	},
 	overseer, RuntimeApiError, SubsystemError, SubsystemResult,
 };
-use polkadot_node_subsystem_util::{determine_new_blocks, runtime::RuntimeInfo};
-use polkadot_primitives::{
+use kvp_node_subsystem_util::{determine_new_blocks, runtime::RuntimeInfo};
+use kvp_primitives::{
 	BlockNumber, CandidateEvent, CandidateHash, CandidateReceipt, ConsensusLog, CoreIndex,
 	GroupIndex, Hash, Header, SessionIndex,
 };
@@ -192,7 +192,7 @@ async fn imported_block_info<Context>(
 		// that every block in BABE has the epoch _it was authored in_ within its post-state. So we
 		// use the block, and not its parent.
 		//
-		// It's worth nothing that Polkadot session changes, at least for the purposes of
+		// It's worth nothing that kvp session changes, at least for the purposes of
 		// parachains, would function the same way, except for the fact that they're always delayed
 		// by one block. This gives us the opposite invariant for sessions - the parent block's
 		// post-state gives us the canonical information about the session index for any of its
@@ -459,7 +459,7 @@ pub(crate) async fn handle_new_head<Context, B: Backend>(
 		let validator_group_lens: Vec<usize> =
 			session_info.validator_groups.iter().map(|v| v.len()).collect();
 		// insta-approve candidates on low-node testnets:
-		// cf. https://github.com/paritytech/polkadot/issues/2411
+		// cf. https://github.com/paritytech/kvp/issues/2411
 		let num_candidates = included_candidates.len();
 		let approved_bitfield = {
 			if needed_approvals == 0 {
@@ -591,14 +591,14 @@ pub(crate) mod tests {
 	use crate::{approval_db::v1::DbBackend, RuntimeInfo, RuntimeInfoConfig};
 	use ::test_helpers::{dummy_candidate_receipt, dummy_hash};
 	use assert_matches::assert_matches;
-	use polkadot_node_primitives::{
+	use kvp_node_primitives::{
 		approval::{VrfSignature, VrfTranscript},
 		DISPUTE_WINDOW,
 	};
-	use polkadot_node_subsystem::messages::{AllMessages, ApprovalVotingMessage};
-	use polkadot_node_subsystem_test_helpers::make_subsystem_context;
-	use polkadot_node_subsystem_util::database::Database;
-	use polkadot_primitives::{Id as ParaId, IndexedVec, SessionInfo, ValidatorId, ValidatorIndex};
+	use kvp_node_subsystem::messages::{AllMessages, ApprovalVotingMessage};
+	use kvp_node_subsystem_test_helpers::make_subsystem_context;
+	use kvp_node_subsystem_util::database::Database;
+	use kvp_primitives::{Id as ParaId, IndexedVec, SessionInfo, ValidatorId, ValidatorIndex};
 	pub(crate) use sp_consensus_babe::{
 		digests::{CompatibleDigestItem, PreDigest, SecondaryVRFPreDigest},
 		AllowedSlots, BabeEpochConfiguration, Epoch as BabeEpoch,
@@ -654,26 +654,26 @@ pub(crate) mod tests {
 		fn compute_assignments(
 			&self,
 			_keystore: &LocalKeystore,
-			_relay_vrf_story: polkadot_node_primitives::approval::RelayVRFStory,
+			_relay_vrf_story: kvp_node_primitives::approval::RelayVRFStory,
 			_config: &criteria::Config,
 			_leaving_cores: Vec<(
 				CandidateHash,
-				polkadot_primitives::CoreIndex,
-				polkadot_primitives::GroupIndex,
+				kvp_primitives::CoreIndex,
+				kvp_primitives::GroupIndex,
 			)>,
-		) -> HashMap<polkadot_primitives::CoreIndex, criteria::OurAssignment> {
+		) -> HashMap<kvp_primitives::CoreIndex, criteria::OurAssignment> {
 			HashMap::new()
 		}
 
 		fn check_assignment_cert(
 			&self,
-			_claimed_core_index: polkadot_primitives::CoreIndex,
-			_validator_index: polkadot_primitives::ValidatorIndex,
+			_claimed_core_index: kvp_primitives::CoreIndex,
+			_validator_index: kvp_primitives::ValidatorIndex,
 			_config: &criteria::Config,
-			_relay_vrf_story: polkadot_node_primitives::approval::RelayVRFStory,
-			_assignment: &polkadot_node_primitives::approval::AssignmentCert,
-			_backing_group: polkadot_primitives::GroupIndex,
-		) -> Result<polkadot_node_primitives::approval::DelayTranche, criteria::InvalidAssignment> {
+			_relay_vrf_story: kvp_node_primitives::approval::RelayVRFStory,
+			_assignment: &kvp_node_primitives::approval::AssignmentCert,
+			_backing_group: kvp_primitives::GroupIndex,
+		) -> Result<kvp_node_primitives::approval::DelayTranche, criteria::InvalidAssignment> {
 			Ok(0)
 		}
 	}
@@ -1180,7 +1180,7 @@ pub(crate) mod tests {
 	#[test]
 	fn insta_approval_works() {
 		let db = kvdb_memorydb::create(NUM_COLUMNS);
-		let db = polkadot_node_subsystem_util::database::kvdb_impl::DbAdapter::new(db, &[]);
+		let db = kvp_node_subsystem_util::database::kvdb_impl::DbAdapter::new(db, &[]);
 		let db_writer: Arc<dyn Database> = Arc::new(db);
 		let mut db = DbBackend::new(db_writer.clone(), TEST_CONFIG);
 		let mut overlay_db = OverlayedBackend::new(&db);

@@ -14,7 +14,7 @@ staking-miner --help
 
 ## Building
 
-You can build from the root of the Polkadot repository using:
+You can build from the root of the kvp repository using:
 ```
 cargo build --profile production --locked --package staking-miner --bin staking-miner
 ```
@@ -28,7 +28,7 @@ There are 2 options to build a staking-miner Docker image:
 ### Building the injected image
 
 First build the binary as documented [above](#building).
-You may then inject the binary into a Docker base image: `parity/base-bin` (running the command from the root of the Polkadot repository):
+You may then inject the binary into a Docker base image: `parity/base-bin` (running the command from the root of the kvp repository):
 ```
 TODO: UPDATE THAT
 docker build -t staking-miner -f scripts/ci/dockerfiles/staking-miner/staking-miner_injected.Dockerfile target/release
@@ -38,7 +38,7 @@ docker build -t staking-miner -f scripts/ci/dockerfiles/staking-miner/staking-mi
 
 Unlike the injected image that requires a Linux pre-built binary, this option does not requires a Linux host, nor Rust to be installed.
 The trade-off however is that it takes a little longer to build and this option is less ideal for CI tasks.
-You may build the multi-stage image the root of the Polkadot repository with:
+You may build the multi-stage image the root of the kvp repository with:
 ```
 TODO: UPDATE THAT
 docker build -t staking-miner -f scripts/ci/dockerfiles/staking-miner/staking-miner_builder.Dockerfile .
@@ -64,7 +64,7 @@ docker run --rm -i \
 
 ### Test locally
 
-Make sure you've built Polkadot, then:
+Make sure you've built kvp, then:
 
-1. `cargo run -p polkadot --features fast-runtime -- --chain polkadot-dev --tmp --alice -lruntime=debug`
+1. `cargo run -p kvp --features fast-runtime -- --chain kvp-dev --tmp --alice -lruntime=debug`
 2. `cargo run -p staking-miner -- --uri ws://localhost:9944 monitor --seed-or-path //Alice phrag-mms`

@@ -1,18 +1,18 @@
 [package]
-name = "polkadot-approval-distribution"
+name = "kvp-approval-distribution"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
 
 [dependencies]
-polkadot-node-metrics = { path = "../../metrics" }
-polkadot-node-network-protocol = { path = "../protocol" }
-polkadot-node-primitives = { path = "../../primitives" }
-polkadot-node-subsystem = { path = "../../subsystem" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util" }
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-node-jaeger = { path = "../../jaeger" }
+kvp-node-metrics = { path = "../../metrics" }
+kvp-node-network-protocol = { path = "../protocol" }
+kvp-node-primitives = { path = "../../primitives" }
+kvp-node-subsystem = { path = "../../subsystem" }
+kvp-node-subsystem-util = { path = "../../subsystem-util" }
+kvp-primitives = { path = "../../../primitives" }
+kvp-node-jaeger = { path = "../../jaeger" }
 rand = "0.8"
 
 futures = "0.3.21"
@@ -23,8 +23,8 @@ gum = { package = "tracing-gum", path = "../../gum" }
 sp-authority-discovery = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-core = { git = "https://github.com/paritytech/substrate", branch = "master", features = ["std"] }
 
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
-polkadot-primitives-test-helpers = { path = "../../../primitives/test-helpers" }
+kvp-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+kvp-primitives-test-helpers = { path = "../../../primitives/test-helpers" }
 
 assert_matches = "1.4.0"
 schnorrkel = { version = "0.9.1", default-features = false }

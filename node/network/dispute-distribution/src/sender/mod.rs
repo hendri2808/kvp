@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::{
 	collections::{HashMap, HashSet},
@@ -25,13 +25,13 @@ use futures::{channel::oneshot, future::poll_fn, Future};
 
 use futures_timer::Delay;
 use indexmap::{map::Entry, IndexMap};
-use polkadot_node_network_protocol::request_response::v1::DisputeRequest;
-use polkadot_node_primitives::{DisputeMessage, DisputeStatus};
-use polkadot_node_subsystem::{
+use kvp_node_network_protocol::request_response::v1::DisputeRequest;
+use kvp_node_primitives::{DisputeMessage, DisputeStatus};
+use kvp_node_subsystem::{
 	messages::DisputeCoordinatorMessage, overseer, ActiveLeavesUpdate, SubsystemSender,
 };
-use polkadot_node_subsystem_util::{nesting_sender::NestingSender, runtime::RuntimeInfo};
-use polkadot_primitives::{CandidateHash, Hash, SessionIndex};
+use kvp_node_subsystem_util::{nesting_sender::NestingSender, runtime::RuntimeInfo};
+use kvp_primitives::{CandidateHash, Hash, SessionIndex};
 
 /// For each ongoing dispute we have a `SendTask` which takes care of it.
 ///

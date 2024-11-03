@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! # Sending and receiving of `DisputeRequest`s.
 //!
@@ -28,17 +28,17 @@ use std::{num::NonZeroUsize, time::Duration};
 
 use futures::{channel::mpsc, FutureExt, StreamExt, TryFutureExt};
 
-use polkadot_node_network_protocol::authority_discovery::AuthorityDiscovery;
-use polkadot_node_subsystem_util::nesting_sender::NestingSender;
+use kvp_node_network_protocol::authority_discovery::AuthorityDiscovery;
+use kvp_node_subsystem_util::nesting_sender::NestingSender;
 use sp_keystore::KeystorePtr;
 
-use polkadot_node_network_protocol::request_response::{incoming::IncomingRequestReceiver, v1};
-use polkadot_node_primitives::DISPUTE_WINDOW;
-use polkadot_node_subsystem::{
+use kvp_node_network_protocol::request_response::{incoming::IncomingRequestReceiver, v1};
+use kvp_node_primitives::DISPUTE_WINDOW;
+use kvp_node_subsystem::{
 	messages::DisputeDistributionMessage, overseer, FromOrchestra, OverseerSignal,
 	SpawnedSubsystem, SubsystemError,
 };
-use polkadot_node_subsystem_util::{runtime, runtime::RuntimeInfo};
+use kvp_node_subsystem_util::{runtime, runtime::RuntimeInfo};
 
 /// ## The sender [`DisputeSender`]
 ///

@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Utility module for subsystems
 //!
@@ -25,24 +25,24 @@
 
 #![warn(missing_docs)]
 
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	errors::{RuntimeApiError, SubsystemError},
 	messages::{RuntimeApiMessage, RuntimeApiRequest, RuntimeApiSender},
 	overseer, SubsystemSender,
 };
-use polkadot_primitives::{slashing, ExecutorParams};
+use kvp_primitives::{slashing, ExecutorParams};
 
 pub use overseer::{
 	gen::{OrchestraError as OverseerError, Timeout},
 	Subsystem, TimeoutExt,
 };
 
-pub use polkadot_node_metrics::{metrics, Metronome};
+pub use kvp_node_metrics::{metrics, Metronome};
 
 use futures::channel::{mpsc, oneshot};
 use parity_scale_codec::Encode;
 
-use polkadot_primitives::{
+use kvp_primitives::{
 	vstaging as vstaging_primitives, AuthorityDiscoveryId, CandidateEvent, CandidateHash,
 	CommittedCandidateReceipt, CoreState, EncodeAs, GroupIndex, GroupRotationInfo, Hash,
 	Id as ParaId, OccupiedCoreAssumption, PersistedValidationData, ScrapedOnChainVotes,
@@ -57,14 +57,14 @@ use std::time::Duration;
 use thiserror::Error;
 
 pub use metered;
-pub use polkadot_node_network_protocol::MIN_GOSSIP_PEERS;
+pub use kvp_node_network_protocol::MIN_GOSSIP_PEERS;
 
 pub use determine_new_blocks::determine_new_blocks;
 
 /// These reexports are required so that external crates can use the `delegated_subsystem` macro
 /// properly.
 pub mod reexports {
-	pub use polkadot_overseer::gen::{SpawnedSubsystem, Spawner, Subsystem, SubsystemContext};
+	pub use kvp_overseer::gen::{SpawnedSubsystem, Spawner, Subsystem, SubsystemContext};
 }
 
 /// A utility for managing the implicit view of the relay-chain derived from active

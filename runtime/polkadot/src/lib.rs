@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The Polkadot runtime. This can be compiled with `#[no_std]`, ready for Wasm.
+//! The kvp runtime. This can be compiled with `#[no_std]`, ready for Wasm.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 // `construct_runtime!` does a lot of recursion and requires us to increase the limit to 256.
@@ -99,7 +99,7 @@ use sp_runtime::traits::Get;
 pub use sp_runtime::BuildStorage;
 
 /// Constant values used within the runtime.
-use polkadot_runtime_constants::{currency::*, fee::*, time::*};
+use kvp_runtime_constants::{currency::*, fee::*, time::*};
 
 // Weights used in the runtime.
 mod weights;
@@ -115,18 +115,18 @@ use governance::{
 
 pub mod xcm_config;
 
-impl_runtime_weights!(polkadot_runtime_constants);
+impl_runtime_weights!(kvp_runtime_constants);
 
 // Make the WASM binary available.
 #[cfg(feature = "std")]
 include!(concat!(env!("OUT_DIR"), "/wasm_binary.rs"));
 
-// Polkadot version identifier;
-/// Runtime version (Polkadot).
+// kvp version identifier;
+/// Runtime version (kvp).
 #[sp_version::runtime_version]
 pub const VERSION: RuntimeVersion = RuntimeVersion {
-	spec_name: create_runtime_str!("polkadot"),
-	impl_name: create_runtime_str!("parity-polkadot"),
+	spec_name: create_runtime_str!("kvp"),
+	impl_name: create_runtime_str!("parity-kvp"),
 	authoring_version: 0,
 	spec_version: 9430,
 	impl_version: 0,
@@ -827,7 +827,7 @@ parameter_types! {
 }
 
 parameter_types! {
-	pub Prefix: &'static [u8] = b"Pay DOTs to the Polkadot account:";
+	pub Prefix: &'static [u8] = b"Pay DOTs to the kvp account:";
 }
 
 impl claims::Config for Runtime {
@@ -1214,7 +1214,7 @@ impl paras_registrar::Config for Runtime {
 parameter_types! {
 	// 12 weeks = 3 months per lease period -> 8 lease periods ~ 2 years
 	pub LeasePeriod: BlockNumber = prod_or_fast!(12 * WEEKS, 12 * WEEKS, "DOT_LEASE_PERIOD");
-	// Polkadot Genesis was on May 26, 2020.
+	// kvp Genesis was on May 26, 2020.
 	// Target Parachain Onboarding Date: Dec 15, 2021.
 	// Difference is 568 days.
 	// We want a lease period to start on the target onboarding date.
@@ -1312,10 +1312,10 @@ impl frame_support::traits::OnRuntimeUpgrade for InitiateNominationPools {
 			pallet_nomination_pools::MaxPoolMembersPerPool::<Runtime>::put(0);
 			pallet_nomination_pools::MaxPoolMembers::<Runtime>::put(0);
 
-			log::info!(target: "runtime::polkadot", "pools config initiated 🎉");
+			log::info!(target: "runtime::kvp", "pools config initiated 🎉");
 			<Runtime as frame_system::Config>::DbWeight::get().reads_writes(1, 5)
 		} else {
-			log::info!(target: "runtime::polkadot", "pools config already initiated 😏");
+			log::info!(target: "runtime::kvp", "pools config already initiated 😏");
 			<Runtime as frame_system::Config>::DbWeight::get().reads(1)
 		}
 	}
@@ -1513,7 +1513,7 @@ pub mod migrations {
 		parachains_configuration::migration::v8::MigrateToV8<Runtime>,
 
 		// Gov v1 storage migrations
-		// https://github.com/paritytech/polkadot/issues/6749
+		// https://github.com/paritytech/kvp/issues/6749
 		pallet_elections_phragmen::migrations::unlock_and_unreserve_all_funds::UnlockAndUnreserveAllFunds<UnlockConfig>,
 		pallet_democracy::migrations::unlock_and_unreserve_all_funds::UnlockAndUnreserveAllFunds<UnlockConfig>,
 		pallet_tips::migrations::unreserve_deposits::UnreserveDeposits<UnlockConfig, ()>,
@@ -1547,7 +1547,7 @@ pub type SignedPayload = generic::SignedPayload<RuntimeCall, SignedExtra>;
 #[cfg(feature = "runtime-benchmarks")]
 mod benches {
 	frame_benchmarking::define_benchmarks!(
-		// Polkadot
+		// kvp
 		// NOTE: Make sure to prefix these with `runtime_common::` so
 		// the that path resolves correctly in the generated file.
 		[runtime_common::auctions, Auctions]
@@ -2030,7 +2030,7 @@ sp_api::impl_runtime_apis! {
 	#[cfg(feature = "try-runtime")]
 	impl frame_try_runtime::TryRuntime<Block> for Runtime {
 		fn on_runtime_upgrade(checks: frame_try_runtime::UpgradeCheckSelect) -> (Weight, Weight) {
-			log::info!("try-runtime::on_runtime_upgrade polkadot.");
+			log::info!("try-runtime::on_runtime_upgrade kvp.");
 			let weight = Executive::try_runtime_upgrade(checks).unwrap();
 			(weight, BlockWeights::get().max_block)
 		}
@@ -2109,7 +2109,7 @@ sp_api::impl_runtime_apis! {
 					Ok(StatemintLocation::get())
 				}
 				fn worst_case_holding(_depositable_count: u32) -> MultiAssets {
-					// Polkadot only knows about DOT
+					// kvp only knows about DOT
 					vec![MultiAsset { id: Concrete(TokenLocation::get()), fun: Fungible(1_000_000 * UNITS) }].into()
 				}
 			}
@@ -2145,12 +2145,12 @@ sp_api::impl_runtime_apis! {
 				}
 
 				fn worst_case_asset_exchange() -> Result<(MultiAssets, MultiAssets), BenchmarkError> {
-					// Polkadot doesn't support asset exchanges
+					// kvp doesn't support asset exchanges
 					Err(BenchmarkError::Skip)
 				}
 
 				fn universal_alias() -> Result<(MultiLocation, Junction), BenchmarkError> {
-					// The XCM executor of Polkadot doesn't have a configured `UniversalAliases`
+					// The XCM executor of kvp doesn't have a configured `UniversalAliases`
 					Err(BenchmarkError::Skip)
 				}
 
@@ -2170,18 +2170,18 @@ sp_api::impl_runtime_apis! {
 				}
 
 				fn unlockable_asset() -> Result<(MultiLocation, MultiLocation, MultiAsset), BenchmarkError> {
-					// Polkadot doesn't support asset locking
+					// kvp doesn't support asset locking
 					Err(BenchmarkError::Skip)
 				}
 
 				fn export_message_origin_and_destination(
 				) -> Result<(MultiLocation, NetworkId, InteriorMultiLocation), BenchmarkError> {
-					// Polkadot doesn't support exporting messages
+					// kvp doesn't support exporting messages
 					Err(BenchmarkError::Skip)
 				}
 
 				fn alias_origin() -> Result<(MultiLocation, MultiLocation), BenchmarkError> {
-					// The XCM executor of Polkadot doesn't have a configured `Aliasers`
+					// The XCM executor of kvp doesn't have a configured `Aliasers`
 					Err(BenchmarkError::Skip)
 				}
 			}
@@ -2534,7 +2534,7 @@ mod remote_tests {
 
 		sp_tracing::try_init_simple();
 		let transport: Transport =
-			var("WS").unwrap_or("wss://rpc.polkadot.io:443".to_string()).into();
+			var("WS").unwrap_or("wss://rpc.kvp.io:443".to_string()).into();
 		let maybe_state_snapshot: Option<SnapshotConfig> = var("SNAP").map(|s| s.into()).ok();
 		let mut ext = Builder::<Block>::default()
 			.mode(if let Some(state_snapshot) = maybe_state_snapshot {
@@ -2560,7 +2560,7 @@ mod remote_tests {
 	async fn try_fast_unstake_all() {
 		sp_tracing::try_init_simple();
 		let transport: Transport =
-			var("WS").unwrap_or("wss://rpc.polkadot.io:443".to_string()).into();
+			var("WS").unwrap_or("wss://rpc.kvp.io:443".to_string()).into();
 		let maybe_state_snapshot: Option<SnapshotConfig> = var("SNAP").map(|s| s.into()).ok();
 		let mut ext = Builder::<Block>::default()
 			.mode(if let Some(state_snapshot) = maybe_state_snapshot {

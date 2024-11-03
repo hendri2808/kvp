@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runtime: [westend, kusama, polkadot, rococo]
+        runtime: [westend, kusama, kvp, rococo]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
@@ -26,12 +26,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runtime: [westend, kusama, polkadot, rococo]
+        runtime: [westend, kusama, kvp, rococo]
     runs-on: ubuntu-latest
     steps:
       - name: Get latest release
         run: |
-          LAST_RELEASE=$(curl -s https://api.github.com/repos/paritytech/polkadot/releases/latest | jq -r .tag_name)
+          LAST_RELEASE=$(curl -s https://api.github.com/repos/paritytech/kvp/releases/latest | jq -r .tag_name)
           echo "LAST_RELEASE=$LAST_RELEASE" >> $GITHUB_ENV
       - name: Checkout current sources
         uses: actions/checkout@v3

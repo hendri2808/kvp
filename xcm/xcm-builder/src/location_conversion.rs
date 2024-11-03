@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::universal_exports::ensure_is_remote;
 use frame_support::traits::Get;
@@ -735,7 +735,7 @@ mod tests {
 			parents: 1,
 			interior: X2(
 				Parachain(1),
-				AccountId32 { network: Some(NetworkId::Polkadot), id: [0u8; 32] },
+				AccountId32 { network: Some(NetworkId::kvp), id: [0u8; 32] },
 			),
 		};
 
@@ -778,7 +778,7 @@ mod tests {
 			parents: 1,
 			interior: X2(
 				Parachain(1),
-				AccountKey20 { network: Some(NetworkId::Polkadot), key: [0u8; 20] },
+				AccountKey20 { network: Some(NetworkId::kvp), key: [0u8; 20] },
 			),
 		};
 
@@ -819,7 +819,7 @@ mod tests {
 
 		let mul = MultiLocation {
 			parents: 1,
-			interior: X1(AccountId32 { network: Some(NetworkId::Polkadot), id: [0u8; 32] }),
+			interior: X1(AccountId32 { network: Some(NetworkId::kvp), id: [0u8; 32] }),
 		};
 
 		assert_eq!(ForeignChainAliasAccount::<[u8; 32]>::convert_location(&mul).unwrap(), rem_1);
@@ -894,7 +894,7 @@ mod tests {
 			parents: 0,
 			interior: X2(
 				Parachain(1),
-				AccountId32 { network: Some(NetworkId::Polkadot), id: [0u8; 32] },
+				AccountId32 { network: Some(NetworkId::kvp), id: [0u8; 32] },
 			),
 		};
 

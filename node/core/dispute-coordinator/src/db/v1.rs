@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! `V1` database for the dispute coordinator.
 //!
@@ -22,9 +22,9 @@
 //! the dispute data in the database. Any breaking changes here will still
 //! require a db migration (check `node/service/src/parachains_db/upgrade.rs`).
 
-use polkadot_node_primitives::DisputeStatus;
-use polkadot_node_subsystem_util::database::{DBTransaction, Database};
-use polkadot_primitives::{
+use kvp_node_primitives::DisputeStatus;
+use kvp_node_subsystem_util::database::{DBTransaction, Database};
+use kvp_primitives::{
 	CandidateHash, CandidateReceipt, Hash, InvalidDisputeStatementKind, SessionIndex,
 	ValidDisputeStatementKind, ValidatorIndex, ValidatorSignature,
 };
@@ -225,9 +225,9 @@ pub struct CandidateVotes {
 	pub invalid: Vec<(InvalidDisputeStatementKind, ValidatorIndex, ValidatorSignature)>,
 }
 
-impl From<CandidateVotes> for polkadot_node_primitives::CandidateVotes {
-	fn from(db_votes: CandidateVotes) -> polkadot_node_primitives::CandidateVotes {
-		polkadot_node_primitives::CandidateVotes {
+impl From<CandidateVotes> for kvp_node_primitives::CandidateVotes {
+	fn from(db_votes: CandidateVotes) -> kvp_node_primitives::CandidateVotes {
+		kvp_node_primitives::CandidateVotes {
 			candidate_receipt: db_votes.candidate_receipt,
 			valid: db_votes.valid.into_iter().map(|(kind, i, sig)| (i, (kind, sig))).collect(),
 			invalid: db_votes.invalid.into_iter().map(|(kind, i, sig)| (i, (kind, sig))).collect(),
@@ -235,8 +235,8 @@ impl From<CandidateVotes> for polkadot_node_primitives::CandidateVotes {
 	}
 }
 
-impl From<polkadot_node_primitives::CandidateVotes> for CandidateVotes {
-	fn from(primitive_votes: polkadot_node_primitives::CandidateVotes) -> CandidateVotes {
+impl From<kvp_node_primitives::CandidateVotes> for CandidateVotes {
+	fn from(primitive_votes: kvp_node_primitives::CandidateVotes) -> CandidateVotes {
 		CandidateVotes {
 			candidate_receipt: primitive_votes.candidate_receipt,
 			valid: primitive_votes
@@ -376,12 +376,12 @@ mod tests {
 
 	use super::*;
 	use ::test_helpers::{dummy_candidate_receipt, dummy_hash};
-	use polkadot_node_primitives::DISPUTE_WINDOW;
-	use polkadot_primitives::{Hash, Id as ParaId};
+	use kvp_node_primitives::DISPUTE_WINDOW;
+	use kvp_primitives::{Hash, Id as ParaId};
 
 	fn make_db() -> DbBackend {
 		let db = kvdb_memorydb::create(1);
-		let db = polkadot_node_subsystem_util::database::kvdb_impl::DbAdapter::new(db, &[0]);
+		let db = kvp_node_subsystem_util::database::kvdb_impl::DbAdapter::new(db, &[0]);
 		let store = Arc::new(db);
 		let config = ColumnConfiguration { col_dispute_data: 0 };
 		DbBackend::new(store, config, Metrics::default())

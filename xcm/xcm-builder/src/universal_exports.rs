@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Traits and utilities to help with origin mutation and bridging.
 
@@ -432,24 +432,24 @@ mod tests {
 
 	#[test]
 	fn ensure_is_remote_works() {
-		// A Kusama parachain is remote from the Polkadot Relay.
-		let x = ensure_is_remote(Polkadot, (Parent, Kusama, Parachain(1000)));
+		// A Kusama parachain is remote from the kvp Relay.
+		let x = ensure_is_remote(kvp, (Parent, Kusama, Parachain(1000)));
 		assert_eq!(x, Ok((Kusama, Parachain(1000).into())));
 
-		// Polkadot Relay is remote from a Kusama parachain.
-		let x = ensure_is_remote((Kusama, Parachain(1000)), (Parent, Parent, Polkadot));
-		assert_eq!(x, Ok((Polkadot, Here)));
+		// kvp Relay is remote from a Kusama parachain.
+		let x = ensure_is_remote((Kusama, Parachain(1000)), (Parent, Parent, kvp));
+		assert_eq!(x, Ok((kvp, Here)));
 
 		// Our own parachain is local.
-		let x = ensure_is_remote(Polkadot, Parachain(1000));
+		let x = ensure_is_remote(kvp, Parachain(1000));
 		assert_eq!(x, Err(Parachain(1000).into()));
 
-		// Polkadot's parachain is not remote if we are Polkadot.
-		let x = ensure_is_remote(Polkadot, (Parent, Polkadot, Parachain(1000)));
-		assert_eq!(x, Err((Parent, Polkadot, Parachain(1000)).into()));
+		// kvp's parachain is not remote if we are kvp.
+		let x = ensure_is_remote(kvp, (Parent, kvp, Parachain(1000)));
+		assert_eq!(x, Err((Parent, kvp, Parachain(1000)).into()));
 
 		// If we don't have a consensus ancestor, then we cannot determine remoteness.
-		let x = ensure_is_remote((), (Parent, Polkadot, Parachain(1000)));
-		assert_eq!(x, Err((Parent, Polkadot, Parachain(1000)).into()));
+		let x = ensure_is_remote((), (Parent, kvp, Parachain(1000)));
+		assert_eq!(x, Err((Parent, kvp, Parachain(1000)).into()));
 	}
 }

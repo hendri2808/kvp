@@ -1,29 +1,29 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Abstract execution environment parameter set.
 //!
 //! Parameter set is encoded as an opaque vector which structure depends on the execution
 //! environment itself (except for environment type/version which is always represented
 //! by the first element of the vector). Decoding to a usable semantics structure is
-//! done in `polkadot-node-core-pvf`.
+//! done in `kvp-node-core-pvf`.
 
 use crate::{BlakeTwo256, HashT as _, PvfExecTimeoutKind, PvfPrepTimeoutKind};
 use parity_scale_codec::{Decode, Encode};
-use polkadot_core_primitives::Hash;
+use kvp_core_primitives::Hash;
 use scale_info::TypeInfo;
 use serde::{Deserialize, Serialize};
 use sp_std::{ops::Deref, time::Duration, vec, vec::Vec};

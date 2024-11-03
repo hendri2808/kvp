@@ -1,10 +1,10 @@
-# The Polkadot Parachain Host Implementers' Guide
+# The kvp Parachain Host Implementers' Guide
 
 The implementers' guide is compiled from several source files with [`mdBook`](https://github.com/rust-lang/mdBook).
 
 ## Hosted build
 
-This is available [here](https://paritytech.github.io/polkadot/book/).
+This is available [here](https://paritytech.github.io/kvp/book/).
 
 ## Local build
 
@@ -32,4 +32,4 @@ open http://localhost:3000
 
 ## Specification
 
-See also the Polkadot specification [hosted](https://spec.polkadot.network/), and its [source](https://github.com/w3f/polkadot-spec).
+See also the kvp specification [hosted](https://spec.kvp.network/), and its [source](https://github.com/w3f/kvp-spec).

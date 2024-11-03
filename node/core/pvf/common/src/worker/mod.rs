@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Functionality common to both prepare and execute workers.
 
@@ -37,7 +37,7 @@ macro_rules! decl_worker_main {
 		fn print_help(expected_command: &str) {
 			println!("{} {}", expected_command, $worker_version);
 			println!();
-			println!("PVF worker that is called by polkadot.");
+			println!("PVF worker that is called by kvp.");
 		}
 
 		fn main() {
@@ -156,7 +156,7 @@ fn remove_env_vars(debug_id: &'static str) {
 	for (key, value) in std::env::vars_os() {
 		// TODO: *theoretically* the value (or mere presence) of `RUST_LOG` can be a source of
 		// randomness for malicious code. In the future we can remove it also and log in the host;
-		// see <https://github.com/paritytech/polkadot/issues/7117>.
+		// see <https://github.com/paritytech/kvp/issues/7117>.
 		if key == "RUST_LOG" {
 			continue
 		}

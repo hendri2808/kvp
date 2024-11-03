@@ -1,7 +1,7 @@
 # This file is part of .gitlab-ci.yml
 # Here are all jobs that are executed during "weights" stage
 
-update_polkadot_weights: &update-weights
+update_kvp_weights: &update-weights
   # The update-weights pipeline defaults to `interruptible: false` so that we'll be able to
   # reach and run the benchmarking jobs despite the "Auto-cancel redundant pipelines" CI setting.
   # The setting is relevant because future pipelines (e.g. created for new commits or other schedules)
@@ -12,7 +12,7 @@ update_polkadot_weights: &update-weights
   when: manual
   image: $CI_IMAGE
   variables:
-    RUNTIME: polkadot
+    RUNTIME: kvp
   artifacts:
     paths:
       - ${RUNTIME}_weights_${CI_COMMIT_SHORT_SHA}.patch

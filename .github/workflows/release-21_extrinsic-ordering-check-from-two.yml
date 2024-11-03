@@ -6,11 +6,11 @@ on:
     inputs:
       reference_binary_url:
         description: A url to a Linux binary for the node containing the reference runtime to test against
-        default: https://releases.parity.io/polkadot/x86_64-debian:stretch/v0.9.26/polkadot
+        default: https://releases.parity.io/kvp/x86_64-debian:stretch/v0.9.26/kvp
         required: true
       binary_url:
         description: A url to a Linux binary for the node containing the runtime to test
-        default: https://releases.parity.io/polkadot/x86_64-debian:stretch/v0.9.27-rc1/polkadot
+        default: https://releases.parity.io/kvp/x86_64-debian:stretch/v0.9.27-rc1/kvp
         required: true
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        chain: [polkadot, kusama, westend, rococo]
+        chain: [kvp, kusama, westend, rococo]
 
     steps:
       - name: Checkout sources
@@ -32,31 +32,31 @@ jobs:
       - name: Fetch reference binary
         run: |
           echo Fetching $REF_URL
-          curl $REF_URL -o polkadot-ref
-          chmod a+x polkadot-ref
-          ./polkadot-ref --version
+          curl $REF_URL -o kvp-ref
+          chmod a+x kvp-ref
+          ./kvp-ref --version
 
       - name: Fetch test binary
         run: |
           echo Fetching $BIN_URL
-          curl $BIN_URL -o polkadot
-          chmod a+x polkadot
-          ./polkadot --version
+          curl $BIN_URL -o kvp
+          chmod a+x kvp
+          ./kvp --version
 
       - name: Start local reference node
         run: |
           echo Running reference on ${{ matrix.chain }}-local
-          ./polkadot-ref --chain=${{ matrix.chain }}-local --rpc-port=9934 --ws-port=9945 --base-path=polkadot-ref-base/ &
+          ./kvp-ref --chain=${{ matrix.chain }}-local --rpc-port=9934 --ws-port=9945 --base-path=kvp-ref-base/ &
 
       - name: Start local test node
         run: |
           echo Running test on ${{ matrix.chain }}-local
-          ./polkadot --chain=${{ matrix.chain }}-local &
+          ./kvp --chain=${{ matrix.chain }}-local &
 
       - name: Prepare output
         run: |
-          REF_VERSION=$(./polkadot-ref --version)
-          BIN_VERSION=$(./polkadot --version)
+          REF_VERSION=$(./kvp-ref --version)
+          BIN_VERSION=$(./kvp --version)
           echo "Metadata comparison:" >> output.txt
           echo "Date: $(date)" >> output.txt
           echo "Ref. binary: $REF_URL" >> output.txt
@@ -66,12 +66,12 @@ jobs:
           echo "Chain: ${{ matrix.chain }}-local" >> output.txt
           echo "----------------------------------------------------------------------" >> output.txt
 
-      - name: Pull polkadot-js-tools image
-        run: docker pull jacogr/polkadot-js-tools
+      - name: Pull kvp-js-tools image
+        run: docker pull jacogr/kvp-js-tools
 
       - name: Compare the metadata
         run: |
-          CMD="docker run --pull always --network host jacogr/polkadot-js-tools metadata ws://localhost:9945 ws://localhost:9944"
+          CMD="docker run --pull always --network host jacogr/kvp-js-tools metadata ws://localhost:9945 ws://localhost:9944"
           echo -e "Running:\n$CMD"
           $CMD >> output.txt
           sed -z -i 's/\n\n/\n/g' output.txt
@@ -93,5 +93,5 @@ jobs:
 
       - name: Stop our local nodes
         run: |
-          pkill polkadot-ref
-          pkill polkadot
+          pkill kvp-ref
+          pkill kvp

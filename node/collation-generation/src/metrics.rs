@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_node_subsystem_util::metrics::{self, prometheus};
+use kvp_node_subsystem_util::metrics::{self, prometheus};
 
 #[derive(Clone)]
 pub(crate) struct MetricsInner {
@@ -70,7 +70,7 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			collations_generated_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_collations_generated_total",
+					"kvp_parachain_collations_generated_total",
 					"Number of collations generated."
 				)?,
 				registry,
@@ -78,7 +78,7 @@ impl metrics::Metrics for Metrics {
 			new_activations_overall: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_collation_generation_new_activations",
+						"kvp_parachain_collation_generation_new_activations",
 						"Time spent within fn handle_new_activations",
 					)
 				)?,
@@ -87,7 +87,7 @@ impl metrics::Metrics for Metrics {
 			new_activations_per_relay_parent: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_collation_generation_per_relay_parent",
+						"kvp_parachain_collation_generation_per_relay_parent",
 						"Time spent handling a particular relay parent within fn handle_new_activations"
 					)
 				)?,
@@ -96,7 +96,7 @@ impl metrics::Metrics for Metrics {
 			new_activations_per_availability_core: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_collation_generation_per_availability_core",
+						"kvp_parachain_collation_generation_per_availability_core",
 						"Time spent handling a particular availability core for a relay parent in fn handle_new_activations",
 					)
 				)?,
@@ -105,7 +105,7 @@ impl metrics::Metrics for Metrics {
 			submit_collation: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_collation_generation_submit_collation",
+						"kvp_parachain_collation_generation_submit_collation",
 						"Time spent preparing and submitting a collation to the network protocol",
 					)
 				)?,

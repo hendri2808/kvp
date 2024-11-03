@@ -1,26 +1,26 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Assignment criteria VRF generation and checking.
 
 use parity_scale_codec::{Decode, Encode};
-use polkadot_node_primitives::approval::{
+use kvp_node_primitives::approval::{
 	self as approval_types, AssignmentCert, AssignmentCertKind, DelayTranche, RelayVRFStory,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	AssignmentId, AssignmentPair, CandidateHash, CoreIndex, GroupIndex, IndexedVec, SessionInfo,
 	ValidatorIndex,
 };
@@ -554,7 +554,7 @@ fn is_in_backing_group(
 mod tests {
 	use super::*;
 	use crate::import::tests::garbage_vrf_signature;
-	use polkadot_primitives::{Hash, ASSIGNMENT_KEY_TYPE_ID};
+	use kvp_primitives::{Hash, ASSIGNMENT_KEY_TYPE_ID};
 	use sp_application_crypto::sr25519;
 	use sp_core::crypto::Pair as PairT;
 	use sp_keyring::sr25519::Keyring as Sr25519Keyring;

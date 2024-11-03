@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use assert_matches::assert_matches;
@@ -22,24 +22,24 @@ use sp_keyring::Sr25519Keyring;
 use sp_keystore::Keystore;
 use std::{iter, sync::Arc, time::Duration};
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	our_view,
 	peer_set::CollationVersion,
 	request_response::{Requests, ResponseSender},
 	ObservedRole,
 };
-use polkadot_node_primitives::{BlockData, PoV};
-use polkadot_node_subsystem::{
+use kvp_node_primitives::{BlockData, PoV};
+use kvp_node_subsystem::{
 	errors::RuntimeApiError,
 	messages::{AllMessages, ReportPeerMessage, RuntimeApiMessage, RuntimeApiRequest},
 };
-use polkadot_node_subsystem_test_helpers as test_helpers;
-use polkadot_node_subsystem_util::{reputation::add_reputation, TimeoutExt};
-use polkadot_primitives::{
+use kvp_node_subsystem_test_helpers as test_helpers;
+use kvp_node_subsystem_util::{reputation::add_reputation, TimeoutExt};
+use kvp_primitives::{
 	CandidateReceipt, CollatorPair, CoreState, GroupIndex, GroupRotationInfo, HeadData,
 	OccupiedCore, PersistedValidationData, ScheduledCore, ValidatorId, ValidatorIndex,
 };
-use polkadot_primitives_test_helpers::{
+use kvp_primitives_test_helpers::{
 	dummy_candidate_descriptor, dummy_candidate_receipt_bad_sig, dummy_hash,
 };
 
@@ -144,7 +144,7 @@ fn test_harness<T: Future<Output = VirtualOverseer>>(
 ) {
 	let _ = env_logger::builder()
 		.is_test(true)
-		.filter(Some("polkadot_collator_protocol"), log::LevelFilter::Trace)
+		.filter(Some("kvp_collator_protocol"), log::LevelFilter::Trace)
 		.filter(Some(LOG_TARGET), log::LevelFilter::Trace)
 		.try_init();
 
@@ -155,7 +155,7 @@ fn test_harness<T: Future<Output = VirtualOverseer>>(
 	let keystore = Arc::new(sc_keystore::LocalKeystore::in_memory());
 	Keystore::sr25519_generate_new(
 		&*keystore,
-		polkadot_primitives::PARACHAIN_KEY_TYPE_ID,
+		kvp_primitives::PARACHAIN_KEY_TYPE_ID,
 		Some(&Sr25519Keyring::Alice.to_seed()),
 	)
 	.expect("Insert key into keystore");

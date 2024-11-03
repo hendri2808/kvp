@@ -1,5 +1,5 @@
 {# This is the entry point of the template -#}
-<!-- repository: {{ polkadot.repository.name }} -->
+<!-- repository: {{ kvp.repository.name }} -->
 {% include "pre_release.md.tera" -%}
 
 {% if env.PRE_RELEASE == "true" -%}
@@ -8,7 +8,7 @@ This pre-release contains the changes from `{{ env.REF1 | replace(from="refs/tag
 This release contains the changes from `{{ env.REF1 | replace(from="refs/tags/", to="") }}` to `{{ env.REF2 | replace(from="refs/tags/", to="") }}`.
 {% endif -%}
 
-{%- set changes = polkadot.changes | concat(with=substrate.changes) -%}
+{%- set changes = kvp.changes | concat(with=substrate.changes) -%}
 {%- include "debug.md.tera" -%}
 
 {%- set CML = "[C]" -%}

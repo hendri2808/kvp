@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-test-runtime"
+name = "kvp-test-runtime"
 build = "build.rs"
 publish = false
 version.workspace = true
@@ -56,11 +56,11 @@ pallet-timestamp = { git = "https://github.com/paritytech/substrate", branch = "
 pallet-sudo = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
 pallet-vesting = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
 
-runtime-common = { package = "polkadot-runtime-common", path = "../common", default-features = false }
-primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
+runtime-common = { package = "kvp-runtime-common", path = "../common", default-features = false }
+primitives = { package = "kvp-primitives", path = "../../primitives", default-features = false }
 pallet-xcm = { path = "../../xcm/pallet-xcm", default-features = false }
-polkadot-parachain = { path = "../../parachain", default-features = false }
-polkadot-runtime-parachains = { path = "../parachains", default-features = false }
+kvp-parachain = { path = "../../parachain", default-features = false }
+kvp-runtime-parachains = { path = "../parachains", default-features = false }
 xcm-builder = { path = "../../xcm/xcm-builder", default-features = false }
 xcm-executor = { path = "../../xcm/xcm-executor", default-features = false }
 xcm = { path = "../../xcm", default-features = false }
@@ -79,7 +79,7 @@ substrate-wasm-builder = { git = "https://github.com/paritytech/substrate", bran
 default = ["std"]
 no_std = []
 only-staking = []
-runtime-metrics = ["polkadot-runtime-parachains/runtime-metrics", "sp-io/with-tracing"]
+runtime-metrics = ["kvp-runtime-parachains/runtime-metrics", "sp-io/with-tracing"]
 
 std = [
 	"authority-discovery-primitives/std",
@@ -91,7 +91,7 @@ std = [
 	"scale-info/std",
 	"inherents/std",
 	"sp-core/std",
-	"polkadot-parachain/std",
+	"kvp-parachain/std",
 	"pallet-xcm/std",
 	"xcm-builder/std",
 	"xcm-executor/std",

@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_node_subsystem_util::metrics::{self, prometheus};
+use kvp_node_subsystem_util::metrics::{self, prometheus};
 
 #[derive(Clone, Default)]
 pub struct Metrics(Option<MetricsInner>);
@@ -70,21 +70,21 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			advertisements_made: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_collation_advertisements_made_total",
+					"kvp_parachain_collation_advertisements_made_total",
 					"A number of collation advertisements sent to validators.",
 				)?,
 				registry,
 			)?,
 			collations_send_requested: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_collations_sent_requested_total",
+					"kvp_parachain_collations_sent_requested_total",
 					"A number of collations requested to be sent to validators.",
 				)?,
 				registry,
 			)?,
 			collations_sent: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_collations_sent_total",
+					"kvp_parachain_collations_sent_total",
 					"A number of collations sent to validators.",
 				)?,
 				registry,
@@ -92,7 +92,7 @@ impl metrics::Metrics for Metrics {
 			process_msg: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_collator_protocol_collator_process_msg",
+						"kvp_parachain_collator_protocol_collator_process_msg",
 						"Time spent within `collator_protocol_collator::process_msg`",
 					)
 					.buckets(vec![
@@ -105,7 +105,7 @@ impl metrics::Metrics for Metrics {
 			collation_distribution_time: prometheus::register(
 				prometheus::HistogramVec::new(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_collator_protocol_collator_distribution_time",
+						"kvp_parachain_collator_protocol_collator_distribution_time",
 						"Time spent within `collator_protocol_collator::distribute_collation`",
 					)
 					.buckets(vec![

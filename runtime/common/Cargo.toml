@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-runtime-common"
+name = "kvp-runtime-common"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -44,9 +44,9 @@ frame-election-provider-support = { git = "https://github.com/paritytech/substra
 frame-benchmarking = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false, optional = true }
 pallet-babe = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false, optional = true }
 
-primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
+primitives = { package = "kvp-primitives", path = "../../primitives", default-features = false }
 libsecp256k1 = { version = "0.7.0", default-features = false }
-runtime-parachains = { package = "polkadot-runtime-parachains", path = "../parachains", default-features = false }
+runtime-parachains = { package = "kvp-runtime-parachains", path = "../parachains", default-features = false }
 
 slot-range-helper = { path = "slot_range_helper", default-features = false }
 xcm = { path = "../../xcm", default-features = false }
@@ -60,7 +60,7 @@ sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "maste
 sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
 serde_json = "1.0.96"
 libsecp256k1 = "0.7.0"
-test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../primitives/test-helpers" }
+test-helpers = { package = "kvp-primitives-test-helpers", path = "../../primitives/test-helpers" }
 
 [features]
 default = ["std"]

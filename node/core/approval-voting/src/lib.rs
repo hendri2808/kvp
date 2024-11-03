@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The Approval Voting Subsystem.
 //!
@@ -22,14 +22,14 @@
 //! been sufficiently approved to finalize.
 
 use jaeger::{hash_to_trace_identifier, PerLeafSpan};
-use polkadot_node_jaeger as jaeger;
-use polkadot_node_primitives::{
+use kvp_node_jaeger as jaeger;
+use kvp_node_primitives::{
 	approval::{
 		BlockApprovalMeta, DelayTranche, IndirectAssignmentCert, IndirectSignedApprovalVote,
 	},
 	ValidationResult, DISPUTE_WINDOW,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	errors::RecoveryError,
 	messages::{
 		ApprovalCheckError, ApprovalCheckResult, ApprovalDistributionMessage,
@@ -41,14 +41,14 @@ use polkadot_node_subsystem::{
 	overseer, FromOrchestra, OverseerSignal, SpawnedSubsystem, SubsystemError, SubsystemResult,
 	SubsystemSender,
 };
-use polkadot_node_subsystem_util::{
+use kvp_node_subsystem_util::{
 	self,
 	database::Database,
 	metrics::{self, prometheus},
 	runtime::{Config as RuntimeInfoConfig, RuntimeInfo},
 	TimeoutExt,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	ApprovalVote, BlockNumber, CandidateHash, CandidateIndex, CandidateReceipt, DisputeStatement,
 	GroupIndex, Hash, PvfExecTimeoutKind, SessionIndex, SessionInfo, ValidDisputeStatementKind,
 	ValidatorId, ValidatorIndex, ValidatorPair, ValidatorSignature,
@@ -262,7 +262,7 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			imported_candidates_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_imported_candidates_total",
+					"kvp_parachain_imported_candidates_total",
 					"Number of candidates imported by the approval voting subsystem",
 				)?,
 				registry,
@@ -270,7 +270,7 @@ impl metrics::Metrics for Metrics {
 			assignments_produced: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_assignments_produced",
+						"kvp_parachain_assignments_produced",
 						"Assignments and tranches produced by the approval voting subsystem",
 					).buckets(vec![0.0, 1.0, 2.0, 3.0, 4.0, 5.0, 10.0, 15.0, 25.0, 40.0, 70.0]),
 				)?,
@@ -279,7 +279,7 @@ impl metrics::Metrics for Metrics {
 			approvals_produced_total: prometheus::register(
 				prometheus::CounterVec::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_approvals_produced_total",
+						"kvp_parachain_approvals_produced_total",
 						"Number of approvals produced by the approval voting subsystem",
 					),
 					&["status"]
@@ -288,14 +288,14 @@ impl metrics::Metrics for Metrics {
 			)?,
 			no_shows_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_approvals_no_shows_total",
+					"kvp_parachain_approvals_no_shows_total",
 					"Number of assignments which became no-shows in the approval voting subsystem",
 				)?,
 				registry,
 			)?,
 			wakeups_triggered_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_approvals_wakeups_total",
+					"kvp_parachain_approvals_wakeups_total",
 					"Number of times we woke up to process a candidate in the approval voting subsystem",
 				)?,
 				registry,
@@ -303,7 +303,7 @@ impl metrics::Metrics for Metrics {
 			candidate_approval_time_ticks: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_approvals_candidate_approval_time_ticks",
+						"kvp_parachain_approvals_candidate_approval_time_ticks",
 						"Number of ticks (500ms) to approve candidates.",
 					).buckets(vec![6.0, 12.0, 18.0, 24.0, 30.0, 36.0, 72.0, 100.0, 144.0]),
 				)?,
@@ -312,7 +312,7 @@ impl metrics::Metrics for Metrics {
 			block_approval_time_ticks: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_approvals_blockapproval_time_ticks",
+						"kvp_parachain_approvals_blockapproval_time_ticks",
 						"Number of ticks (500ms) to approve blocks.",
 					).buckets(vec![6.0, 12.0, 18.0, 24.0, 30.0, 36.0, 72.0, 100.0, 144.0]),
 				)?,
@@ -321,7 +321,7 @@ impl metrics::Metrics for Metrics {
 			time_db_transaction: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_time_approval_db_transaction",
+						"kvp_parachain_time_approval_db_transaction",
 						"Time spent writing an approval db transaction.",
 					)
 				)?,
@@ -330,7 +330,7 @@ impl metrics::Metrics for Metrics {
 			time_recover_and_approve: prometheus::register(
 				prometheus::Histogram::with_opts(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_time_recover_and_approve",
+						"kvp_parachain_time_recover_and_approve",
 						"Time spent recovering and approving data in approval voting",
 					)
 				)?,
@@ -338,14 +338,14 @@ impl metrics::Metrics for Metrics {
 			)?,
 			candidate_signatures_requests_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_approval_candidate_signatures_requests_total",
+					"kvp_parachain_approval_candidate_signatures_requests_total",
 					"Number of times signatures got requested by other subsystems",
 				)?,
 				registry,
 			)?,
 			unapproved_candidates_in_unfinalized_chain: prometheus::register(
 				prometheus::Gauge::new(
-					"polkadot_parachain_approval_unapproved_candidates_in_unfinalized_chain",
+					"kvp_parachain_approval_unapproved_candidates_in_unfinalized_chain",
 					"Number of unapproved candidates in unfinalized chain",
 				)?,
 				registry,
@@ -910,7 +910,7 @@ where
 // of actions are generated by handling a single action.
 //
 // This particular problem statement is specified in issue 3311:
-// 	https://github.com/paritytech/polkadot/issues/3311
+// 	https://github.com/paritytech/kvp/issues/3311
 //
 // returns `true` if any of the actions was a `Conclude` command.
 #[overseer::contextbounds(ApprovalVoting, prefix = self::overseer)]

@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::{
 	collections::HashMap,
@@ -29,13 +29,13 @@ use futures::{
 	future::{self, BoxFuture},
 };
 
-use polkadot_node_subsystem_util::database::Database;
+use kvp_node_subsystem_util::database::Database;
 
-use polkadot_node_primitives::{
+use kvp_node_primitives::{
 	DisputeMessage, DisputeStatus, SignedDisputeStatement, SignedFullStatement, Statement,
 	DISPUTE_WINDOW,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	messages::{
 		ApprovalVotingMessage, ChainApiMessage, ChainSelectionMessage, DisputeCoordinatorMessage,
 		DisputeDistributionMessage, ImportStatementsResult,
@@ -44,7 +44,7 @@ use polkadot_node_subsystem::{
 	OverseerSignal,
 };
 
-use polkadot_node_subsystem_util::TimeoutExt;
+use kvp_node_subsystem_util::TimeoutExt;
 use sc_keystore::LocalKeystore;
 use sp_application_crypto::AppCrypto;
 use sp_core::{sr25519::Pair, testing::TaskExecutor, Pair as PairT};
@@ -52,16 +52,16 @@ use sp_keyring::Sr25519Keyring;
 use sp_keystore::{Keystore, KeystorePtr};
 
 use ::test_helpers::{dummy_candidate_receipt_bad_sig, dummy_digest, dummy_hash};
-use polkadot_node_primitives::{Timestamp, ACTIVE_DURATION_SECS};
-use polkadot_node_subsystem::{
+use kvp_node_primitives::{Timestamp, ACTIVE_DURATION_SECS};
+use kvp_node_subsystem::{
 	jaeger,
 	messages::{AllMessages, BlockDescription, RuntimeApiMessage, RuntimeApiRequest},
 	ActivatedLeaf, ActiveLeavesUpdate, LeafStatus,
 };
-use polkadot_node_subsystem_test_helpers::{
+use kvp_node_subsystem_test_helpers::{
 	make_buffered_subsystem_context, TestSubsystemContextHandle,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	ApprovalVote, BlockNumber, CandidateCommitments, CandidateEvent, CandidateHash,
 	CandidateReceipt, CoreIndex, DisputeStatement, GroupIndex, Hash, HeadData, Header, IndexedVec,
 	MultiDisputeStatementSet, ScrapedOnChainVotes, SessionIndex, SessionInfo, SigningContext,
@@ -86,7 +86,7 @@ fn make_keystore(seeds: impl Iterator<Item = String>) -> LocalKeystore {
 
 	for s in seeds {
 		store
-			.sr25519_generate_new(polkadot_primitives::PARACHAIN_KEY_TYPE_ID, Some(&s))
+			.sr25519_generate_new(kvp_primitives::PARACHAIN_KEY_TYPE_ID, Some(&s))
 			.unwrap();
 	}
 
@@ -215,7 +215,7 @@ impl Default for TestState {
 			make_keystore(vec![Sr25519Keyring::Alice.to_seed()].into_iter()).into();
 
 		let db = kvdb_memorydb::create(1);
-		let db = polkadot_node_subsystem_util::database::kvdb_impl::DbAdapter::new(db, &[0]);
+		let db = kvp_node_subsystem_util::database::kvdb_impl::DbAdapter::new(db, &[0]);
 		let db = Arc::new(db);
 		let config = Config { col_dispute_data: 0 };
 
@@ -1767,7 +1767,7 @@ fn supermajority_valid_dispute_may_be_finalized() {
 				.await;
 
 			let supermajority_threshold =
-				polkadot_primitives::supermajority_threshold(test_state.validators.len());
+				kvp_primitives::supermajority_threshold(test_state.validators.len());
 
 			let (valid_vote, invalid_vote) = generate_opposing_votes_pair(
 				&test_state,
@@ -1904,7 +1904,7 @@ fn concluded_supermajority_for_non_active_after_time() {
 				.await;
 
 			let supermajority_threshold =
-				polkadot_primitives::supermajority_threshold(test_state.validators.len());
+				kvp_primitives::supermajority_threshold(test_state.validators.len());
 
 			let (valid_vote, invalid_vote) = generate_opposing_votes_pair(
 				&test_state,
@@ -2019,7 +2019,7 @@ fn concluded_supermajority_against_non_active_after_time() {
 				.await;
 
 			let supermajority_threshold =
-				polkadot_primitives::supermajority_threshold(test_state.validators.len());
+				kvp_primitives::supermajority_threshold(test_state.validators.len());
 
 			let (valid_vote, invalid_vote) = generate_opposing_votes_pair(
 				&test_state,
@@ -3304,7 +3304,7 @@ fn informs_chain_selection_when_dispute_concluded_against() {
 				.await;
 
 			let byzantine_threshold =
-				polkadot_primitives::byzantine_threshold(test_state.validators.len());
+				kvp_primitives::byzantine_threshold(test_state.validators.len());
 
 			let (valid_vote, invalid_vote) = generate_opposing_votes_pair(
 				&test_state,

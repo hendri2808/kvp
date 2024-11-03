@@ -7,10 +7,10 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
-polkadot-runtime = { path = "../../../runtime/polkadot" }
+kvp-runtime = { path = "../../../runtime/kvp" }
 kusama-runtime = { path = "../../../runtime/kusama" }
 westend-runtime = { path = "../../../runtime/westend" }
-polkadot-runtime-constants = { path = "../../../runtime/polkadot/constants" }
+kvp-runtime-constants = { path = "../../../runtime/kvp/constants" }
 kusama-runtime-constants = { path = "../../../runtime/kusama/constants" }
 westend-runtime-constants = { path = "../../../runtime/westend/constants" }
 

@@ -27,9 +27,9 @@ xcm-simulator = { path = "../" }
 xcm-executor = { path = "../../xcm-executor" }
 xcm-builder = { path = "../../xcm-builder" }
 pallet-xcm = { path = "../../pallet-xcm" }
-polkadot-core-primitives = { path = "../../../core-primitives" }
-polkadot-runtime-parachains = { path = "../../../runtime/parachains" }
-polkadot-parachain = { path = "../../../parachain" }
+kvp-core-primitives = { path = "../../../core-primitives" }
+kvp-runtime-parachains = { path = "../../../runtime/parachains" }
+kvp-parachain = { path = "../../../parachain" }
 
 [features]
 default = []
@@ -42,6 +42,6 @@ runtime-benchmarks = [
 	"pallet-xcm/runtime-benchmarks",
 	"xcm-builder/runtime-benchmarks",
 	"xcm-executor/runtime-benchmarks",
-	"polkadot-runtime-parachains/runtime-benchmarks",
-	"polkadot-parachain/runtime-benchmarks",
+	"kvp-runtime-parachains/runtime-benchmarks",
+	"kvp-parachain/runtime-benchmarks",
 ]

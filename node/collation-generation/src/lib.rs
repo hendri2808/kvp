@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The collation generation subsystem is the interface between polkadot and the collators.
+//! The collation generation subsystem is the interface between kvp and the collators.
 //!
 //! # Protocol
 //!
@@ -33,21 +33,21 @@
 
 use futures::{channel::oneshot, future::FutureExt, join, select};
 use parity_scale_codec::Encode;
-use polkadot_node_primitives::{
+use kvp_node_primitives::{
 	AvailableData, Collation, CollationGenerationConfig, CollationSecondedSignal, PoV,
 	SubmitCollationParams,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	messages::{CollationGenerationMessage, CollatorProtocolMessage},
 	overseer, ActiveLeavesUpdate, FromOrchestra, OverseerSignal, RuntimeApiError, SpawnedSubsystem,
 	SubsystemContext, SubsystemError, SubsystemResult,
 };
-use polkadot_node_subsystem_util::{
+use kvp_node_subsystem_util::{
 	request_availability_cores, request_persisted_validation_data,
 	request_staging_async_backing_params, request_validation_code, request_validation_code_hash,
 	request_validators,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	collator_signature_payload, CandidateCommitments, CandidateDescriptor, CandidateReceipt,
 	CollatorPair, CoreState, Hash, Id as ParaId, OccupiedCoreAssumption, PersistedValidationData,
 	ValidationCodeHash,
@@ -194,7 +194,7 @@ async fn handle_new_activations<Context>(
 	metrics: Metrics,
 ) -> crate::error::Result<()> {
 	// follow the procedure from the guide:
-	// https://paritytech.github.io/polkadot/book/node/collators/collation-generation.html
+	// https://paritytech.github.io/kvp/book/node/collators/collation-generation.html
 
 	if config.collator.is_none() {
 		return Ok(())
@@ -586,6 +586,6 @@ fn erasure_root(
 	let available_data =
 		AvailableData { validation_data: persisted_validation, pov: Arc::new(pov) };
 
-	let chunks = polkadot_erasure_coding::obtain_chunks_v1(n_validators, &available_data)?;
-	Ok(polkadot_erasure_coding::branches(&chunks).root())
+	let chunks = kvp_erasure_coding::obtain_chunks_v1(n_validators, &available_data)?;
+	Ok(kvp_erasure_coding::branches(&chunks).root())
 }

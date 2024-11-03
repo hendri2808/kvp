@@ -1,23 +1,23 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! All peersets and protocols used for parachains.
 
 use derive_more::Display;
-use polkadot_primitives::Hash;
+use kvp_primitives::Hash;
 use sc_network::{
 	config::{NonDefaultSetConfig, SetConfig},
 	types::ProtocolName,
@@ -29,8 +29,8 @@ use std::{
 use strum::{EnumIter, IntoEnumIterator};
 
 /// The legacy protocol names. Only supported on version = 1.
-const LEGACY_VALIDATION_PROTOCOL_V1: &str = "/polkadot/validation/1";
-const LEGACY_COLLATION_PROTOCOL_V1: &str = "/polkadot/collation/1";
+const LEGACY_VALIDATION_PROTOCOL_V1: &str = "/kvp/validation/1";
+const LEGACY_COLLATION_PROTOCOL_V1: &str = "/kvp/collation/1";
 
 /// The legacy protocol version. Is always 1 for both validation & collation.
 const LEGACY_PROTOCOL_VERSION_V1: u32 = 1;
@@ -507,7 +507,7 @@ mod tests {
 			Some((PeerSet::Validation, TestVersion(1).into())),
 		);
 
-		let validation_legacy = "/polkadot/validation/1";
+		let validation_legacy = "/kvp/validation/1";
 		assert_eq!(
 			protocol_names.try_get_protocol(&validation_legacy.into()),
 			Some((PeerSet::Validation, TestVersion(1).into())),
@@ -520,7 +520,7 @@ mod tests {
 			Some((PeerSet::Collation, TestVersion(1).into())),
 		);
 
-		let collation_legacy = "/polkadot/collation/1";
+		let collation_legacy = "/kvp/collation/1";
 		assert_eq!(
 			protocol_names.try_get_protocol(&collation_legacy.into()),
 			Some((PeerSet::Collation, TestVersion(1).into())),

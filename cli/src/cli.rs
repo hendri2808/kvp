@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot CLI library.
+//! kvp CLI library.
 
 use clap::Parser;
 use std::path::PathBuf;
@@ -132,7 +132,7 @@ pub struct RunCmd {
 	pub overseer_channel_capacity_override: Option<usize>,
 
 	/// Path to the directory where auxiliary worker binaries reside. If not specified, the main
-	/// binary's directory is searched first, then `/usr/lib/polkadot` is searched. TESTING ONLY:
+	/// binary's directory is searched first, then `/usr/lib/kvp` is searched. TESTING ONLY:
 	/// if the path points to an executable rather then directory, that executable is used both as
 	/// preparation and execution worker.
 	#[arg(long, value_name = "PATH")]

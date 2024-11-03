@@ -1,5 +1,5 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
 // Substrate is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -12,7 +12,7 @@
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Version 3 of the Cross-Consensus Message format data structures.
 
@@ -909,7 +909,7 @@ pub enum Instruction<Call> {
 	/// As an example, to export a message for execution on Statemine (parachain #1000 in the
 	/// Kusama network), you would call with `network: NetworkId::Kusama` and
 	/// `destination: X1(Parachain(1000))`. Alternatively, to export a message for execution on
-	/// Polkadot, you would call with `network: NetworkId:: Polkadot` and `destination: Here`.
+	/// kvp, you would call with `network: NetworkId:: kvp` and `destination: Here`.
 	///
 	/// Kind: *Command*
 	///

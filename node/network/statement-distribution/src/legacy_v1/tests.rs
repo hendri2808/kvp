@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 #![allow(clippy::clone_on_copy)]
 
@@ -23,7 +23,7 @@ use assert_matches::assert_matches;
 use futures::executor;
 use futures_timer::Delay;
 use parity_scale_codec::{Decode, Encode};
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	grid_topology::{SessionGridTopology, TopologyPeerInfo},
 	peer_set::ValidationVersion,
 	request_response::{
@@ -32,21 +32,21 @@ use polkadot_node_network_protocol::{
 	},
 	view, ObservedRole, VersionedValidationProtocol,
 };
-use polkadot_node_primitives::{
+use kvp_node_primitives::{
 	SignedFullStatementWithPVD, Statement, UncheckedSignedFullStatement,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	jaeger,
 	messages::{
 		network_bridge_event, AllMessages, ReportPeerMessage, RuntimeApiMessage, RuntimeApiRequest,
 	},
 	ActivatedLeaf, LeafStatus, RuntimeApiError,
 };
-use polkadot_node_subsystem_test_helpers::mock::make_ferdie_keystore;
-use polkadot_primitives::{
+use kvp_node_subsystem_test_helpers::mock::make_ferdie_keystore;
+use kvp_primitives::{
 	GroupIndex, Hash, HeadData, Id as ParaId, IndexedVec, SessionInfo, ValidationCode,
 };
-use polkadot_primitives_test_helpers::{
+use kvp_primitives_test_helpers::{
 	dummy_committed_candidate_receipt, dummy_hash, AlwaysZeroRng,
 };
 use sc_keystore::LocalKeystore;
@@ -539,7 +539,7 @@ fn peer_view_update_sends_messages() {
 	};
 
 	let pool = sp_core::testing::TaskExecutor::new();
-	let (mut ctx, mut handle) = polkadot_node_subsystem_test_helpers::make_subsystem_context::<
+	let (mut ctx, mut handle) = kvp_node_subsystem_test_helpers::make_subsystem_context::<
 		StatementDistributionMessage,
 		_,
 	>(pool);
@@ -642,7 +642,7 @@ fn circulated_statement_goes_to_all_peers_with_view() {
 	.collect();
 
 	let pool = sp_core::testing::TaskExecutor::new();
-	let (mut ctx, mut handle) = polkadot_node_subsystem_test_helpers::make_subsystem_context::<
+	let (mut ctx, mut handle) = kvp_node_subsystem_test_helpers::make_subsystem_context::<
 		StatementDistributionMessage,
 		_,
 	>(pool);
@@ -764,7 +764,7 @@ fn receiving_from_one_sends_to_another_and_to_candidate_backing() {
 	let session_index = 1;
 
 	let pool = sp_core::testing::TaskExecutor::new();
-	let (ctx, mut handle) = polkadot_node_subsystem_test_helpers::make_subsystem_context(pool);
+	let (ctx, mut handle) = kvp_node_subsystem_test_helpers::make_subsystem_context(pool);
 
 	let req_protocol_names = ReqProtocolNames::new(&GENESIS_HASH, None);
 	let (statement_req_receiver, _) = IncomingRequest::get_config_receiver(&req_protocol_names);
@@ -997,7 +997,7 @@ fn receiving_large_statement_from_one_sends_to_another_and_to_candidate_backing(
 	let session_index = 1;
 
 	let pool = sp_core::testing::TaskExecutor::new();
-	let (ctx, mut handle) = polkadot_node_subsystem_test_helpers::make_subsystem_context(pool);
+	let (ctx, mut handle) = kvp_node_subsystem_test_helpers::make_subsystem_context(pool);
 
 	let req_protocol_names = ReqProtocolNames::new(&GENESIS_HASH, None);
 	let (statement_req_receiver, mut req_cfg) =
@@ -1520,7 +1520,7 @@ fn delay_reputation_changes() {
 	let session_index = 1;
 
 	let pool = sp_core::testing::TaskExecutor::new();
-	let (ctx, mut handle) = polkadot_node_subsystem_test_helpers::make_subsystem_context(pool);
+	let (ctx, mut handle) = kvp_node_subsystem_test_helpers::make_subsystem_context(pool);
 
 	let req_protocol_names = ReqProtocolNames::new(&GENESIS_HASH, None);
 	let (statement_req_receiver, _) = IncomingRequest::get_config_receiver(&req_protocol_names);
@@ -1995,7 +1995,7 @@ fn share_prioritizes_backing_group() {
 	let session_index = 1;
 
 	let pool = sp_core::testing::TaskExecutor::new();
-	let (ctx, mut handle) = polkadot_node_subsystem_test_helpers::make_subsystem_context(pool);
+	let (ctx, mut handle) = kvp_node_subsystem_test_helpers::make_subsystem_context(pool);
 
 	let req_protocol_names = ReqProtocolNames::new(&GENESIS_HASH, None);
 	let (statement_req_receiver, mut req_cfg) =
@@ -2313,7 +2313,7 @@ fn peer_cant_flood_with_large_statements() {
 	let session_index = 1;
 
 	let pool = sp_core::testing::TaskExecutor::new();
-	let (ctx, mut handle) = polkadot_node_subsystem_test_helpers::make_subsystem_context(pool);
+	let (ctx, mut handle) = kvp_node_subsystem_test_helpers::make_subsystem_context(pool);
 
 	let req_protocol_names = ReqProtocolNames::new(&GENESIS_HASH, None);
 	let (statement_req_receiver, _) = IncomingRequest::get_config_receiver(&req_protocol_names);
@@ -2487,7 +2487,7 @@ fn peer_cant_flood_with_large_statements() {
 
 // This test addresses an issue when received knowledge is not updated on a
 // subsequent `Seconded` statements
-// See https://github.com/paritytech/polkadot/pull/5177
+// See https://github.com/paritytech/kvp/pull/5177
 #[test]
 fn handle_multiple_seconded_statements() {
 	let relay_parent_hash = Hash::repeat_byte(1);
@@ -2531,7 +2531,7 @@ fn handle_multiple_seconded_statements() {
 	let session_index = 1;
 
 	let pool = sp_core::testing::TaskExecutor::new();
-	let (ctx, mut handle) = polkadot_node_subsystem_test_helpers::make_subsystem_context(pool);
+	let (ctx, mut handle) = kvp_node_subsystem_test_helpers::make_subsystem_context(pool);
 
 	let req_protocol_names = ReqProtocolNames::new(&GENESIS_HASH, None);
 	let (statement_req_receiver, _) = IncomingRequest::get_config_receiver(&req_protocol_names);

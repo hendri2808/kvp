@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Runtime component for handling disputes of parachain candidates.
 
@@ -23,7 +23,7 @@ use bitvec::{bitvec, order::Lsb0 as BitOrderLsb0};
 use frame_support::{ensure, weights::Weight};
 use frame_system::pallet_prelude::*;
 use parity_scale_codec::{Decode, Encode};
-use polkadot_runtime_metrics::get_current_time;
+use kvp_runtime_metrics::get_current_time;
 use primitives::{
 	byzantine_threshold, supermajority_threshold, ApprovalVote, CandidateHash,
 	CheckedDisputeStatementSet, CheckedMultiDisputeStatementSet, CompactStatement, ConsensusLog,
@@ -192,7 +192,7 @@ pub trait DisputesHandler<BlockNumber: Ord> {
 	) -> Result<(), ()> {
 		// TODO: Consider trade-of to avoid `O(n * log(n))` average lookups of `included_state`
 		// TODO: instead make a single pass and store the values lazily.
-		// TODO: https://github.com/paritytech/polkadot/issues/4527
+		// TODO: https://github.com/paritytech/kvp/issues/4527
 		let n = statement_sets.len();
 
 		statement_sets.sort_by(dispute_ordering_compare::<Self, BlockNumber>);
@@ -888,7 +888,7 @@ impl<T: Config> Pallet<T> {
 				<BackersOnDisputes<T>>::remove_prefix(to_prune, None);
 
 				// This is larger, and will be extracted to the `shared` pallet for more proper
-				// pruning. TODO: https://github.com/paritytech/polkadot/issues/3469
+				// pruning. TODO: https://github.com/paritytech/kvp/issues/3469
 				#[allow(deprecated)]
 				<Included<T>>::remove_prefix(to_prune, None);
 			}

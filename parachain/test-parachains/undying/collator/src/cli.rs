@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot CLI library.
+//! kvp CLI library.
 
 use clap::Parser;
 use sc_cli::SubstrateCli;
@@ -102,7 +102,7 @@ impl SubstrateCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/paritytech/polkadot/issues/new".into()
+		"https://github.com/paritytech/kvp/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {
@@ -117,13 +117,13 @@ impl SubstrateCli for Cli {
 		let id = if id.is_empty() { "rococo" } else { id };
 		Ok(match id {
 			"rococo-staging" =>
-				Box::new(polkadot_service::chain_spec::rococo_staging_testnet_config()?),
+				Box::new(kvp_service::chain_spec::rococo_staging_testnet_config()?),
 			"rococo-local" =>
-				Box::new(polkadot_service::chain_spec::rococo_local_testnet_config()?),
-			"rococo" => Box::new(polkadot_service::chain_spec::rococo_config()?),
+				Box::new(kvp_service::chain_spec::rococo_local_testnet_config()?),
+			"rococo" => Box::new(kvp_service::chain_spec::rococo_config()?),
 			path => {
 				let path = std::path::PathBuf::from(path);
-				Box::new(polkadot_service::RococoChainSpec::from_json_file(path)?)
+				Box::new(kvp_service::RococoChainSpec::from_json_file(path)?)
 			},
 		})
 	}

@@ -1,25 +1,25 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 
-use polkadot_node_primitives::{BabeAllowedSlots, BabeEpoch, BabeEpochConfiguration};
-use polkadot_node_subsystem::SpawnGlue;
-use polkadot_node_subsystem_test_helpers::make_subsystem_context;
-use polkadot_primitives::{
+use kvp_node_primitives::{BabeAllowedSlots, BabeEpoch, BabeEpochConfiguration};
+use kvp_node_subsystem::SpawnGlue;
+use kvp_node_subsystem_test_helpers::make_subsystem_context;
+use kvp_primitives::{
 	vstaging, AuthorityDiscoveryId, BlockNumber, CandidateCommitments, CandidateEvent,
 	CandidateHash, CommittedCandidateReceipt, CoreState, DisputeState, ExecutorParams,
 	GroupRotationInfo, Id as ParaId, InboundDownwardMessage, InboundHrmpMessage,
@@ -481,7 +481,7 @@ fn requests_check_validation_outputs() {
 	let relay_parent = [1; 32].into();
 	let para_a = ParaId::from(5_u32);
 	let para_b = ParaId::from(6_u32);
-	let commitments = polkadot_primitives::CandidateCommitments::default();
+	let commitments = kvp_primitives::CandidateCommitments::default();
 	let spawner = sp_core::testing::TaskExecutor::new();
 
 	subsystem_client.validation_outputs_results.insert(para_a, false);

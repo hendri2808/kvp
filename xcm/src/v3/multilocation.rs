@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! XCM `MultiLocation` datatype.
 
@@ -33,7 +33,7 @@ use scale_info::TypeInfo;
 ///
 /// A very-much non-exhaustive list of types of location include:
 /// - A (normal, layer-1) block chain, e.g. the Bitcoin mainnet or a parachain.
-/// - A layer-0 super-chain, e.g. the Polkadot Relay chain.
+/// - A layer-0 super-chain, e.g. the kvp Relay chain.
 /// - A layer-2 smart contract, e.g. an ERC-20 on Ethereum.
 /// - A logical functional component of a chain, e.g. a single instance of a pallet on a Frame-based
 ///   Substrate chain.
@@ -405,7 +405,7 @@ impl MultiLocation {
 		target: &MultiLocation,
 		context: InteriorMultiLocation,
 	) -> Result<(), ()> {
-		// TODO: https://github.com/paritytech/polkadot/issues/4489 Optimize this.
+		// TODO: https://github.com/paritytech/kvp/issues/4489 Optimize this.
 
 		// 1. Use our `context` to figure out how the `target` would address us.
 		let inverted_target = context.invert_target(target)?;

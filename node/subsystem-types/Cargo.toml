@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-subsystem-types"
+name = "kvp-node-subsystem-types"
 description = "Subsystem traits and message definitions"
 version.workspace = true
 authors.workspace = true
@@ -9,11 +9,11 @@ license.workspace = true
 [dependencies]
 derive_more = "0.99.17"
 futures = "0.3.21"
-polkadot-primitives = { path = "../../primitives" }
-polkadot-node-primitives = { path = "../primitives" }
-polkadot-node-network-protocol = { path = "../network/protocol" }
-polkadot-statement-table = { path = "../../statement-table" }
-polkadot-node-jaeger = { path = "../jaeger" }
+kvp-primitives = { path = "../../primitives" }
+kvp-node-primitives = { path = "../primitives" }
+kvp-node-network-protocol = { path = "../network/protocol" }
+kvp-statement-table = { path = "../../statement-table" }
+kvp-node-jaeger = { path = "../jaeger" }
 orchestra = "0.0.5"
 sc-network = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-api = { git = "https://github.com/paritytech/substrate", branch = "master" }

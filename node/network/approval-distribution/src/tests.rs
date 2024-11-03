@@ -1,38 +1,38 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use assert_matches::assert_matches;
 use futures::{executor, future, Future};
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	grid_topology::{SessionGridTopology, TopologyPeerInfo},
 	our_view,
 	peer_set::ValidationVersion,
 	view, ObservedRole,
 };
-use polkadot_node_primitives::approval::{
+use kvp_node_primitives::approval::{
 	AssignmentCertKind, VrfOutput, VrfProof, VrfSignature, RELAY_VRF_MODULO_CONTEXT,
 };
-use polkadot_node_subsystem::messages::{
+use kvp_node_subsystem::messages::{
 	network_bridge_event, AllMessages, ApprovalCheckError, ReportPeerMessage,
 };
-use polkadot_node_subsystem_test_helpers as test_helpers;
-use polkadot_node_subsystem_util::{reputation::add_reputation, TimeoutExt as _};
-use polkadot_primitives::{AuthorityDiscoveryId, BlakeTwo256, HashT};
-use polkadot_primitives_test_helpers::dummy_signature;
+use kvp_node_subsystem_test_helpers as test_helpers;
+use kvp_node_subsystem_util::{reputation::add_reputation, TimeoutExt as _};
+use kvp_primitives::{AuthorityDiscoveryId, BlakeTwo256, HashT};
+use kvp_primitives_test_helpers::dummy_signature;
 use rand::SeedableRng;
 use sp_authority_discovery::AuthorityPair as AuthorityDiscoveryPair;
 use sp_core::crypto::Pair as PairT;
@@ -459,7 +459,7 @@ fn delay_reputation_change() {
 	});
 }
 
-/// <https://github.com/paritytech/polkadot/pull/2160#discussion_r547594835>
+/// <https://github.com/paritytech/kvp/pull/2160#discussion_r547594835>
 ///
 /// 1. Send a view update that removes block B from their view.
 /// 2. Send a message from B that they incur `COST_UNEXPECTED_MESSAGE` for, but then they receive
@@ -548,7 +548,7 @@ fn spam_attack_results_in_negative_reputation_change() {
 /// Upon receiving them, they both will try to send the message each other.
 /// This test makes sure they will not punish each other for such duplicate messages.
 ///
-/// See <https://github.com/paritytech/polkadot/issues/2499>.
+/// See <https://github.com/paritytech/kvp/issues/2499>.
 #[test]
 fn peer_sending_us_the_same_we_just_sent_them_is_ok() {
 	let parent_hash = Hash::repeat_byte(0xFF);
@@ -1191,7 +1191,7 @@ fn sends_assignments_even_when_state_is_approved() {
 	});
 }
 
-/// <https://github.com/paritytech/polkadot/pull/5089>
+/// <https://github.com/paritytech/kvp/pull/5089>
 ///
 /// 1. Receive remote peer view update with an unknown head
 /// 2. Receive assignments for that unknown head
@@ -2496,7 +2496,7 @@ fn import_versioned_approval() {
 }
 
 fn batch_test_round(message_count: usize) {
-	use polkadot_node_subsystem::SubsystemContext;
+	use kvp_node_subsystem::SubsystemContext;
 	let pool = sp_core::testing::TaskExecutor::new();
 	let mut state = State::default();
 

@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::{
 	collections::{BTreeMap, HashSet},
@@ -22,15 +22,15 @@ use std::{
 use futures::channel::oneshot;
 use lru::LruCache;
 
-use polkadot_node_primitives::{DISPUTE_CANDIDATE_LIFETIME_AFTER_FINALIZATION, MAX_FINALITY_LAG};
-use polkadot_node_subsystem::{
+use kvp_node_primitives::{DISPUTE_CANDIDATE_LIFETIME_AFTER_FINALIZATION, MAX_FINALITY_LAG};
+use kvp_node_subsystem::{
 	messages::ChainApiMessage, overseer, ActivatedLeaf, ActiveLeavesUpdate, ChainApiError,
 	RuntimeApiError, SubsystemSender,
 };
-use polkadot_node_subsystem_util::runtime::{
+use kvp_node_subsystem_util::runtime::{
 	self, get_candidate_events, get_on_chain_votes, get_unapplied_slashes,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	slashing::PendingSlashes, BlockNumber, CandidateEvent, CandidateHash, CandidateReceipt, Hash,
 	ScrapedOnChainVotes, SessionIndex,
 };

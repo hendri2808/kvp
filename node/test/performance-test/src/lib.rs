@@ -1,29 +1,29 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! A Polkadot performance tests utilities.
+//! A kvp performance tests utilities.
 
-use polkadot_erasure_coding::{obtain_chunks, reconstruct};
-use polkadot_primitives::ExecutorParams;
+use kvp_erasure_coding::{obtain_chunks, reconstruct};
+use kvp_primitives::ExecutorParams;
 use std::time::{Duration, Instant};
 
 mod constants;
 
 pub use constants::*;
-pub use polkadot_node_primitives::VALIDATION_CODE_BOMB_LIMIT;
+pub use kvp_node_primitives::VALIDATION_CODE_BOMB_LIMIT;
 
 /// Value used for reference benchmark of erasure-coding.
 pub const ERASURE_CODING_N_VALIDATORS: usize = 1024;
@@ -46,7 +46,7 @@ pub enum PerfCheckError {
 	Wasm(#[from] sc_executor_common::error::WasmError),
 
 	#[error(transparent)]
-	ErasureCoding(#[from] polkadot_erasure_coding::Error),
+	ErasureCoding(#[from] kvp_erasure_coding::Error),
 
 	#[error(transparent)]
 	Io(#[from] std::io::Error),
@@ -65,9 +65,9 @@ pub fn measure_pvf_prepare(wasm_code: &[u8]) -> Result<Duration, PerfCheckError>
 		.or(Err(PerfCheckError::CodeDecompressionFailed))?;
 
 	// Recreate the pipeline from the pvf prepare worker.
-	let blob = polkadot_node_core_pvf_prepare_worker::prevalidate(code.as_ref())
+	let blob = kvp_node_core_pvf_prepare_worker::prevalidate(code.as_ref())
 		.map_err(PerfCheckError::from)?;
-	polkadot_node_core_pvf_prepare_worker::prepare(blob, &ExecutorParams::default())
+	kvp_node_core_pvf_prepare_worker::prepare(blob, &ExecutorParams::default())
 		.map_err(PerfCheckError::from)?;
 
 	Ok(start.elapsed())

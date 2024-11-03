@@ -1,6 +1,6 @@
 # .gitlab-ci.yml
 #
-# polkadot
+# kvp
 #
 # Pipelines can be triggered manually in the web.
 #
@@ -182,7 +182,7 @@ default:
     - test -s ./artifacts/EXTRATAG || exit 1
     - export VERSION="$(cat ./artifacts/VERSION)"
     - EXTRATAG="$(cat ./artifacts/EXTRATAG)"
-    - echo "Polkadot version = ${VERSION} (EXTRATAG = ${EXTRATAG})"
+    - echo "kvp version = ${VERSION} (EXTRATAG = ${EXTRATAG})"
   script:
     - test "$DOCKER_USER" -a "$DOCKER_PASS" ||
       ( echo "no docker credentials provided"; exit 1 )
@@ -243,8 +243,8 @@ deploy-parity-testnet:
   extends:
     - .deploy-testnet-refs
   variables:
-    POLKADOT_CI_COMMIT_NAME: "${CI_COMMIT_REF_NAME}"
-    POLKADOT_CI_COMMIT_REF: "${CI_COMMIT_SHORT_SHA}"
+    kvp_CI_COMMIT_NAME: "${CI_COMMIT_REF_NAME}"
+    kvp_CI_COMMIT_REF: "${CI_COMMIT_SHORT_SHA}"
   allow_failure: false
   trigger: "parity/infrastructure/parity-testnet"
 

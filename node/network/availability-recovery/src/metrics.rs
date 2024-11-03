@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_node_subsystem_util::metrics::{
+use kvp_node_subsystem_util::metrics::{
 	self,
 	prometheus::{self, Counter, CounterVec, Histogram, Opts, PrometheusError, Registry, U64},
 };
@@ -166,7 +166,7 @@ impl metrics::Metrics for Metrics {
 		let metrics = MetricsInner {
 			chunk_requests_issued: prometheus::register(
 				Counter::new(
-					"polkadot_parachain_availability_recovery_chunk_requests_issued",
+					"kvp_parachain_availability_recovery_chunk_requests_issued",
 					"Total number of issued chunk requests.",
 				)?,
 				registry,
@@ -174,7 +174,7 @@ impl metrics::Metrics for Metrics {
 			chunk_requests_finished: prometheus::register(
 				CounterVec::new(
 					Opts::new(
-						"polkadot_parachain_availability_recovery_chunk_requests_finished",
+						"kvp_parachain_availability_recovery_chunk_requests_finished",
 						"Total number of chunk requests finished.",
 					),
 					&["result"],
@@ -183,28 +183,28 @@ impl metrics::Metrics for Metrics {
 			)?,
 			time_chunk_request: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_availability_recovery_time_chunk_request",
+					"kvp_parachain_availability_recovery_time_chunk_request",
 					"Time spent waiting for a response to a chunk request",
 				))?,
 				registry,
 			)?,
 			time_erasure_recovery: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_availability_recovery_time_erasure_recovery",
+					"kvp_parachain_availability_recovery_time_erasure_recovery",
 					"Time spent to recover the erasure code and verify the merkle root by re-encoding as erasure chunks",
 				))?,
 				registry,
 			)?,
 			time_reencode_chunks: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_availability_reencode_chunks",
+					"kvp_parachain_availability_reencode_chunks",
 					"Time spent re-encoding the data as erasure chunks",
 				))?,
 				registry,
 			)?,
 			time_full_recovery: prometheus::register(
 				prometheus::Histogram::with_opts(prometheus::HistogramOpts::new(
-					"polkadot_parachain_availability_recovery_time_total",
+					"kvp_parachain_availability_recovery_time_total",
 					"Time a full recovery process took, either until failure or successful erasure decoding.",
 				))?,
 				registry,
@@ -212,7 +212,7 @@ impl metrics::Metrics for Metrics {
 			full_recoveries_finished: prometheus::register(
 				CounterVec::new(
 					Opts::new(
-						"polkadot_parachain_availability_recovery_recoveries_finished",
+						"kvp_parachain_availability_recovery_recoveries_finished",
 						"Total number of recoveries that finished.",
 					),
 					&["result"],
@@ -221,7 +221,7 @@ impl metrics::Metrics for Metrics {
 			)?,
 			full_recoveries_started: prometheus::register(
 				Counter::new(
-					"polkadot_parachain_availability_recovery_recovieries_started",
+					"kvp_parachain_availability_recovery_recovieries_started",
 					"Total number of started recoveries.",
 				)?,
 				registry,

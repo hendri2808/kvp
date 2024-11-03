@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::collections::HashSet;
 
@@ -22,18 +22,18 @@ use futures::{
 	FutureExt, SinkExt,
 };
 
-use polkadot_erasure_coding::branch_hash;
-use polkadot_node_network_protocol::request_response::{
+use kvp_erasure_coding::branch_hash;
+use kvp_node_network_protocol::request_response::{
 	outgoing::{OutgoingRequest, Recipient, RequestError, Requests},
 	v1::{ChunkFetchingRequest, ChunkFetchingResponse},
 };
-use polkadot_node_primitives::ErasureChunk;
-use polkadot_node_subsystem::{
+use kvp_node_primitives::ErasureChunk;
+use kvp_node_subsystem::{
 	jaeger,
 	messages::{AvailabilityStoreMessage, IfDisconnected, NetworkBridgeTxMessage},
 	overseer,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	AuthorityDiscoveryId, BlakeTwo256, CandidateHash, GroupIndex, Hash, HashT, OccupiedCore,
 	SessionIndex,
 };

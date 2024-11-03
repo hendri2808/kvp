@@ -1,18 +1,18 @@
 // Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Primitives for tracking collations-related data.
 
@@ -20,15 +20,15 @@ use std::collections::{HashSet, VecDeque};
 
 use futures::{future::BoxFuture, stream::FuturesUnordered};
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	request_response::{
 		incoming::OutgoingResponse, v1 as protocol_v1, vstaging as protocol_vstaging,
 		IncomingRequest,
 	},
 	PeerId,
 };
-use polkadot_node_primitives::PoV;
-use polkadot_primitives::{CandidateHash, CandidateReceipt, Hash, Id as ParaId};
+use kvp_node_primitives::PoV;
+use kvp_primitives::{CandidateHash, CandidateReceipt, Hash, Id as ParaId};
 
 /// The status of a collation as seen from the collator.
 pub enum CollationStatus {

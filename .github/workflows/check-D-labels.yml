@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [labeled, opened, synchronize, unlabeled]
     paths:
-      - runtime/polkadot/**
+      - runtime/kvp/**
       - runtime/kusama/**
       - runtime/common/**
       - primitives/src/**
@@ -27,7 +27,7 @@ jobs:
           API_BASE: https://api.github.com/repos
           REPO: ${{ github.repository }}
           RULES_PATH: labels/ruled_labels
-          CHECK_SPECS: specs_polkadot.yaml
+          CHECK_SPECS: specs_kvp.yaml
         run: |
           echo "REPO: ${REPO}"
           echo "GITHUB_PR: ${GITHUB_PR}"

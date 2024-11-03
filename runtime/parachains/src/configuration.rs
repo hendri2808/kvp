@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Configuration manager for the Polkadot runtime parachains logic.
+//! Configuration manager for the kvp runtime parachains logic.
 //!
 //! Configuration can change only at session boundaries and is buffered until then.
 
@@ -22,7 +22,7 @@ use crate::{inclusion::MAX_UPWARD_MESSAGE_SIZE_BOUND, shared};
 use frame_support::{pallet_prelude::*, DefaultNoBound};
 use frame_system::pallet_prelude::*;
 use parity_scale_codec::{Decode, Encode};
-use polkadot_parachain::primitives::{MAX_HORIZONTAL_MESSAGE_NUM, MAX_UPWARD_MESSAGE_NUM};
+use kvp_parachain::primitives::{MAX_HORIZONTAL_MESSAGE_NUM, MAX_UPWARD_MESSAGE_NUM};
 use primitives::{
 	vstaging::AsyncBackingParams, Balance, ExecutorParams, SessionIndex, MAX_CODE_SIZE,
 	MAX_HEAD_DATA_SIZE, MAX_POV_SIZE, ON_DEMAND_DEFAULT_QUEUE_MAX_SIZE,
@@ -122,7 +122,7 @@ pub struct HostConfiguration<BlockNumber> {
 	/// revert [`validation_upgrade_delay`] many blocks back and still find the new code in the
 	/// storage by hash.
 	///
-	/// [#4601]: https://github.com/paritytech/polkadot/issues/4601
+	/// [#4601]: https://github.com/paritytech/kvp/issues/4601
 	pub validation_upgrade_delay: BlockNumber,
 	/// Asynchronous backing parameters.
 	pub async_backing_params: AsyncBackingParams,
@@ -464,16 +464,16 @@ pub mod pallet {
 
 	/// The current storage version.
 	///
-	/// v0-v1: <https://github.com/paritytech/polkadot/pull/3575>
-	/// v1-v2: <https://github.com/paritytech/polkadot/pull/4420>
-	/// v2-v3: <https://github.com/paritytech/polkadot/pull/6091>
-	/// v3-v4: <https://github.com/paritytech/polkadot/pull/6345>
-	/// v4-v5: <https://github.com/paritytech/polkadot/pull/6937>
-	///      + <https://github.com/paritytech/polkadot/pull/6961>
-	///      + <https://github.com/paritytech/polkadot/pull/6934>
-	/// v5-v6: <https://github.com/paritytech/polkadot/pull/6271> (remove UMP dispatch queue)
-	/// v6-v7: <https://github.com/paritytech/polkadot/pull/7396>
-	/// v7-v8: <https://github.com/paritytech/polkadot/pull/6969>
+	/// v0-v1: <https://github.com/paritytech/kvp/pull/3575>
+	/// v1-v2: <https://github.com/paritytech/kvp/pull/4420>
+	/// v2-v3: <https://github.com/paritytech/kvp/pull/6091>
+	/// v3-v4: <https://github.com/paritytech/kvp/pull/6345>
+	/// v4-v5: <https://github.com/paritytech/kvp/pull/6937>
+	///      + <https://github.com/paritytech/kvp/pull/6961>
+	///      + <https://github.com/paritytech/kvp/pull/6934>
+	/// v5-v6: <https://github.com/paritytech/kvp/pull/6271> (remove UMP dispatch queue)
+	/// v6-v7: <https://github.com/paritytech/kvp/pull/7396>
+	/// v7-v8: <https://github.com/paritytech/kvp/pull/6969>
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(8);
 
 	#[pallet::pallet]

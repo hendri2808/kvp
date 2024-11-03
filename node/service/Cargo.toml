@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-service"
+name = "kvp-service"
 rust-version = "1.60"
 version.workspace = true
 authors.workspace = true
@@ -90,61 +90,61 @@ lru = "0.11.0"
 log = "0.4.17"
 is_executable = "1.0.1"
 
-# Polkadot
-polkadot-core-primitives = { path = "../../core-primitives" }
-polkadot-node-core-parachains-inherent = { path = "../core/parachains-inherent" }
-polkadot-overseer = { path = "../overseer" }
-polkadot-parachain = { path = "../../parachain" }
-polkadot-primitives = { path = "../../primitives" }
-polkadot-node-primitives = { path = "../primitives" }
-polkadot-rpc = { path = "../../rpc" }
-polkadot-node-subsystem = {path = "../subsystem" }
-polkadot-node-subsystem-util = { path = "../subsystem-util" }
-polkadot-node-subsystem-types = { path = "../subsystem-types" }
-polkadot-runtime-parachains = { path = "../../runtime/parachains" }
-polkadot-node-network-protocol = { path = "../network/protocol" }
-polkadot-runtime-common = { path = "../../runtime/common" }
+# kvp
+kvp-core-primitives = { path = "../../core-primitives" }
+kvp-node-core-parachains-inherent = { path = "../core/parachains-inherent" }
+kvp-overseer = { path = "../overseer" }
+kvp-parachain = { path = "../../parachain" }
+kvp-primitives = { path = "../../primitives" }
+kvp-node-primitives = { path = "../primitives" }
+kvp-rpc = { path = "../../rpc" }
+kvp-node-subsystem = {path = "../subsystem" }
+kvp-node-subsystem-util = { path = "../subsystem-util" }
+kvp-node-subsystem-types = { path = "../subsystem-types" }
+kvp-runtime-parachains = { path = "../../runtime/parachains" }
+kvp-node-network-protocol = { path = "../network/protocol" }
+kvp-runtime-common = { path = "../../runtime/common" }
 
-# Polkadot Runtime Constants
-polkadot-runtime-constants = { path = "../../runtime/polkadot/constants", optional = true }
+# kvp Runtime Constants
+kvp-runtime-constants = { path = "../../runtime/kvp/constants", optional = true }
 kusama-runtime-constants = { path = "../../runtime/kusama/constants", optional = true }
 rococo-runtime-constants = { path = "../../runtime/rococo/constants", optional = true }
 westend-runtime-constants = { path = "../../runtime/westend/constants", optional = true }
 
-# Polkadot Runtimes
-polkadot-runtime = { path = "../../runtime/polkadot", optional = true }
+# kvp Runtimes
+kvp-runtime = { path = "../../runtime/kvp", optional = true }
 kusama-runtime = { path = "../../runtime/kusama", optional = true }
 westend-runtime = { path = "../../runtime/westend", optional = true }
 rococo-runtime = { path = "../../runtime/rococo", optional = true }
 
-# Polkadot Subsystems
-polkadot-approval-distribution = { path = "../network/approval-distribution", optional = true }
-polkadot-availability-bitfield-distribution = { path = "../network/bitfield-distribution", optional = true }
-polkadot-availability-distribution = { path = "../network/availability-distribution", optional = true }
-polkadot-availability-recovery = { path = "../network/availability-recovery", optional = true }
-polkadot-collator-protocol = { path = "../network/collator-protocol", optional = true }
-polkadot-dispute-distribution = { path = "../network/dispute-distribution", optional = true }
-polkadot-gossip-support = { path = "../network/gossip-support", optional = true }
-polkadot-network-bridge = { path = "../network/bridge", optional = true }
-polkadot-node-collation-generation = { path = "../collation-generation", optional = true }
-polkadot-node-core-approval-voting = { path = "../core/approval-voting", optional = true }
-polkadot-node-core-av-store = { path = "../core/av-store", optional = true }
-polkadot-node-core-backing = { path = "../core/backing", optional = true }
-polkadot-node-core-bitfield-signing = { path = "../core/bitfield-signing", optional = true }
-polkadot-node-core-candidate-validation = { path = "../core/candidate-validation", optional = true }
-polkadot-node-core-chain-api = { path = "../core/chain-api", optional = true }
-polkadot-node-core-chain-selection = { path = "../core/chain-selection", optional = true }
-polkadot-node-core-dispute-coordinator = { path = "../core/dispute-coordinator", optional = true }
-polkadot-node-core-prospective-parachains = { path = "../core/prospective-parachains", optional = true }
-polkadot-node-core-provisioner = { path = "../core/provisioner", optional = true }
-polkadot-node-core-pvf = { path = "../core/pvf", optional = true }
-polkadot-node-core-pvf-checker = { path = "../core/pvf-checker", optional = true }
-polkadot-node-core-runtime-api = { path = "../core/runtime-api", optional = true }
-polkadot-statement-distribution = { path = "../network/statement-distribution", optional = true }
+# kvp Subsystems
+kvp-approval-distribution = { path = "../network/approval-distribution", optional = true }
+kvp-availability-bitfield-distribution = { path = "../network/bitfield-distribution", optional = true }
+kvp-availability-distribution = { path = "../network/availability-distribution", optional = true }
+kvp-availability-recovery = { path = "../network/availability-recovery", optional = true }
+kvp-collator-protocol = { path = "../network/collator-protocol", optional = true }
+kvp-dispute-distribution = { path = "../network/dispute-distribution", optional = true }
+kvp-gossip-support = { path = "../network/gossip-support", optional = true }
+kvp-network-bridge = { path = "../network/bridge", optional = true }
+kvp-node-collation-generation = { path = "../collation-generation", optional = true }
+kvp-node-core-approval-voting = { path = "../core/approval-voting", optional = true }
+kvp-node-core-av-store = { path = "../core/av-store", optional = true }
+kvp-node-core-backing = { path = "../core/backing", optional = true }
+kvp-node-core-bitfield-signing = { path = "../core/bitfield-signing", optional = true }
+kvp-node-core-candidate-validation = { path = "../core/candidate-validation", optional = true }
+kvp-node-core-chain-api = { path = "../core/chain-api", optional = true }
+kvp-node-core-chain-selection = { path = "../core/chain-selection", optional = true }
+kvp-node-core-dispute-coordinator = { path = "../core/dispute-coordinator", optional = true }
+kvp-node-core-prospective-parachains = { path = "../core/prospective-parachains", optional = true }
+kvp-node-core-provisioner = { path = "../core/provisioner", optional = true }
+kvp-node-core-pvf = { path = "../core/pvf", optional = true }
+kvp-node-core-pvf-checker = { path = "../core/pvf-checker", optional = true }
+kvp-node-core-runtime-api = { path = "../core/runtime-api", optional = true }
+kvp-statement-distribution = { path = "../network/statement-distribution", optional = true }
 
 [dev-dependencies]
-polkadot-test-client = { path = "../test/client" }
-polkadot-node-subsystem-test-helpers = { path = "../subsystem-test-helpers" }
+kvp-test-client = { path = "../test/client" }
+kvp-node-subsystem-test-helpers = { path = "../subsystem-test-helpers" }
 env_logger = "0.9.0"
 assert_matches = "1.5.0"
 serial_test = "2.0.0"
@@ -158,43 +158,43 @@ db = [
 ]
 
 full-node = [
-	"polkadot-node-core-av-store",
-	"polkadot-node-core-approval-voting",
-	"polkadot-availability-bitfield-distribution",
-	"polkadot-availability-distribution",
-	"polkadot-availability-recovery",
-	"polkadot-collator-protocol",
-	"polkadot-dispute-distribution",
-	"polkadot-gossip-support",
-	"polkadot-network-bridge",
-	"polkadot-node-collation-generation",
-	"polkadot-node-core-backing",
-	"polkadot-node-core-bitfield-signing",
-	"polkadot-node-core-candidate-validation",
-	"polkadot-node-core-chain-api",
-	"polkadot-node-core-chain-selection",
-	"polkadot-node-core-dispute-coordinator",
-	"polkadot-node-core-prospective-parachains",
-	"polkadot-node-core-provisioner",
-	"polkadot-node-core-runtime-api",
-	"polkadot-statement-distribution",
-	"polkadot-approval-distribution",
-	"polkadot-node-core-pvf",
-	"polkadot-node-core-pvf-checker",
+	"kvp-node-core-av-store",
+	"kvp-node-core-approval-voting",
+	"kvp-availability-bitfield-distribution",
+	"kvp-availability-distribution",
+	"kvp-availability-recovery",
+	"kvp-collator-protocol",
+	"kvp-dispute-distribution",
+	"kvp-gossip-support",
+	"kvp-network-bridge",
+	"kvp-node-collation-generation",
+	"kvp-node-core-backing",
+	"kvp-node-core-bitfield-signing",
+	"kvp-node-core-candidate-validation",
+	"kvp-node-core-chain-api",
+	"kvp-node-core-chain-selection",
+	"kvp-node-core-dispute-coordinator",
+	"kvp-node-core-prospective-parachains",
+	"kvp-node-core-provisioner",
+	"kvp-node-core-runtime-api",
+	"kvp-statement-distribution",
+	"kvp-approval-distribution",
+	"kvp-node-core-pvf",
+	"kvp-node-core-pvf-checker",
 	"kvdb-rocksdb",
 	"parity-db",
 ]
 
-# Configure the native runtimes to use. Polkadot is enabled by default.
+# Configure the native runtimes to use. kvp is enabled by default.
 #
 # Validators require the native runtime currently
-polkadot-native = [ "polkadot-runtime", "polkadot-runtime-constants" ]
+kvp-native = [ "kvp-runtime", "kvp-runtime-constants" ]
 kusama-native = [ "kusama-runtime", "kusama-runtime-constants" ]
 westend-native = [ "westend-runtime", "westend-runtime-constants" ]
 rococo-native = [ "rococo-runtime", "rococo-runtime-constants" ]
 
 runtime-benchmarks = [
-	"polkadot-runtime?/runtime-benchmarks",
+	"kvp-runtime?/runtime-benchmarks",
 	"kusama-runtime?/runtime-benchmarks",
 	"westend-runtime?/runtime-benchmarks",
 	"rococo-runtime?/runtime-benchmarks",
@@ -202,13 +202,13 @@ runtime-benchmarks = [
 	"service/runtime-benchmarks",
 ]
 try-runtime = [
-	"polkadot-runtime?/try-runtime",
+	"kvp-runtime?/try-runtime",
 	"kusama-runtime?/try-runtime",
 	"westend-runtime?/try-runtime",
 	"rococo-runtime?/try-runtime",
 ]
 fast-runtime = [
-	"polkadot-runtime?/fast-runtime",
+	"kvp-runtime?/fast-runtime",
 	"kusama-runtime?/fast-runtime",
 	"westend-runtime?/fast-runtime",
 	"rococo-runtime?/fast-runtime",
@@ -219,8 +219,8 @@ runtime-metrics = [
 	"rococo-runtime?/runtime-metrics",
 	"westend-runtime?/runtime-metrics",
 	"kusama-runtime?/runtime-metrics",
-	"polkadot-runtime?/runtime-metrics",
-	"polkadot-runtime-parachains/runtime-metrics"
+	"kvp-runtime?/runtime-metrics",
+	"kvp-runtime-parachains/runtime-metrics"
 ]
 
-network-protocol-staging = ["polkadot-node-network-protocol/network-protocol-staging"]
+network-protocol-staging = ["kvp-node-network-protocol/network-protocol-staging"]

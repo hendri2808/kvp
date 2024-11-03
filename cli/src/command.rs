@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::cli::{Cli, Subcommand, NODE_VERSION};
 use frame_benchmarking_cli::{BenchmarkCmd, ExtrinsicFactory, SUBSTRATE_REFERENCE_HARDWARE};
@@ -30,7 +30,7 @@ use std::net::ToSocketAddrs;
 
 pub use crate::{error::Error, service::BlockId};
 #[cfg(feature = "hostperfcheck")]
-pub use polkadot_performance_test::PerfCheckError;
+pub use kvp_performance_test::PerfCheckError;
 #[cfg(feature = "pyroscope")]
 use pyroscope_pprofrs::{pprof_backend, PprofConfig};
 
@@ -51,7 +51,7 @@ fn get_exec_name() -> Option<String> {
 
 impl SubstrateCli for Cli {
 	fn impl_name() -> String {
-		"Parity Polkadot".into()
+		"Parity kvp".into()
 	}
 
 	fn impl_version() -> String {
@@ -67,7 +67,7 @@ impl SubstrateCli for Cli {
 	}
 
 	fn support_url() -> String {
-		"https://github.com/paritytech/polkadot/issues/new".into()
+		"https://github.com/paritytech/kvp/issues/new".into()
 	}
 
 	fn copyright_start_year() -> i32 {
@@ -75,17 +75,17 @@ impl SubstrateCli for Cli {
 	}
 
 	fn executable_name() -> String {
-		"polkadot".into()
+		"kvp".into()
 	}
 
 	fn load_spec(&self, id: &str) -> std::result::Result<Box<dyn sc_service::ChainSpec>, String> {
 		let id = if id == "" {
 			let n = get_exec_name().unwrap_or_default();
-			["polkadot", "kusama", "westend", "rococo", "versi"]
+			["kvp", "kusama", "westend", "rococo", "versi"]
 				.iter()
 				.cloned()
 				.find(|&chain| n.starts_with(chain))
-				.unwrap_or("polkadot")
+				.unwrap_or("kvp")
 		} else {
 			id
 		};
@@ -100,11 +100,11 @@ impl SubstrateCli for Cli {
 			#[cfg(not(feature = "kusama-native"))]
 			name if name.starts_with("kusama-") && !name.ends_with(".json") =>
 				Err(format!("`{}` only supported with `kusama-native` feature enabled.", name))?,
-			"polkadot" => Box::new(service::chain_spec::polkadot_config()?),
-			#[cfg(feature = "polkadot-native")]
-			"polkadot-dev" | "dev" => Box::new(service::chain_spec::polkadot_development_config()?),
-			#[cfg(feature = "polkadot-native")]
-			"polkadot-local" => Box::new(service::chain_spec::polkadot_local_testnet_config()?),
+			"kvp" => Box::new(service::chain_spec::kvp_config()?),
+			#[cfg(feature = "kvp-native")]
+			"kvp-dev" | "dev" => Box::new(service::chain_spec::kvp_development_config()?),
+			#[cfg(feature = "kvp-native")]
+			"kvp-local" => Box::new(service::chain_spec::kvp_local_testnet_config()?),
 			"rococo" => Box::new(service::chain_spec::rococo_config()?),
 			#[cfg(feature = "rococo-native")]
 			"rococo-dev" => Box::new(service::chain_spec::rococo_development_config()?),
@@ -145,7 +145,7 @@ impl SubstrateCli for Cli {
 			path => {
 				let path = std::path::PathBuf::from(path);
 
-				let chain_spec = Box::new(service::PolkadotChainSpec::from_json_file(path.clone())?)
+				let chain_spec = Box::new(service::kvpChainSpec::from_json_file(path.clone())?)
 					as Box<dyn service::ChainSpec>;
 
 				// When `force_*` is given or the file name starts with the name of one of the known
@@ -174,7 +174,7 @@ fn set_default_ss58_version(spec: &Box<dyn service::ChainSpec>) {
 	} else if spec.is_westend() {
 		Ss58AddressFormatRegistry::SubstrateAccount
 	} else {
-		Ss58AddressFormatRegistry::PolkadotAccount
+		Ss58AddressFormatRegistry::kvpAccount
 	}
 	.into();
 
@@ -182,7 +182,7 @@ fn set_default_ss58_version(spec: &Box<dyn service::ChainSpec>) {
 }
 
 const DEV_ONLY_ERROR_PATTERN: &'static str =
-	"can only use subcommand with --chain [polkadot-dev, kusama-dev, westend-dev, rococo-dev, wococo-dev], got ";
+	"can only use subcommand with --chain [kvp-dev, kusama-dev, westend-dev, rococo-dev, wococo-dev], got ";
 
 fn ensure_dev(spec: &Box<dyn service::ChainSpec>) -> std::result::Result<(), String> {
 	if spec.is_dev() {
@@ -240,9 +240,9 @@ where
 		.map_err(Error::from)?;
 	let chain_spec = &runner.config().chain_spec;
 
-	// By default, enable BEEFY on all networks except Polkadot (for now), unless
+	// By default, enable BEEFY on all networks except kvp (for now), unless
 	// explicitly disabled through CLI.
-	let mut enable_beefy = !chain_spec.is_polkadot() && !cli.run.no_beefy;
+	let mut enable_beefy = !chain_spec.is_kvp() && !cli.run.no_beefy;
 	// BEEFY doesn't (yet) support warp sync:
 	// Until we implement https://github.com/paritytech/substrate/issues/14756
 	// - disallow warp sync for validators,
@@ -330,7 +330,7 @@ where
 	})
 }
 
-/// Parses polkadot specific CLI arguments and run the service.
+/// Parses kvp specific CLI arguments and run the service.
 pub fn run() -> Result<()> {
 	let cli: Cli = Cli::from_args();
 
@@ -344,7 +344,7 @@ pub fn run() -> Result<()> {
 		// The pyroscope agent requires a `http://` prefix, so we just do that.
 		let agent = pyro::PyroscopeAgent::builder(
 			"http://".to_owned() + address.to_string().as_str(),
-			"polkadot".to_owned(),
+			"kvp".to_owned(),
 		)
 		.backend(pprof_backend(PprofConfig::new().sample_rate(113)))
 		.build()?;
@@ -363,7 +363,7 @@ pub fn run() -> Result<()> {
 			cli,
 			service::RealOverseerGen,
 			None,
-			polkadot_node_metrics::logger_hook(),
+			kvp_node_metrics::logger_hook(),
 		),
 		Some(Subcommand::BuildSpec(cmd)) => {
 			let runner = cli.create_runner(cmd)?;
@@ -389,7 +389,7 @@ pub fn run() -> Result<()> {
 
 			Ok(runner.async_run(|mut config| {
 				let (client, _, _, task_manager) =
-					service::new_chain_ops(&mut config, None).map_err(Error::PolkadotService)?;
+					service::new_chain_ops(&mut config, None).map_err(Error::kvpService)?;
 				Ok((cmd.run(client, config.database).map_err(Error::SubstrateCli), task_manager))
 			})?)
 		},
@@ -531,7 +531,7 @@ pub fn run() -> Result<()> {
 					cmd.run(&config, SUBSTRATE_REFERENCE_HARDWARE.clone())
 						.map_err(Error::SubstrateCli)
 				}),
-				// NOTE: this allows the Polkadot client to leniently implement
+				// NOTE: this allows the kvp client to leniently implement
 				// new benchmark commands.
 				#[allow(unreachable_patterns)]
 				_ => Err(Error::CommandNotImplemented),

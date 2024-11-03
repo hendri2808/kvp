@@ -1,25 +1,25 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot Jaeger span definitions.
+//! kvp Jaeger span definitions.
 //!
 //! ```rust
-//! # use polkadot_primitives::{CandidateHash, Hash};
+//! # use kvp_primitives::{CandidateHash, Hash};
 //! # fn main() {
-//! use polkadot_node_jaeger as jaeger;
+//! use kvp_node_jaeger as jaeger;
 //!
 //! let relay_parent = Hash::default();
 //! let candidate = CandidateHash::default();
@@ -51,9 +51,9 @@
 //! over the course of a function, for this purpose use the non-consuming
 //! `fn` variants, i.e.
 //! ```rust
-//! # use polkadot_primitives::{CandidateHash, Hash};
+//! # use kvp_primitives::{CandidateHash, Hash};
 //! # fn main() {
-//! # use polkadot_node_jaeger as jaeger;
+//! # use kvp_node_jaeger as jaeger;
 //!
 //! # let relay_parent = Hash::default();
 //! # let candidate = CandidateHash::default();
@@ -84,8 +84,8 @@
 //! ```
 
 use parity_scale_codec::Encode;
-use polkadot_node_primitives::PoV;
-use polkadot_primitives::{BlakeTwo256, CandidateHash, Hash, HashT, Id as ParaId, ValidatorIndex};
+use kvp_node_primitives::PoV;
+use kvp_primitives::{BlakeTwo256, CandidateHash, Hash, HashT, Id as ParaId, ValidatorIndex};
 use sc_network::PeerId;
 
 use std::{fmt, sync::Arc};
@@ -153,8 +153,8 @@ pub enum Stage {
 	// Expand as needed, numbers should be ascending according to the stage
 	// through the inclusion pipeline, or according to the descriptions
 	// in [the path of a para chain block]
-	// (https://polkadot.network/the-path-of-a-parachain-block/)
-	// see [issue](https://github.com/paritytech/polkadot/issues/2389)
+	// (https://kvp.network/the-path-of-a-parachain-block/)
+	// see [issue](https://github.com/paritytech/kvp/issues/2389)
 }
 
 /// A wrapper type for a span.

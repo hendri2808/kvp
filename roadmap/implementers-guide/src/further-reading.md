@@ -1,4 +1,4 @@
 # Further Reading
 
-- Polkadot Wiki on Consensus: <https://wiki.polkadot.network/docs/learn-consensus>
-- Polkadot Spec: <https://github.com/w3f/polkadot-spec>
+- kvp Wiki on Consensus: <https://wiki.kvp.network/docs/learn-consensus>
+- kvp Spec: <https://github.com/w3f/kvp-spec>

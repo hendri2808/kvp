@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 //
 
 //! Mock data and utility functions for unit tests in this subsystem.
@@ -26,18 +26,18 @@ use std::{
 use async_trait::async_trait;
 use lazy_static::lazy_static;
 
-use polkadot_node_network_protocol::{authority_discovery::AuthorityDiscovery, PeerId};
+use kvp_node_network_protocol::{authority_discovery::AuthorityDiscovery, PeerId};
 use sc_keystore::LocalKeystore;
 use sp_application_crypto::AppCrypto;
 use sp_keyring::Sr25519Keyring;
 use sp_keystore::{Keystore, KeystorePtr};
 
-use polkadot_node_primitives::{DisputeMessage, SignedDisputeStatement};
-use polkadot_primitives::{
+use kvp_node_primitives::{DisputeMessage, SignedDisputeStatement};
+use kvp_primitives::{
 	AuthorityDiscoveryId, CandidateHash, CandidateReceipt, Hash, SessionIndex, SessionInfo,
 	ValidatorId, ValidatorIndex,
 };
-use polkadot_primitives_test_helpers::dummy_candidate_descriptor;
+use kvp_primitives_test_helpers::dummy_candidate_descriptor;
 
 use crate::LOG_TARGET;
 
@@ -207,15 +207,15 @@ impl MockAuthorityDiscovery {
 impl AuthorityDiscovery for MockAuthorityDiscovery {
 	async fn get_addresses_by_authority_id(
 		&mut self,
-		_authority: polkadot_primitives::AuthorityDiscoveryId,
+		_authority: kvp_primitives::AuthorityDiscoveryId,
 	) -> Option<HashSet<sc_network::Multiaddr>> {
 		panic!("Not implemented");
 	}
 
 	async fn get_authority_ids_by_peer_id(
 		&mut self,
-		peer_id: polkadot_node_network_protocol::PeerId,
-	) -> Option<HashSet<polkadot_primitives::AuthorityDiscoveryId>> {
+		peer_id: kvp_node_network_protocol::PeerId,
+	) -> Option<HashSet<kvp_primitives::AuthorityDiscoveryId>> {
 		for (a, p) in self.peer_ids.iter() {
 			if p == &peer_id {
 				let result =

@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The paras pallet acts as the main registry of paras.
 //!
@@ -384,7 +384,7 @@ pub(crate) enum PvfCheckCause<BlockNumber> {
 		/// instead of its relay parent -- in order to keep PVF available in case of chain
 		/// reversions.
 		///
-		/// See https://github.com/paritytech/polkadot/issues/4601 for detailed explanation.
+		/// See https://github.com/paritytech/kvp/issues/4601 for detailed explanation.
 		included_at: BlockNumber,
 	},
 }
@@ -1682,7 +1682,7 @@ impl<T: Config> Pallet<T> {
 		//
 		// This is only an intermediate solution and should be fixed in foreseable future.
 		//
-		// [soaking issue]: https://github.com/paritytech/polkadot/issues/3918
+		// [soaking issue]: https://github.com/paritytech/kvp/issues/3918
 		let validation_code =
 			mem::replace(&mut genesis_data.validation_code, ValidationCode(Vec::new()));
 		UpcomingParasGenesis::<T>::insert(&id, genesis_data);

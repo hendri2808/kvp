@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-subsystem"
+name = "kvp-node-subsystem"
 description = "Subsystem traits and message definitions and the generated overseer"
 version.workspace = true
 authors.workspace = true
@@ -7,6 +7,6 @@ edition.workspace = true
 license.workspace = true
 
 [dependencies]
-polkadot-overseer = { path = "../overseer" }
-polkadot-node-subsystem-types = { path = "../subsystem-types" }
-polkadot-node-jaeger = { path = "../jaeger" }
+kvp-overseer = { path = "../overseer" }
+kvp-node-subsystem-types = { path = "../subsystem-types" }
+kvp-node-jaeger = { path = "../jaeger" }

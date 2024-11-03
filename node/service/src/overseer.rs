@@ -1,48 +1,48 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::{AuthorityDiscoveryApi, Block, Error, Hash, IsParachainNode, Registry};
-use polkadot_node_subsystem_types::DefaultSubsystemClient;
+use kvp_node_subsystem_types::DefaultSubsystemClient;
 use sc_transaction_pool_api::OffchainTransactionPoolFactory;
 use sp_core::traits::SpawnNamed;
 
 use lru::LruCache;
-use polkadot_availability_distribution::IncomingRequestReceivers;
-use polkadot_node_core_approval_voting::Config as ApprovalVotingConfig;
-use polkadot_node_core_av_store::Config as AvailabilityConfig;
-use polkadot_node_core_candidate_validation::Config as CandidateValidationConfig;
-use polkadot_node_core_chain_selection::Config as ChainSelectionConfig;
-use polkadot_node_core_dispute_coordinator::Config as DisputeCoordinatorConfig;
-use polkadot_node_network_protocol::{
+use kvp_availability_distribution::IncomingRequestReceivers;
+use kvp_node_core_approval_voting::Config as ApprovalVotingConfig;
+use kvp_node_core_av_store::Config as AvailabilityConfig;
+use kvp_node_core_candidate_validation::Config as CandidateValidationConfig;
+use kvp_node_core_chain_selection::Config as ChainSelectionConfig;
+use kvp_node_core_dispute_coordinator::Config as DisputeCoordinatorConfig;
+use kvp_node_network_protocol::{
 	peer_set::PeerSetProtocolNames,
 	request_response::{
 		v1 as request_v1, vstaging as request_vstaging, IncomingRequestReceiver, ReqProtocolNames,
 	},
 };
 #[cfg(any(feature = "malus", test))]
-pub use polkadot_overseer::{
+pub use kvp_overseer::{
 	dummy::{dummy_overseer_builder, DummySubsystem},
 	HeadSupportsParachains,
 };
-use polkadot_overseer::{
+use kvp_overseer::{
 	metrics::Metrics as OverseerMetrics, InitializedOverseerBuilder, MetricsTrait, Overseer,
 	OverseerConnector, OverseerHandle, SpawnGlue,
 };
 
-use polkadot_primitives::runtime_api::ParachainHost;
+use kvp_primitives::runtime_api::ParachainHost;
 use sc_authority_discovery::Service as AuthorityDiscoveryService;
 use sc_client_api::AuxStore;
 use sc_keystore::LocalKeystore;
@@ -52,32 +52,32 @@ use sp_blockchain::HeaderBackend;
 use sp_consensus_babe::BabeApi;
 use std::sync::Arc;
 
-pub use polkadot_approval_distribution::ApprovalDistribution as ApprovalDistributionSubsystem;
-pub use polkadot_availability_bitfield_distribution::BitfieldDistribution as BitfieldDistributionSubsystem;
-pub use polkadot_availability_distribution::AvailabilityDistributionSubsystem;
-pub use polkadot_availability_recovery::AvailabilityRecoverySubsystem;
-pub use polkadot_collator_protocol::{CollatorProtocolSubsystem, ProtocolSide};
-pub use polkadot_dispute_distribution::DisputeDistributionSubsystem;
-pub use polkadot_gossip_support::GossipSupport as GossipSupportSubsystem;
-pub use polkadot_network_bridge::{
+pub use kvp_approval_distribution::ApprovalDistribution as ApprovalDistributionSubsystem;
+pub use kvp_availability_bitfield_distribution::BitfieldDistribution as BitfieldDistributionSubsystem;
+pub use kvp_availability_distribution::AvailabilityDistributionSubsystem;
+pub use kvp_availability_recovery::AvailabilityRecoverySubsystem;
+pub use kvp_collator_protocol::{CollatorProtocolSubsystem, ProtocolSide};
+pub use kvp_dispute_distribution::DisputeDistributionSubsystem;
+pub use kvp_gossip_support::GossipSupport as GossipSupportSubsystem;
+pub use kvp_network_bridge::{
 	Metrics as NetworkBridgeMetrics, NetworkBridgeRx as NetworkBridgeRxSubsystem,
 	NetworkBridgeTx as NetworkBridgeTxSubsystem,
 };
-pub use polkadot_node_collation_generation::CollationGenerationSubsystem;
-pub use polkadot_node_core_approval_voting::ApprovalVotingSubsystem;
-pub use polkadot_node_core_av_store::AvailabilityStoreSubsystem;
-pub use polkadot_node_core_backing::CandidateBackingSubsystem;
-pub use polkadot_node_core_bitfield_signing::BitfieldSigningSubsystem;
-pub use polkadot_node_core_candidate_validation::CandidateValidationSubsystem;
-pub use polkadot_node_core_chain_api::ChainApiSubsystem;
-pub use polkadot_node_core_chain_selection::ChainSelectionSubsystem;
-pub use polkadot_node_core_dispute_coordinator::DisputeCoordinatorSubsystem;
-pub use polkadot_node_core_prospective_parachains::ProspectiveParachainsSubsystem;
-pub use polkadot_node_core_provisioner::ProvisionerSubsystem;
-pub use polkadot_node_core_pvf_checker::PvfCheckerSubsystem;
-pub use polkadot_node_core_runtime_api::RuntimeApiSubsystem;
-use polkadot_node_subsystem_util::rand::{self, SeedableRng};
-pub use polkadot_statement_distribution::StatementDistributionSubsystem;
+pub use kvp_node_collation_generation::CollationGenerationSubsystem;
+pub use kvp_node_core_approval_voting::ApprovalVotingSubsystem;
+pub use kvp_node_core_av_store::AvailabilityStoreSubsystem;
+pub use kvp_node_core_backing::CandidateBackingSubsystem;
+pub use kvp_node_core_bitfield_signing::BitfieldSigningSubsystem;
+pub use kvp_node_core_candidate_validation::CandidateValidationSubsystem;
+pub use kvp_node_core_chain_api::ChainApiSubsystem;
+pub use kvp_node_core_chain_selection::ChainSelectionSubsystem;
+pub use kvp_node_core_dispute_coordinator::DisputeCoordinatorSubsystem;
+pub use kvp_node_core_prospective_parachains::ProspectiveParachainsSubsystem;
+pub use kvp_node_core_provisioner::ProvisionerSubsystem;
+pub use kvp_node_core_pvf_checker::PvfCheckerSubsystem;
+pub use kvp_node_core_runtime_api::RuntimeApiSubsystem;
+use kvp_node_subsystem_util::rand::{self, SeedableRng};
+pub use kvp_statement_distribution::StatementDistributionSubsystem;
 
 /// Arguments passed for overseer construction.
 pub struct OverseerGenArgs<'a, Spawner, RuntimeClient>
@@ -91,7 +91,7 @@ where
 	/// Runtime client generic, providing the `ProvieRuntimeApi` trait besides others.
 	pub runtime_client: Arc<RuntimeClient>,
 	/// The underlying key value store for the parachains.
-	pub parachains_db: Arc<dyn polkadot_node_subsystem_util::database::Database>,
+	pub parachains_db: Arc<dyn kvp_node_subsystem_util::database::Database>,
 	/// Underlying network service implementation.
 	pub network_service: Arc<sc_network::NetworkService<Block, Hash>>,
 	/// Underlying syncing service implementation.
@@ -218,7 +218,7 @@ where
 	RuntimeClient::Api: ParachainHost<Block> + BabeApi<Block> + AuthorityDiscoveryApi<Block>,
 	Spawner: 'static + SpawnNamed + Clone + Unpin,
 {
-	use polkadot_node_subsystem_util::metrics::Metrics;
+	use kvp_node_subsystem_util::metrics::Metrics;
 
 	let metrics = <OverseerMetrics as MetricsTrait>::register(registry)?;
 
@@ -382,7 +382,7 @@ pub trait OverseerGen {
 	// as consequence make this rather annoying to implement and use.
 }
 
-use polkadot_overseer::KNOWN_LEAVES_CACHE_SIZE;
+use kvp_overseer::KNOWN_LEAVES_CACHE_SIZE;
 
 /// The regular set of subsystems.
 pub struct RealOverseerGen;

@@ -14,10 +14,10 @@
 // You should have received a copy of the GNU General Public License
 // along with Substrate.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot runtime metrics integration test.
+//! kvp runtime metrics integration test.
 
 use hyper::{Client, Uri};
-use polkadot_test_service::{node_config, run_validator_node, test_prometheus_config};
+use kvp_test_service::{node_config, run_validator_node, test_prometheus_config};
 use primitives::metric_definitions::PARACHAIN_INHERENT_DATA_BITFIELDS_PROCESSED;
 use sp_keyring::AccountKeyring::*;
 use std::collections::HashMap;

@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-primitives"
+name = "kvp-primitives"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -25,8 +25,8 @@ sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "maste
 sp-staking = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false, features = ["serde"] }
 sp-std = { package = "sp-std", git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
 
-polkadot-core-primitives = { path = "../core-primitives", default-features = false }
-polkadot-parachain = { path = "../parachain", default-features = false }
+kvp-core-primitives = { path = "../core-primitives", default-features = false }
+kvp-parachain = { path = "../parachain", default-features = false }
 
 [features]
 default = ["std"]
@@ -46,8 +46,8 @@ std = [
 	"sp-arithmetic/std",
 	"runtime_primitives/std",
 	"serde/std",
-	"polkadot-parachain/std",
-	"polkadot-core-primitives/std",
+	"kvp-parachain/std",
+	"kvp-core-primitives/std",
 	"bitvec/std",
 ]
 runtime-benchmarks = []

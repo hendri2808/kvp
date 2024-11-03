@@ -70,7 +70,7 @@ You can then either delete manually the `<chain>.json` file or `export NO_CACHE=
 ## Full PR list
 
 At times, it may be useful to get a raw full PR list.
-In order to produce this list, you first need to fetch the the latest `context.json` from the `release-notes-context` artifacts you can find [here](https://github.com/paritytech/polkadot/actions/workflows/release-30_publish-draft-release.yml). You may store this `context.json` under `scripts/ci/changelog`.
+In order to produce this list, you first need to fetch the the latest `context.json` from the `release-notes-context` artifacts you can find [here](https://github.com/paritytech/kvp/actions/workflows/release-30_publish-draft-release.yml). You may store this `context.json` under `scripts/ci/changelog`.
 
 Using the `full_pr_list.md.tera` template, you can generate the `raw` list of changes:
 

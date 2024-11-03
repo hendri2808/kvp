@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Implements a `AvailabilityStoreSubsystem`.
 
@@ -35,19 +35,19 @@ use futures::{
 };
 use futures_timer::Delay;
 use parity_scale_codec::{Decode, Encode, Error as CodecError, Input};
-use polkadot_node_subsystem_util::database::{DBTransaction, Database};
+use kvp_node_subsystem_util::database::{DBTransaction, Database};
 use sp_consensus::SyncOracle;
 
 use bitvec::{order::Lsb0 as BitOrderLsb0, vec::BitVec};
-use polkadot_node_jaeger as jaeger;
-use polkadot_node_primitives::{AvailableData, ErasureChunk};
-use polkadot_node_subsystem::{
+use kvp_node_jaeger as jaeger;
+use kvp_node_primitives::{AvailableData, ErasureChunk};
+use kvp_node_subsystem::{
 	errors::{ChainApiError, RuntimeApiError},
 	messages::{AvailabilityStoreMessage, ChainApiMessage, StoreAvailableDataError},
 	overseer, ActiveLeavesUpdate, FromOrchestra, OverseerSignal, SpawnedSubsystem, SubsystemError,
 };
-use polkadot_node_subsystem_util as util;
-use polkadot_primitives::{
+use kvp_node_subsystem_util as util;
+use kvp_primitives::{
 	BlockNumber, CandidateEvent, CandidateHash, CandidateReceipt, Hash, Header, ValidatorIndex,
 };
 
@@ -651,7 +651,7 @@ async fn run_iteration<Context>(
 
 // Start prune-all on a separate thread, so that in the case when the operation takes
 // longer than expected we don't keep the whole subsystem blocked.
-// See: https://github.com/paritytech/polkadot/issues/7237 for more details.
+// See: https://github.com/paritytech/kvp/issues/7237 for more details.
 #[overseer::contextbounds(AvailabilityStore, prefix = self::overseer)]
 async fn start_prune_all<Context>(
 	ctx: &mut Context,

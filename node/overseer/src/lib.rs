@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! # Overseer
 //!
@@ -72,10 +72,10 @@ use futures::{channel::oneshot, future::BoxFuture, select, Future, FutureExt, St
 use lru::LruCache;
 
 use client::{BlockImportNotification, BlockchainEvents, FinalityNotification};
-use polkadot_primitives::{Block, BlockNumber, Hash};
+use kvp_primitives::{Block, BlockNumber, Hash};
 
 use self::messages::{BitfieldSigningMessage, PvfCheckerMessage};
-use polkadot_node_subsystem_types::messages::{
+use kvp_node_subsystem_types::messages::{
 	ApprovalDistributionMessage, ApprovalVotingMessage, AvailabilityDistributionMessage,
 	AvailabilityRecoveryMessage, AvailabilityStoreMessage, BitfieldDistributionMessage,
 	CandidateBackingMessage, CandidateValidationMessage, ChainApiMessage, ChainSelectionMessage,
@@ -85,7 +85,7 @@ use polkadot_node_subsystem_types::messages::{
 	StatementDistributionMessage,
 };
 
-pub use polkadot_node_subsystem_types::{
+pub use kvp_node_subsystem_types::{
 	errors::{SubsystemError, SubsystemResult},
 	jaeger, ActivatedLeaf, ActiveLeavesUpdate, LeafStatus, OverseerSignal,
 	RuntimeApiSubsystemClient,
@@ -98,7 +98,7 @@ pub use self::metrics::Metrics as OverseerMetrics;
 pub mod dummy;
 pub use self::dummy::DummySubsystem;
 
-pub use polkadot_node_metrics::{
+pub use kvp_node_metrics::{
 	metrics::{prometheus, Metrics as MetricsTrait},
 	Metronome,
 };
@@ -369,8 +369,8 @@ pub async fn forward_events<P: BlockchainEvents<Block>>(client: Arc<P>, mut hand
 /// # use std::time::Duration;
 /// # use futures::{executor, pin_mut, select, FutureExt};
 /// # use futures_timer::Delay;
-/// # use polkadot_primitives::Hash;
-/// # use polkadot_overseer::{
+/// # use kvp_primitives::Hash;
+/// # use kvp_overseer::{
 /// # 	self as overseer,
 /// #   OverseerSignal,
 /// # 	SubsystemSender as _,
@@ -384,7 +384,7 @@ pub async fn forward_events<P: BlockchainEvents<Block>>(client: Arc<P>, mut hand
 /// # 		SpawnedSubsystem,
 /// # 	},
 /// # };
-/// # use polkadot_node_subsystem_types::messages::{
+/// # use kvp_node_subsystem_types::messages::{
 /// # 	CandidateValidationMessage, CandidateBackingMessage,
 /// # 	NetworkBridgeTxMessage,
 /// # };
@@ -585,7 +585,7 @@ pub struct Overseer<SupportsParachains> {
 
 	#[subsystem(GossipSupportMessage, sends: [
 		NetworkBridgeTxMessage,
-		NetworkBridgeRxMessage, // TODO <https://github.com/paritytech/polkadot/issues/5626>
+		NetworkBridgeRxMessage, // TODO <https://github.com/paritytech/kvp/issues/5626>
 		RuntimeApiMessage,
 		ChainSelectionMessage,
 	])]

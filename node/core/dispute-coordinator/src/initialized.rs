@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Dispute coordinator subsystem in initialized state (after first active leaf is received).
 
@@ -28,21 +28,21 @@ use futures::{
 
 use sc_keystore::LocalKeystore;
 
-use polkadot_node_primitives::{
+use kvp_node_primitives::{
 	disputes::ValidCandidateVotes, CandidateVotes, DisputeStatus, SignedDisputeStatement,
 	Timestamp, DISPUTE_WINDOW,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	messages::{
 		ApprovalVotingMessage, BlockDescription, ChainSelectionMessage, DisputeCoordinatorMessage,
 		DisputeDistributionMessage, ImportStatementsResult,
 	},
 	overseer, ActivatedLeaf, ActiveLeavesUpdate, FromOrchestra, OverseerSignal, RuntimeApiError,
 };
-use polkadot_node_subsystem_util::runtime::{
+use kvp_node_subsystem_util::runtime::{
 	self, key_ownership_proof, submit_report_dispute_lost, RuntimeInfo,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	vstaging, BlockNumber, CandidateHash, CandidateReceipt, CompactStatement, DisputeStatement,
 	DisputeStatementSet, Hash, ScrapedOnChainVotes, SessionIndex, ValidDisputeStatementKind,
 	ValidatorId, ValidatorIndex,
@@ -107,7 +107,7 @@ pub(crate) struct Initialized {
 	/// blocks) we will be too slow importing all votes from unfinalized chains on startup
 	/// (dispute-coordinator gets killed because of unresponsiveness).
 	///
-	/// https://github.com/paritytech/polkadot/issues/6912
+	/// https://github.com/paritytech/kvp/issues/6912
 	///
 	/// To resolve this, we limit the amount of votes imported at once to
 	/// `CHAIN_IMPORT_MAX_BATCH_SIZE` and put the rest here for later processing.
@@ -750,7 +750,7 @@ impl Initialized {
 				.handle_import_statements(
 					ctx,
 					overlay_db,
-					// TODO <https://github.com/paritytech/polkadot/issues/4011>
+					// TODO <https://github.com/paritytech/kvp/issues/4011>
 					MaybeCandidateReceipt::AssumeBackingVotePresent(candidate_hash),
 					session,
 					statements,

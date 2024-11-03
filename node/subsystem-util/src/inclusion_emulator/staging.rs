@@ -1,12 +1,12 @@
 // Copyright 2017-2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -114,7 +114,7 @@
 //! That means a few blocks of execution time lost, which is not a big deal for code upgrades
 //! in practice at most once every few weeks.
 
-use polkadot_primitives::vstaging::{
+use kvp_primitives::vstaging::{
 	BlockNumber, CandidateCommitments, CollatorId, CollatorSignature,
 	Constraints as PrimitiveConstraints, Hash, HeadData, Id as ParaId, PersistedValidationData,
 	UpgradeRestriction, ValidationCodeHash,
@@ -826,7 +826,7 @@ fn validate_against_constraints(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use polkadot_primitives::vstaging::{
+	use kvp_primitives::vstaging::{
 		CollatorPair, HorizontalMessages, OutboundHrmpMessage, ValidationCode,
 	};
 	use sp_application_crypto::Pair;

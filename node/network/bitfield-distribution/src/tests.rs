@@ -1,38 +1,38 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use assert_matches::assert_matches;
 use bitvec::bitvec;
 use futures::executor;
 use maplit::hashmap;
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	grid_topology::{SessionBoundGridTopologyStorage, SessionGridTopology, TopologyPeerInfo},
 	our_view,
 	peer_set::ValidationVersion,
 	view, ObservedRole,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	jaeger,
 	jaeger::{PerLeafSpan, Span},
 	messages::ReportPeerMessage,
 };
-use polkadot_node_subsystem_test_helpers::make_subsystem_context;
-use polkadot_node_subsystem_util::TimeoutExt;
-use polkadot_primitives::{AvailabilityBitfield, Signed, ValidatorIndex};
+use kvp_node_subsystem_test_helpers::make_subsystem_context;
+use kvp_node_subsystem_util::TimeoutExt;
+use kvp_primitives::{AvailabilityBitfield, Signed, ValidatorIndex};
 use rand_chacha::ChaCha12Rng;
 use sp_application_crypto::AppCrypto;
 use sp_authority_discovery::AuthorityPair as AuthorityDiscoveryPair;
@@ -440,7 +440,7 @@ fn receive_duplicate_messages() {
 
 #[test]
 fn delay_reputation_change() {
-	use polkadot_node_subsystem_util::reputation::add_reputation;
+	use kvp_node_subsystem_util::reputation::add_reputation;
 
 	let _ = env_logger::builder()
 		.filter(None, log::LevelFilter::Trace)

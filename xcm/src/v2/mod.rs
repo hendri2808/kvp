@@ -17,7 +17,7 @@
 //! # XCM Version 2
 //! Version 2 of the Cross-Consensus Message format data structures. The comprehensive list of
 //! changes can be found in
-//! [this PR description](https://github.com/paritytech/polkadot/pull/3629#issue-968428279).
+//! [this PR description](https://github.com/paritytech/kvp/pull/3629#issue-968428279).
 //!
 //! ## Changes to be aware of
 //! The biggest change here is the restructuring of XCM messages: instead of having `Order` and
@@ -110,8 +110,8 @@ pub enum NetworkId {
 	Any,
 	/// Some named network.
 	Named(WeakBoundedVec<u8, ConstU32<32>>),
-	/// The Polkadot Relay chain
-	Polkadot,
+	/// The kvp Relay chain
+	kvp,
 	/// Kusama.
 	Kusama,
 }
@@ -131,7 +131,7 @@ impl TryFrom<NewNetworkId> for NetworkId {
 	fn try_from(new: NewNetworkId) -> result::Result<NetworkId, ()> {
 		use NewNetworkId::*;
 		match new {
-			Polkadot => Ok(NetworkId::Polkadot),
+			kvp => Ok(NetworkId::kvp),
 			Kusama => Ok(NetworkId::Kusama),
 			_ => Err(()),
 		}
@@ -148,23 +148,23 @@ pub enum BodyId {
 	Named(WeakBoundedVec<u8, ConstU32<32>>),
 	/// An indexed body.
 	Index(#[codec(compact)] u32),
-	/// The unambiguous executive body (for Polkadot, this would be the Polkadot council).
+	/// The unambiguous executive body (for kvp, this would be the kvp council).
 	Executive,
-	/// The unambiguous technical body (for Polkadot, this would be the Technical Committee).
+	/// The unambiguous technical body (for kvp, this would be the Technical Committee).
 	Technical,
-	/// The unambiguous legislative body (for Polkadot, this could be considered the opinion of a
+	/// The unambiguous legislative body (for kvp, this could be considered the opinion of a
 	/// majority of lock-voters).
 	Legislative,
-	/// The unambiguous judicial body (this doesn't exist on Polkadot, but if it were to get a
+	/// The unambiguous judicial body (this doesn't exist on kvp, but if it were to get a
 	/// "grand oracle", it may be considered as that).
 	Judicial,
-	/// The unambiguous defense body (for Polkadot, an opinion on the topic given via a public
+	/// The unambiguous defense body (for kvp, an opinion on the topic given via a public
 	/// referendum on the `staking_admin` track).
 	Defense,
-	/// The unambiguous administration body (for Polkadot, an opinion on the topic given via a
+	/// The unambiguous administration body (for kvp, an opinion on the topic given via a
 	/// public referendum on the `general_admin` track).
 	Administration,
-	/// The unambiguous treasury body (for Polkadot, an opinion on the topic given via a public
+	/// The unambiguous treasury body (for kvp, an opinion on the topic given via a public
 	/// referendum on the `treasurer` track).
 	Treasury,
 }

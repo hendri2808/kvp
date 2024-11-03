@@ -9,8 +9,8 @@ ENGINE=${ENGINE:-podman}
 $ENGINE run --user root --rm -i \
   -v "$TMP:/export" \
   --entrypoint /bin/bash \
-  parity/polkadot -c \
-  'cp "$(which polkadot)" /export'
+  parity/kvp -c \
+  'cp "$(which kvp)" /export'
 
 echo "Checking binaries we got:"
 tree $TMP

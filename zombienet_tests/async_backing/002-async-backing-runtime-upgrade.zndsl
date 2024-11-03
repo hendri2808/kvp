@@ -27,8 +27,8 @@ alice: parachain 100 block height is at least 10 within 250 seconds
 bob: parachain 100 block height is at least 10 within 250 seconds
 
 # Runtime upgrade (according to previous runtime tests, avg. is 30s)
-alice: run ../misc/0002-download-polkadot-from-pr.sh with "{{POLKADOT_PR_BIN_URL}}" within 40 seconds
-bob: run ../misc/0002-download-polkadot-from-pr.sh with "{{POLKADOT_PR_BIN_URL}}" within 40 seconds
+alice: run ../misc/0002-download-kvp-from-pr.sh with "{{kvp_PR_BIN_URL}}" within 40 seconds
+bob: run ../misc/0002-download-kvp-from-pr.sh with "{{kvp_PR_BIN_URL}}" within 40 seconds
 
 # Bootstrap the runtime upgrade
 sleep 30 seconds

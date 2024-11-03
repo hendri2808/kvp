@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Substrate.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_core_primitives::{Block, Hash, Header};
+use kvp_core_primitives::{Block, Hash, Header};
 use std::{
 	io::{BufRead, BufReader, Read},
 	process::{Child, ExitStatus},
@@ -74,7 +74,7 @@ async fn wait_n_finalized_blocks_from(n: usize, url: &str) {
 /// Read the WS address from the output.
 ///
 /// This is hack to get the actual binded sockaddr because
-/// polkadot assigns a random port if the specified port was already binded.
+/// kvp assigns a random port if the specified port was already binded.
 ///
 /// You must call
 /// `Command::new("cmd").stdout(process::Stdio::piped()).stderr(process::Stdio::piped())`

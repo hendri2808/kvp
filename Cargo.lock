@@ -2561,9 +2561,9 @@ name = "erasure_coding_fuzzer"
 version = "0.9.43"
 dependencies = [
  "honggfuzz",
- "polkadot-erasure-coding",
- "polkadot-node-primitives",
- "polkadot-primitives",
+ "kvp-erasure-coding",
+ "kvp-node-primitives",
+ "kvp-primitives",
 ]
 
 [[package]]
@@ -4359,9 +4359,9 @@ dependencies = [
  "pallet-xcm",
  "pallet-xcm-benchmarks",
  "parity-scale-codec",
- "polkadot-primitives",
- "polkadot-runtime-common",
- "polkadot-runtime-parachains",
+ "kvp-primitives",
+ "kvp-runtime-common",
+ "kvp-runtime-parachains",
  "rustc-hex",
  "scale-info",
  "separator",
@@ -4406,8 +4406,8 @@ name = "kusama-runtime-constants"
 version = "0.9.43"
 dependencies = [
  "frame-support",
- "polkadot-primitives",
- "polkadot-runtime-common",
+ "kvp-primitives",
+ "kvp-runtime-common",
  "smallvec",
  "sp-core",
  "sp-runtime",
@@ -6938,8 +6938,8 @@ dependencies = [
  "log",
  "pallet-balances",
  "parity-scale-codec",
- "polkadot-parachain",
- "polkadot-runtime-parachains",
+ "kvp-parachain",
+ "kvp-runtime-parachains",
  "scale-info",
  "serde",
  "sp-core",
@@ -6963,8 +6963,8 @@ dependencies = [
  "pallet-balances",
  "pallet-xcm",
  "parity-scale-codec",
- "polkadot-primitives",
- "polkadot-runtime-common",
+ "kvp-primitives",
+ "kvp-runtime-common",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -7274,19 +7274,19 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e3d7ddaed09e0eb771a79ab0fd64609ba0afb0a8366421957936ad14cbd13630"
 
 [[package]]
-name = "polkadot"
+name = "kvp"
 version = "0.9.43"
 dependencies = [
  "assert_cmd",
  "color-eyre",
  "nix 0.26.2",
- "polkadot-cli",
- "polkadot-core-primitives",
- "polkadot-node-core-pvf",
- "polkadot-node-core-pvf-common",
- "polkadot-node-core-pvf-execute-worker",
- "polkadot-node-core-pvf-prepare-worker",
- "polkadot-overseer",
+ "kvp-cli",
+ "kvp-core-primitives",
+ "kvp-node-core-pvf",
+ "kvp-node-core-pvf-common",
+ "kvp-node-core-pvf-execute-worker",
+ "kvp-node-core-pvf-prepare-worker",
+ "kvp-overseer",
  "substrate-build-script-utils",
  "substrate-rpc-client",
  "tempfile",
@@ -7295,7 +7295,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-approval-distribution"
+name = "kvp-approval-distribution"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7303,15 +7303,15 @@ dependencies = [
  "futures",
  "futures-timer",
  "log",
- "polkadot-node-jaeger",
- "polkadot-node-metrics",
- "polkadot-node-network-protocol",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-jaeger",
+ "kvp-node-metrics",
+ "kvp-node-network-protocol",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "rand 0.8.5",
  "rand_chacha 0.3.1",
  "rand_core 0.5.1",
@@ -7322,7 +7322,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-availability-bitfield-distribution"
+name = "kvp-availability-bitfield-distribution"
 version = "0.9.43"
 dependencies = [
  "always-assert",
@@ -7333,11 +7333,11 @@ dependencies = [
  "futures-timer",
  "log",
  "maplit",
- "polkadot-node-network-protocol",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
+ "kvp-node-network-protocol",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
  "rand 0.8.5",
  "rand_chacha 0.3.1",
  "sp-application-crypto",
@@ -7349,7 +7349,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-availability-distribution"
+name = "kvp-availability-distribution"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7359,14 +7359,14 @@ dependencies = [
  "futures-timer",
  "lru 0.11.0",
  "parity-scale-codec",
- "polkadot-erasure-coding",
- "polkadot-node-network-protocol",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-erasure-coding",
+ "kvp-node-network-protocol",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "rand 0.8.5",
  "sc-network",
  "sp-core",
@@ -7378,7 +7378,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-availability-recovery"
+name = "kvp-availability-recovery"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7389,14 +7389,14 @@ dependencies = [
  "log",
  "lru 0.11.0",
  "parity-scale-codec",
- "polkadot-erasure-coding",
- "polkadot-node-network-protocol",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-erasure-coding",
+ "kvp-node-network-protocol",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "rand 0.8.5",
  "sc-network",
  "sp-application-crypto",
@@ -7407,16 +7407,16 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-cli"
+name = "kvp-cli"
 version = "0.9.43"
 dependencies = [
  "clap 4.3.19",
  "frame-benchmarking-cli",
  "futures",
  "log",
- "polkadot-node-metrics",
- "polkadot-performance-test",
- "polkadot-service",
+ "kvp-node-metrics",
+ "kvp-performance-test",
+ "kvp-service",
  "pyroscope",
  "pyroscope_pprofrs",
  "sc-cli",
@@ -7435,7 +7435,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-collator-protocol"
+name = "kvp-collator-protocol"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7446,13 +7446,13 @@ dependencies = [
  "futures-timer",
  "log",
  "parity-scale-codec",
- "polkadot-node-network-protocol",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-network-protocol",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sc-keystore",
  "sc-network",
  "sp-core",
@@ -7465,7 +7465,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-core-primitives"
+name = "kvp-core-primitives"
 version = "0.9.43"
 dependencies = [
  "parity-scale-codec",
@@ -7476,7 +7476,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-dispute-distribution"
+name = "kvp-dispute-distribution"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7490,14 +7490,14 @@ dependencies = [
  "lazy_static",
  "lru 0.11.0",
  "parity-scale-codec",
- "polkadot-erasure-coding",
- "polkadot-node-network-protocol",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-erasure-coding",
+ "kvp-node-network-protocol",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sc-keystore",
  "sc-network",
  "sp-application-crypto",
@@ -7509,13 +7509,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-erasure-coding"
+name = "kvp-erasure-coding"
 version = "0.9.43"
 dependencies = [
  "criterion",
  "parity-scale-codec",
- "polkadot-node-primitives",
- "polkadot-primitives",
+ "kvp-node-primitives",
+ "kvp-primitives",
  "reed-solomon-novelpoly",
  "sp-core",
  "sp-trie",
@@ -7523,7 +7523,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-gossip-support"
+name = "kvp-gossip-support"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7531,11 +7531,11 @@ dependencies = [
  "futures",
  "futures-timer",
  "lazy_static",
- "polkadot-node-network-protocol",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
+ "kvp-node-network-protocol",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
  "rand 0.8.5",
  "rand_chacha 0.3.1",
  "sc-network",
@@ -7551,7 +7551,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-network-bridge"
+name = "kvp-network-bridge"
 version = "0.9.43"
 dependencies = [
  "always-assert",
@@ -7563,14 +7563,14 @@ dependencies = [
  "futures-timer",
  "parity-scale-codec",
  "parking_lot 0.12.1",
- "polkadot-node-metrics",
- "polkadot-node-network-protocol",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-overseer",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-metrics",
+ "kvp-node-network-protocol",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-overseer",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sc-network",
  "sp-consensus",
  "sp-core",
@@ -7580,19 +7580,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-collation-generation"
+name = "kvp-node-collation-generation"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
  "futures",
  "parity-scale-codec",
- "polkadot-erasure-coding",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-erasure-coding",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sp-core",
  "sp-keyring",
  "sp-maybe-compressed-blob",
@@ -7601,7 +7601,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-approval-voting"
+name = "kvp-node-core-approval-voting"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7616,14 +7616,14 @@ dependencies = [
  "merlin 2.0.1",
  "parity-scale-codec",
  "parking_lot 0.12.1",
- "polkadot-node-jaeger",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-overseer",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-jaeger",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-overseer",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "rand_core 0.5.1",
  "sc-keystore",
  "schnorrkel",
@@ -7640,7 +7640,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-av-store"
+name = "kvp-node-core-av-store"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7653,15 +7653,15 @@ dependencies = [
  "log",
  "parity-scale-codec",
  "parking_lot 0.12.1",
- "polkadot-erasure-coding",
- "polkadot-node-jaeger",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-overseer",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-erasure-coding",
+ "kvp-node-jaeger",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-overseer",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sp-consensus",
  "sp-core",
  "sp-keyring",
@@ -7670,21 +7670,21 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-backing"
+name = "kvp-node-core-backing"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
  "bitvec",
  "fatality",
  "futures",
- "polkadot-erasure-coding",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
- "polkadot-statement-table",
+ "kvp-erasure-coding",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
+ "kvp-statement-table",
  "sc-keystore",
  "sp-application-crypto",
  "sp-core",
@@ -7696,15 +7696,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-bitfield-signing"
+name = "kvp-node-core-bitfield-signing"
 version = "0.9.43"
 dependencies = [
  "futures",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sp-keystore",
  "thiserror",
  "tracing-gum",
@@ -7712,7 +7712,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-candidate-validation"
+name = "kvp-node-core-candidate-validation"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7720,16 +7720,16 @@ dependencies = [
  "futures",
  "futures-timer",
  "parity-scale-codec",
- "polkadot-node-core-pvf",
- "polkadot-node-metrics",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-overseer",
- "polkadot-parachain",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-core-pvf",
+ "kvp-node-metrics",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-overseer",
+ "kvp-parachain",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sp-core",
  "sp-keyring",
  "sp-maybe-compressed-blob",
@@ -7737,17 +7737,17 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-chain-api"
+name = "kvp-node-core-chain-api"
 version = "0.9.43"
 dependencies = [
  "futures",
  "maplit",
  "parity-scale-codec",
- "polkadot-node-metrics",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-primitives",
+ "kvp-node-metrics",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-primitives",
  "sc-client-api",
  "sc-consensus-babe",
  "sp-blockchain",
@@ -7756,7 +7756,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-chain-selection"
+name = "kvp-node-core-chain-selection"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7766,18 +7766,18 @@ dependencies = [
  "kvdb-memorydb",
  "parity-scale-codec",
  "parking_lot 0.12.1",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
  "sp-core",
  "thiserror",
  "tracing-gum",
 ]
 
 [[package]]
-name = "polkadot-node-core-dispute-coordinator"
+name = "kvp-node-core-dispute-coordinator"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7788,12 +7788,12 @@ dependencies = [
  "kvdb-memorydb",
  "lru 0.11.0",
  "parity-scale-codec",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sc-keystore",
  "sp-application-crypto",
  "sp-core",
@@ -7805,15 +7805,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-parachains-inherent"
+name = "kvp-node-core-parachains-inherent"
 version = "0.9.43"
 dependencies = [
  "async-trait",
  "futures",
  "futures-timer",
- "polkadot-node-subsystem",
- "polkadot-overseer",
- "polkadot-primitives",
+ "kvp-node-subsystem",
+ "kvp-overseer",
+ "kvp-primitives",
  "sp-blockchain",
  "sp-inherents",
  "thiserror",
@@ -7821,7 +7821,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-prospective-parachains"
+name = "kvp-node-core-prospective-parachains"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7829,13 +7829,13 @@ dependencies = [
  "fatality",
  "futures",
  "parity-scale-codec",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-types",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-types",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sc-keystore",
  "sp-application-crypto",
  "sp-core",
@@ -7846,19 +7846,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-provisioner"
+name = "kvp-node-core-provisioner"
 version = "0.9.43"
 dependencies = [
  "bitvec",
  "fatality",
  "futures",
  "futures-timer",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sp-application-crypto",
  "sp-keystore",
  "thiserror",
@@ -7866,7 +7866,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-pvf"
+name = "kvp-node-core-pvf"
 version = "0.9.43"
 dependencies = [
  "always-assert",
@@ -7877,15 +7877,15 @@ dependencies = [
  "libc",
  "parity-scale-codec",
  "pin-project",
- "polkadot-core-primitives",
- "polkadot-node-core-pvf",
- "polkadot-node-core-pvf-common",
- "polkadot-node-core-pvf-execute-worker",
- "polkadot-node-core-pvf-prepare-worker",
- "polkadot-node-metrics",
- "polkadot-node-primitives",
- "polkadot-parachain",
- "polkadot-primitives",
+ "kvp-core-primitives",
+ "kvp-node-core-pvf",
+ "kvp-node-core-pvf-common",
+ "kvp-node-core-pvf-execute-worker",
+ "kvp-node-core-pvf-prepare-worker",
+ "kvp-node-metrics",
+ "kvp-node-primitives",
+ "kvp-parachain",
+ "kvp-primitives",
  "rand 0.8.5",
  "slotmap",
  "sp-core",
@@ -7901,18 +7901,18 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-pvf-checker"
+name = "kvp-node-core-pvf-checker"
 version = "0.9.43"
 dependencies = [
  "futures",
  "futures-timer",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-util",
- "polkadot-overseer",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-util",
+ "kvp-overseer",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sc-keystore",
  "sp-application-crypto",
  "sp-core",
@@ -7924,7 +7924,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-pvf-common"
+name = "kvp-node-core-pvf-common"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -7933,8 +7933,8 @@ dependencies = [
  "landlock",
  "libc",
  "parity-scale-codec",
- "polkadot-parachain",
- "polkadot-primitives",
+ "kvp-parachain",
+ "kvp-primitives",
  "sc-executor",
  "sc-executor-common",
  "sc-executor-wasmtime",
@@ -7948,15 +7948,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-pvf-execute-worker"
+name = "kvp-node-core-pvf-execute-worker"
 version = "0.9.43"
 dependencies = [
  "cpu-time",
  "futures",
  "parity-scale-codec",
- "polkadot-node-core-pvf-common",
- "polkadot-parachain",
- "polkadot-primitives",
+ "kvp-node-core-pvf-common",
+ "kvp-parachain",
+ "kvp-primitives",
  "rayon",
  "sp-core",
  "sp-maybe-compressed-blob",
@@ -7967,15 +7967,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-pvf-prepare-worker"
+name = "kvp-node-core-pvf-prepare-worker"
 version = "0.9.43"
 dependencies = [
  "futures",
  "libc",
  "parity-scale-codec",
- "polkadot-node-core-pvf-common",
- "polkadot-parachain",
- "polkadot-primitives",
+ "kvp-node-core-pvf-common",
+ "kvp-parachain",
+ "kvp-primitives",
  "rayon",
  "sc-executor",
  "sc-executor-common",
@@ -7989,19 +7989,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-core-runtime-api"
+name = "kvp-node-core-runtime-api"
 version = "0.9.43"
 dependencies = [
  "async-trait",
  "futures",
  "lru 0.11.0",
- "polkadot-node-metrics",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-types",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-metrics",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-types",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "sp-api",
  "sp-consensus-babe",
  "sp-core",
@@ -8010,7 +8010,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-jaeger"
+name = "kvp-node-jaeger"
 version = "0.9.43"
 dependencies = [
  "lazy_static",
@@ -8018,8 +8018,8 @@ dependencies = [
  "mick-jaeger",
  "parity-scale-codec",
  "parking_lot 0.12.1",
- "polkadot-node-primitives",
- "polkadot-primitives",
+ "kvp-node-primitives",
+ "kvp-primitives",
  "sc-network",
  "sp-core",
  "thiserror",
@@ -8027,7 +8027,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-metrics"
+name = "kvp-node-metrics"
 version = "0.9.43"
 dependencies = [
  "assert_cmd",
@@ -8037,8 +8037,8 @@ dependencies = [
  "hyper",
  "log",
  "parity-scale-codec",
- "polkadot-primitives",
- "polkadot-test-service",
+ "kvp-primitives",
+ "kvp-test-service",
  "prioritized-metered-channel",
  "prometheus-parse",
  "sc-cli",
@@ -8053,7 +8053,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-network-protocol"
+name = "kvp-node-network-protocol"
 version = "0.9.43"
 dependencies = [
  "async-channel",
@@ -8064,9 +8064,9 @@ dependencies = [
  "futures",
  "hex",
  "parity-scale-codec",
- "polkadot-node-jaeger",
- "polkadot-node-primitives",
- "polkadot-primitives",
+ "kvp-node-jaeger",
+ "kvp-node-primitives",
+ "kvp-primitives",
  "rand 0.8.5",
  "rand_chacha 0.3.1",
  "sc-authority-discovery",
@@ -8077,15 +8077,15 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-primitives"
+name = "kvp-node-primitives"
 version = "0.9.43"
 dependencies = [
  "bounded-vec",
  "futures",
  "parity-scale-codec",
- "polkadot-erasure-coding",
- "polkadot-parachain",
- "polkadot-primitives",
+ "kvp-erasure-coding",
+ "kvp-parachain",
+ "kvp-primitives",
  "schnorrkel",
  "serde",
  "sp-application-crypto",
@@ -8099,25 +8099,25 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-subsystem"
+name = "kvp-node-subsystem"
 version = "0.9.43"
 dependencies = [
- "polkadot-node-jaeger",
- "polkadot-node-subsystem-types",
- "polkadot-overseer",
+ "kvp-node-jaeger",
+ "kvp-node-subsystem-types",
+ "kvp-overseer",
 ]
 
 [[package]]
-name = "polkadot-node-subsystem-test-helpers"
+name = "kvp-node-subsystem-test-helpers"
 version = "0.9.43"
 dependencies = [
  "async-trait",
  "futures",
  "parking_lot 0.12.1",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-util",
- "polkadot-overseer",
- "polkadot-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-util",
+ "kvp-overseer",
+ "kvp-primitives",
  "sc-keystore",
  "sp-application-crypto",
  "sp-core",
@@ -8126,18 +8126,18 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-subsystem-types"
+name = "kvp-node-subsystem-types"
 version = "0.9.43"
 dependencies = [
  "async-trait",
  "derive_more",
  "futures",
  "orchestra",
- "polkadot-node-jaeger",
- "polkadot-node-network-protocol",
- "polkadot-node-primitives",
- "polkadot-primitives",
- "polkadot-statement-table",
+ "kvp-node-jaeger",
+ "kvp-node-network-protocol",
+ "kvp-node-primitives",
+ "kvp-primitives",
+ "kvp-statement-table",
  "sc-network",
  "sc-transaction-pool-api",
  "smallvec",
@@ -8149,7 +8149,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-node-subsystem-util"
+name = "kvp-node-subsystem-util"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -8170,15 +8170,15 @@ dependencies = [
  "parity-scale-codec",
  "parking_lot 0.11.2",
  "pin-project",
- "polkadot-node-jaeger",
- "polkadot-node-metrics",
- "polkadot-node-network-protocol",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-overseer",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-jaeger",
+ "kvp-node-metrics",
+ "kvp-node-network-protocol",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-overseer",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "prioritized-metered-channel",
  "rand 0.8.5",
  "sp-application-crypto",
@@ -8190,7 +8190,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-overseer"
+name = "kvp-overseer"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -8201,12 +8201,12 @@ dependencies = [
  "lru 0.11.0",
  "orchestra",
  "parking_lot 0.12.1",
- "polkadot-node-metrics",
- "polkadot-node-network-protocol",
- "polkadot-node-primitives",
- "polkadot-node-subsystem-types",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-metrics",
+ "kvp-node-network-protocol",
+ "kvp-node-primitives",
+ "kvp-node-subsystem-types",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "prioritized-metered-channel",
  "sc-client-api",
  "sp-api",
@@ -8216,14 +8216,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-parachain"
+name = "kvp-parachain"
 version = "0.9.43"
 dependencies = [
  "bounded-collections",
  "derive_more",
  "frame-support",
  "parity-scale-codec",
- "polkadot-core-primitives",
+ "kvp-core-primitives",
  "scale-info",
  "serde",
  "sp-core",
@@ -8232,16 +8232,16 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-performance-test"
+name = "kvp-performance-test"
 version = "0.9.43"
 dependencies = [
  "env_logger 0.9.3",
  "kusama-runtime",
  "log",
- "polkadot-erasure-coding",
- "polkadot-node-core-pvf-prepare-worker",
- "polkadot-node-primitives",
- "polkadot-primitives",
+ "kvp-erasure-coding",
+ "kvp-node-core-pvf-prepare-worker",
+ "kvp-node-primitives",
+ "kvp-primitives",
  "quote",
  "sc-executor-common",
  "sp-maybe-compressed-blob",
@@ -8249,14 +8249,14 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-primitives"
+name = "kvp-primitives"
 version = "0.9.43"
 dependencies = [
  "bitvec",
  "hex-literal 0.4.1",
  "parity-scale-codec",
- "polkadot-core-primitives",
- "polkadot-parachain",
+ "kvp-core-primitives",
+ "kvp-parachain",
  "scale-info",
  "serde",
  "sp-api",
@@ -8274,10 +8274,10 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-primitives-test-helpers"
+name = "kvp-primitives-test-helpers"
 version = "0.9.43"
 dependencies = [
- "polkadot-primitives",
+ "kvp-primitives",
  "rand 0.8.5",
  "sp-application-crypto",
  "sp-core",
@@ -8286,13 +8286,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-rpc"
+name = "kvp-rpc"
 version = "0.9.43"
 dependencies = [
  "jsonrpsee",
  "mmr-rpc",
  "pallet-transaction-payment-rpc",
- "polkadot-primitives",
+ "kvp-primitives",
  "sc-chain-spec",
  "sc-client-api",
  "sc-consensus-babe",
@@ -8317,7 +8317,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-runtime"
+name = "kvp-runtime"
 version = "0.9.43"
 dependencies = [
  "bitvec",
@@ -8378,10 +8378,10 @@ dependencies = [
  "pallet-xcm",
  "pallet-xcm-benchmarks",
  "parity-scale-codec",
- "polkadot-primitives",
- "polkadot-runtime-common",
- "polkadot-runtime-constants",
- "polkadot-runtime-parachains",
+ "kvp-primitives",
+ "kvp-runtime-common",
+ "kvp-runtime-constants",
+ "kvp-runtime-parachains",
  "rustc-hex",
  "scale-info",
  "separator",
@@ -8421,7 +8421,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-runtime-common"
+name = "kvp-runtime-common"
 version = "0.9.43"
 dependencies = [
  "bitvec",
@@ -8447,9 +8447,9 @@ dependencies = [
  "pallet-treasury",
  "pallet-vesting",
  "parity-scale-codec",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
- "polkadot-runtime-parachains",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
+ "kvp-runtime-parachains",
  "rustc-hex",
  "scale-info",
  "serde",
@@ -8472,12 +8472,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-runtime-constants"
+name = "kvp-runtime-constants"
 version = "0.9.43"
 dependencies = [
  "frame-support",
- "polkadot-primitives",
- "polkadot-runtime-common",
+ "kvp-primitives",
+ "kvp-runtime-common",
  "smallvec",
  "sp-core",
  "sp-runtime",
@@ -8485,19 +8485,19 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-runtime-metrics"
+name = "kvp-runtime-metrics"
 version = "0.9.43"
 dependencies = [
  "bs58",
  "frame-benchmarking",
  "parity-scale-codec",
- "polkadot-primitives",
+ "kvp-primitives",
  "sp-std",
  "sp-tracing",
 ]
 
 [[package]]
-name = "polkadot-runtime-parachains"
+name = "kvp-runtime-parachains"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -8521,10 +8521,10 @@ dependencies = [
  "pallet-timestamp",
  "pallet-vesting",
  "parity-scale-codec",
- "polkadot-parachain",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
- "polkadot-runtime-metrics",
+ "kvp-parachain",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
+ "kvp-runtime-metrics",
  "rand 0.8.5",
  "rand_chacha 0.3.1",
  "rustc-hex",
@@ -8551,7 +8551,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-service"
+name = "kvp-service"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -8579,46 +8579,46 @@ dependencies = [
  "pallet-transaction-payment-rpc-runtime-api",
  "parity-db",
  "parity-scale-codec",
- "polkadot-approval-distribution",
- "polkadot-availability-bitfield-distribution",
- "polkadot-availability-distribution",
- "polkadot-availability-recovery",
- "polkadot-collator-protocol",
- "polkadot-core-primitives",
- "polkadot-dispute-distribution",
- "polkadot-gossip-support",
- "polkadot-network-bridge",
- "polkadot-node-collation-generation",
- "polkadot-node-core-approval-voting",
- "polkadot-node-core-av-store",
- "polkadot-node-core-backing",
- "polkadot-node-core-bitfield-signing",
- "polkadot-node-core-candidate-validation",
- "polkadot-node-core-chain-api",
- "polkadot-node-core-chain-selection",
- "polkadot-node-core-dispute-coordinator",
- "polkadot-node-core-parachains-inherent",
- "polkadot-node-core-prospective-parachains",
- "polkadot-node-core-provisioner",
- "polkadot-node-core-pvf",
- "polkadot-node-core-pvf-checker",
- "polkadot-node-core-runtime-api",
- "polkadot-node-network-protocol",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-types",
- "polkadot-node-subsystem-util",
- "polkadot-overseer",
- "polkadot-parachain",
- "polkadot-primitives",
- "polkadot-rpc",
- "polkadot-runtime",
- "polkadot-runtime-common",
- "polkadot-runtime-constants",
- "polkadot-runtime-parachains",
- "polkadot-statement-distribution",
- "polkadot-test-client",
+ "kvp-approval-distribution",
+ "kvp-availability-bitfield-distribution",
+ "kvp-availability-distribution",
+ "kvp-availability-recovery",
+ "kvp-collator-protocol",
+ "kvp-core-primitives",
+ "kvp-dispute-distribution",
+ "kvp-gossip-support",
+ "kvp-network-bridge",
+ "kvp-node-collation-generation",
+ "kvp-node-core-approval-voting",
+ "kvp-node-core-av-store",
+ "kvp-node-core-backing",
+ "kvp-node-core-bitfield-signing",
+ "kvp-node-core-candidate-validation",
+ "kvp-node-core-chain-api",
+ "kvp-node-core-chain-selection",
+ "kvp-node-core-dispute-coordinator",
+ "kvp-node-core-parachains-inherent",
+ "kvp-node-core-prospective-parachains",
+ "kvp-node-core-provisioner",
+ "kvp-node-core-pvf",
+ "kvp-node-core-pvf-checker",
+ "kvp-node-core-runtime-api",
+ "kvp-node-network-protocol",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-types",
+ "kvp-node-subsystem-util",
+ "kvp-overseer",
+ "kvp-parachain",
+ "kvp-primitives",
+ "kvp-rpc",
+ "kvp-runtime",
+ "kvp-runtime-common",
+ "kvp-runtime-constants",
+ "kvp-runtime-parachains",
+ "kvp-statement-distribution",
+ "kvp-test-client",
  "rococo-runtime",
  "rococo-runtime-constants",
  "sc-authority-discovery",
@@ -8679,7 +8679,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-statement-distribution"
+name = "kvp-statement-distribution"
 version = "0.9.43"
 dependencies = [
  "arrayvec 0.7.4",
@@ -8691,14 +8691,14 @@ dependencies = [
  "futures-timer",
  "indexmap 1.9.3",
  "parity-scale-codec",
- "polkadot-node-network-protocol",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-types",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
- "polkadot-primitives-test-helpers",
+ "kvp-node-network-protocol",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-types",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
+ "kvp-primitives-test-helpers",
  "rand_chacha 0.3.1",
  "sc-keystore",
  "sc-network",
@@ -8714,25 +8714,25 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-statement-table"
+name = "kvp-statement-table"
 version = "0.9.43"
 dependencies = [
  "parity-scale-codec",
- "polkadot-primitives",
+ "kvp-primitives",
  "sp-core",
 ]
 
 [[package]]
-name = "polkadot-test-client"
+name = "kvp-test-client"
 version = "0.9.43"
 dependencies = [
  "frame-benchmarking",
  "futures",
  "parity-scale-codec",
- "polkadot-node-subsystem",
- "polkadot-primitives",
- "polkadot-test-runtime",
- "polkadot-test-service",
+ "kvp-node-subsystem",
+ "kvp-primitives",
+ "kvp-test-runtime",
+ "kvp-test-service",
  "sc-block-builder",
  "sc-consensus",
  "sc-offchain",
@@ -8752,7 +8752,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-test-malus"
+name = "kvp-test-malus"
 version = "0.9.43"
 dependencies = [
  "assert_matches",
@@ -8761,20 +8761,20 @@ dependencies = [
  "color-eyre",
  "futures",
  "futures-timer",
- "polkadot-cli",
- "polkadot-erasure-coding",
- "polkadot-node-core-backing",
- "polkadot-node-core-candidate-validation",
- "polkadot-node-core-dispute-coordinator",
- "polkadot-node-core-pvf-common",
- "polkadot-node-core-pvf-execute-worker",
- "polkadot-node-core-pvf-prepare-worker",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-node-subsystem-test-helpers",
- "polkadot-node-subsystem-types",
- "polkadot-node-subsystem-util",
- "polkadot-primitives",
+ "kvp-cli",
+ "kvp-erasure-coding",
+ "kvp-node-core-backing",
+ "kvp-node-core-candidate-validation",
+ "kvp-node-core-dispute-coordinator",
+ "kvp-node-core-pvf-common",
+ "kvp-node-core-pvf-execute-worker",
+ "kvp-node-core-pvf-prepare-worker",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-node-subsystem-test-helpers",
+ "kvp-node-subsystem-types",
+ "kvp-node-subsystem-util",
+ "kvp-primitives",
  "rand 0.8.5",
  "sp-core",
  "sp-keystore",
@@ -8783,7 +8783,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-test-runtime"
+name = "kvp-test-runtime"
 version = "0.9.43"
 dependencies = [
  "bitvec",
@@ -8811,10 +8811,10 @@ dependencies = [
  "pallet-vesting",
  "pallet-xcm",
  "parity-scale-codec",
- "polkadot-parachain",
- "polkadot-primitives",
- "polkadot-runtime-common",
- "polkadot-runtime-parachains",
+ "kvp-parachain",
+ "kvp-primitives",
+ "kvp-runtime-common",
+ "kvp-runtime-parachains",
  "rustc-hex",
  "scale-info",
  "serde",
@@ -8848,7 +8848,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-test-service"
+name = "kvp-test-service"
 version = "0.9.43"
 dependencies = [
  "frame-system",
@@ -8857,16 +8857,16 @@ dependencies = [
  "pallet-balances",
  "pallet-staking",
  "pallet-transaction-payment",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-overseer",
- "polkadot-parachain",
- "polkadot-primitives",
- "polkadot-rpc",
- "polkadot-runtime-common",
- "polkadot-runtime-parachains",
- "polkadot-service",
- "polkadot-test-runtime",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-overseer",
+ "kvp-parachain",
+ "kvp-primitives",
+ "kvp-rpc",
+ "kvp-runtime-common",
+ "kvp-runtime-parachains",
+ "kvp-service",
+ "kvp-test-runtime",
  "rand 0.8.5",
  "sc-authority-discovery",
  "sc-chain-spec",
@@ -8900,13 +8900,13 @@ dependencies = [
 ]
 
 [[package]]
-name = "polkadot-voter-bags"
+name = "kvp-voter-bags"
 version = "0.9.43"
 dependencies = [
  "clap 4.3.19",
  "generate-bags",
  "kusama-runtime",
- "polkadot-runtime",
+ "kvp-runtime",
  "sp-io",
  "westend-runtime",
 ]
@@ -9630,8 +9630,8 @@ dependencies = [
  "kusama-runtime-constants",
  "log",
  "pallet-bags-list-remote-tests",
- "polkadot-runtime",
- "polkadot-runtime-constants",
+ "kvp-runtime",
+ "kvp-runtime-constants",
  "sp-core",
  "sp-tracing",
  "tokio",
@@ -9810,10 +9810,10 @@ dependencies = [
  "pallet-xcm",
  "pallet-xcm-benchmarks",
  "parity-scale-codec",
- "polkadot-parachain",
- "polkadot-primitives",
- "polkadot-runtime-common",
- "polkadot-runtime-parachains",
+ "kvp-parachain",
+ "kvp-primitives",
+ "kvp-runtime-common",
+ "kvp-runtime-parachains",
  "rococo-runtime-constants",
  "scale-info",
  "separator",
@@ -9855,8 +9855,8 @@ name = "rococo-runtime-constants"
 version = "0.9.43"
 dependencies = [
  "frame-support",
- "polkadot-primitives",
- "polkadot-runtime-common",
+ "kvp-primitives",
+ "kvp-runtime-common",
  "smallvec",
  "sp-core",
  "sp-runtime",
@@ -12548,9 +12548,9 @@ dependencies = [
  "pallet-transaction-payment",
  "parity-scale-codec",
  "paste",
- "polkadot-core-primitives",
- "polkadot-runtime",
- "polkadot-runtime-common",
+ "kvp-core-primitives",
+ "kvp-runtime",
+ "kvp-runtime-common",
  "sc-transaction-pool-api",
  "serde",
  "serde_json",
@@ -13033,7 +13033,7 @@ version = "0.9.43"
 dependencies = [
  "dlmalloc",
  "parity-scale-codec",
- "polkadot-parachain",
+ "kvp-parachain",
  "sp-io",
  "sp-std",
  "substrate-wasm-builder",
@@ -13049,14 +13049,14 @@ dependencies = [
  "futures-timer",
  "log",
  "parity-scale-codec",
- "polkadot-cli",
- "polkadot-node-core-pvf",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-parachain",
- "polkadot-primitives",
- "polkadot-service",
- "polkadot-test-service",
+ "kvp-cli",
+ "kvp-node-core-pvf",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-parachain",
+ "kvp-primitives",
+ "kvp-service",
+ "kvp-test-service",
  "sc-cli",
  "sc-service",
  "sp-core",
@@ -13082,7 +13082,7 @@ dependencies = [
  "dlmalloc",
  "log",
  "parity-scale-codec",
- "polkadot-parachain",
+ "kvp-parachain",
  "sp-io",
  "sp-std",
  "substrate-wasm-builder",
@@ -13098,14 +13098,14 @@ dependencies = [
  "futures-timer",
  "log",
  "parity-scale-codec",
- "polkadot-cli",
- "polkadot-node-core-pvf",
- "polkadot-node-primitives",
- "polkadot-node-subsystem",
- "polkadot-parachain",
- "polkadot-primitives",
- "polkadot-service",
- "polkadot-test-service",
+ "kvp-cli",
+ "kvp-node-core-pvf",
+ "kvp-node-primitives",
+ "kvp-node-subsystem",
+ "kvp-parachain",
+ "kvp-primitives",
+ "kvp-service",
+ "kvp-test-service",
  "sc-cli",
  "sc-service",
  "sp-core",
@@ -13132,8 +13132,8 @@ name = "test-runtime-constants"
 version = "0.9.43"
 dependencies = [
  "frame-support",
- "polkadot-primitives",
- "polkadot-runtime-common",
+ "kvp-primitives",
+ "kvp-runtime-common",
  "smallvec",
  "sp-core",
  "sp-runtime",
@@ -13562,8 +13562,8 @@ name = "tracing-gum"
 version = "0.9.43"
 dependencies = [
  "coarsetime",
- "polkadot-node-jaeger",
- "polkadot-primitives",
+ "kvp-node-jaeger",
+ "kvp-primitives",
  "tracing",
  "tracing-gum-proc-macro",
 ]
@@ -14721,10 +14721,10 @@ dependencies = [
  "pallet-xcm",
  "pallet-xcm-benchmarks",
  "parity-scale-codec",
- "polkadot-parachain",
- "polkadot-primitives",
- "polkadot-runtime-common",
- "polkadot-runtime-parachains",
+ "kvp-parachain",
+ "kvp-primitives",
+ "kvp-runtime-common",
+ "kvp-runtime-parachains",
  "rustc-hex",
  "scale-info",
  "serde",
@@ -14766,8 +14766,8 @@ name = "westend-runtime-constants"
 version = "0.9.43"
 dependencies = [
  "frame-support",
- "polkadot-primitives",
- "polkadot-runtime-common",
+ "kvp-primitives",
+ "kvp-runtime-common",
  "smallvec",
  "sp-core",
  "sp-runtime",
@@ -15146,10 +15146,10 @@ dependencies = [
  "pallet-transaction-payment",
  "pallet-xcm",
  "parity-scale-codec",
- "polkadot-parachain",
- "polkadot-primitives",
- "polkadot-runtime-parachains",
- "polkadot-test-runtime",
+ "kvp-parachain",
+ "kvp-primitives",
+ "kvp-runtime-parachains",
+ "kvp-test-runtime",
  "primitive-types",
  "scale-info",
  "sp-arithmetic",
@@ -15189,9 +15189,9 @@ dependencies = [
  "futures",
  "pallet-xcm",
  "parity-scale-codec",
- "polkadot-test-client",
- "polkadot-test-runtime",
- "polkadot-test-service",
+ "kvp-test-client",
+ "kvp-test-runtime",
+ "kvp-test-service",
  "sp-consensus",
  "sp-keyring",
  "sp-runtime",
@@ -15218,9 +15218,9 @@ dependencies = [
  "frame-support",
  "parity-scale-codec",
  "paste",
- "polkadot-core-primitives",
- "polkadot-parachain",
- "polkadot-runtime-parachains",
+ "kvp-core-primitives",
+ "kvp-parachain",
+ "kvp-runtime-parachains",
  "sp-io",
  "sp-std",
  "xcm",
@@ -15240,9 +15240,9 @@ dependencies = [
  "pallet-uniques",
  "pallet-xcm",
  "parity-scale-codec",
- "polkadot-core-primitives",
- "polkadot-parachain",
- "polkadot-runtime-parachains",
+ "kvp-core-primitives",
+ "kvp-parachain",
+ "kvp-runtime-parachains",
  "scale-info",
  "sp-core",
  "sp-io",
@@ -15267,9 +15267,9 @@ dependencies = [
  "pallet-message-queue",
  "pallet-xcm",
  "parity-scale-codec",
- "polkadot-core-primitives",
- "polkadot-parachain",
- "polkadot-runtime-parachains",
+ "kvp-core-primitives",
+ "kvp-parachain",
+ "kvp-runtime-parachains",
  "scale-info",
  "sp-core",
  "sp-io",

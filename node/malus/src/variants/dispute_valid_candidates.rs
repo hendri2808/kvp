@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! A malicious node that replaces approvals with invalid disputes
 //! against valid candidates. Additionally, the malus node can be configured to
@@ -22,7 +22,7 @@
 
 #![allow(missing_docs)]
 
-use polkadot_cli::{
+use kvp_cli::{
 	prepared_overseer_builder,
 	service::{
 		AuthorityDiscoveryApi, AuxStore, BabeApi, Block, Error, HeaderBackend, Overseer,
@@ -31,8 +31,8 @@ use polkadot_cli::{
 	},
 	Cli,
 };
-use polkadot_node_subsystem::SpawnGlue;
-use polkadot_node_subsystem_types::DefaultSubsystemClient;
+use kvp_node_subsystem::SpawnGlue;
+use kvp_node_subsystem_types::DefaultSubsystemClient;
 use sp_core::traits::SpawnNamed;
 
 // Filter wrapping related types.

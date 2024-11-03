@@ -1,18 +1,18 @@
 // Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! A tree utility for managing parachain fragments not referenced by the relay-chain.
 //!
@@ -96,10 +96,10 @@ use std::{
 
 use super::LOG_TARGET;
 use bitvec::prelude::*;
-use polkadot_node_subsystem_util::inclusion_emulator::staging::{
+use kvp_node_subsystem_util::inclusion_emulator::staging::{
 	ConstraintModifications, Constraints, Fragment, ProspectiveCandidate, RelayChainBlockInfo,
 };
-use polkadot_primitives::vstaging::{
+use kvp_primitives::vstaging::{
 	BlockNumber, CandidateHash, CommittedCandidateReceipt, Hash, HeadData, Id as ParaId,
 	PersistedValidationData,
 };
@@ -981,11 +981,11 @@ impl FragmentNode {
 mod tests {
 	use super::*;
 	use assert_matches::assert_matches;
-	use polkadot_node_subsystem_util::inclusion_emulator::staging::InboundHrmpLimitations;
-	use polkadot_primitives::vstaging::{
+	use kvp_node_subsystem_util::inclusion_emulator::staging::InboundHrmpLimitations;
+	use kvp_primitives::vstaging::{
 		BlockNumber, CandidateCommitments, CandidateDescriptor, HeadData,
 	};
-	use polkadot_primitives_test_helpers as test_helpers;
+	use kvp_primitives_test_helpers as test_helpers;
 
 	fn make_constraints(
 		min_relay_parent_number: BlockNumber,

@@ -1,21 +1,21 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use async_trait::async_trait;
-use polkadot_primitives::{
+use kvp_primitives::{
 	runtime_api::ParachainHost, vstaging, Block, BlockNumber, CandidateCommitments, CandidateEvent,
 	CandidateHash, CommittedCandidateReceipt, CoreState, DisputeState, ExecutorParams,
 	GroupRotationInfo, Hash, Id, InboundDownwardMessage, InboundHrmpMessage,
@@ -238,7 +238,7 @@ pub trait RuntimeApiSubsystemClient {
 	async fn staging_async_backing_params(
 		&self,
 		at: Hash,
-	) -> Result<polkadot_primitives::vstaging::AsyncBackingParams, ApiError>;
+	) -> Result<kvp_primitives::vstaging::AsyncBackingParams, ApiError>;
 
 	/// Returns the state of parachain backing for a given para.
 	/// This is a staging method! Do not use on production runtimes!
@@ -246,7 +246,7 @@ pub trait RuntimeApiSubsystemClient {
 		&self,
 		at: Hash,
 		para_id: Id,
-	) -> Result<Option<polkadot_primitives::vstaging::BackingState>, ApiError>;
+	) -> Result<Option<kvp_primitives::vstaging::BackingState>, ApiError>;
 }
 
 /// Default implementation of [`RuntimeApiSubsystemClient`] using the client.
@@ -477,7 +477,7 @@ where
 		&self,
 		at: Hash,
 		para_id: Id,
-	) -> Result<Option<polkadot_primitives::vstaging::BackingState>, ApiError> {
+	) -> Result<Option<kvp_primitives::vstaging::BackingState>, ApiError> {
 		self.client.runtime_api().staging_para_backing_state(at, para_id)
 	}
 
@@ -485,7 +485,7 @@ where
 	async fn staging_async_backing_params(
 		&self,
 		at: Hash,
-	) -> Result<polkadot_primitives::vstaging::AsyncBackingParams, ApiError> {
+	) -> Result<kvp_primitives::vstaging::AsyncBackingParams, ApiError> {
 		self.client.runtime_api().staging_async_backing_params(at)
 	}
 }

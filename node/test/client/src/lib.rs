@@ -1,32 +1,32 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! A Polkadot test client.
+//! A kvp test client.
 //!
-//! This test client is using the Polkadot test runtime.
+//! This test client is using the kvp test runtime.
 
 mod block_builder;
 
-use polkadot_primitives::Block;
+use kvp_primitives::Block;
 use sp_runtime::BuildStorage;
 use std::sync::Arc;
 
 pub use block_builder::*;
-pub use polkadot_test_runtime as runtime;
-pub use polkadot_test_service::{
+pub use kvp_test_runtime as runtime;
+pub use kvp_test_service::{
 	construct_extrinsic, construct_transfer_extrinsic, Client, FullBackend,
 };
 pub use substrate_test_client::*;
@@ -38,7 +38,7 @@ pub type Executor = client::LocalCallExecutor<
 	WasmExecutor<(sp_io::SubstrateHostFunctions, frame_benchmarking::benchmarking::HostFunctions)>,
 >;
 
-/// Test client builder for Polkadot.
+/// Test client builder for kvp.
 pub type TestClientBuilder =
 	substrate_test_client::TestClientBuilder<Block, Executor, FullBackend, GenesisParameters>;
 
@@ -51,7 +51,7 @@ pub struct GenesisParameters;
 
 impl substrate_test_client::GenesisInit for GenesisParameters {
 	fn genesis_storage(&self) -> Storage {
-		polkadot_test_service::chain_spec::polkadot_local_testnet_genesis()
+		kvp_test_service::chain_spec::kvp_local_testnet_genesis()
 			.build_storage()
 			.expect("Builds test runtime genesis storage")
 	}
@@ -104,7 +104,7 @@ mod tests {
 	fn ensure_test_client_can_build_and_import_block() {
 		let mut client = TestClientBuilder::new().build();
 
-		let block_builder = client.init_polkadot_block_builder();
+		let block_builder = client.init_kvp_block_builder();
 		let block = block_builder.build().expect("Finalizes the block").block;
 
 		futures::executor::block_on(client.import(BlockOrigin::Own, block))
@@ -121,8 +121,8 @@ mod tests {
 			sp_keyring::Sr25519Keyring::Bob,
 			1000,
 		);
-		let mut block_builder = client.init_polkadot_block_builder();
-		block_builder.push_polkadot_extrinsic(transfer).expect("Pushes extrinsic");
+		let mut block_builder = client.init_kvp_block_builder();
+		block_builder.push_kvp_extrinsic(transfer).expect("Pushes extrinsic");
 
 		let block = block_builder.build().expect("Finalizes the block").block;
 

@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-use polkadot_primitives::{BlockNumber, CandidateHash};
+use kvp_primitives::{BlockNumber, CandidateHash};
 use std::collections::{BTreeMap, HashMap, HashSet};
 
 /// Keeps `CandidateHash` in reference counted way.
@@ -60,7 +60,7 @@ impl RefCountedCandidates {
 #[cfg(test)]
 mod ref_counted_candidates_tests {
 	use super::*;
-	use polkadot_primitives::{BlakeTwo256, HashT};
+	use kvp_primitives::{BlakeTwo256, HashT};
 
 	#[test]
 	fn element_is_removed_when_refcount_reaches_zero() {
@@ -152,7 +152,7 @@ impl ScrapedCandidates {
 #[cfg(test)]
 mod scraped_candidates_tests {
 	use super::*;
-	use polkadot_primitives::{BlakeTwo256, HashT};
+	use kvp_primitives::{BlakeTwo256, HashT};
 
 	#[test]
 	fn stale_candidates_are_removed() {

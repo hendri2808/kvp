@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot. If not, see <http://www.gnu.org/licenses/>.
+// along with kvp. If not, see <http://www.gnu.org/licenses/>.
 
 //! Custom origins for governance interventions.
 
@@ -60,31 +60,31 @@ pub mod pallet_custom_origins {
 		BigSpender,
 		/// Origin able to dispatch a whitelisted call.
 		WhitelistedCaller,
-		/// Origin commanded by any members of the Polkadot Fellowship (no Dan grade needed).
+		/// Origin commanded by any members of the kvp Fellowship (no Dan grade needed).
 		FellowshipInitiates,
-		/// Origin commanded by Polkadot Fellows (3rd Dan fellows or greater).
+		/// Origin commanded by kvp Fellows (3rd Dan fellows or greater).
 		Fellows,
-		/// Origin commanded by Polkadot Experts (5th Dan fellows or greater).
+		/// Origin commanded by kvp Experts (5th Dan fellows or greater).
 		FellowshipExperts,
-		/// Origin commanded by Polkadot Masters (7th Dan fellows of greater).
+		/// Origin commanded by kvp Masters (7th Dan fellows of greater).
 		FellowshipMasters,
-		/// Origin commanded by rank 1 of the Polkadot Fellowship and with a success of 1.
+		/// Origin commanded by rank 1 of the kvp Fellowship and with a success of 1.
 		Fellowship1Dan,
-		/// Origin commanded by rank 2 of the Polkadot Fellowship and with a success of 2.
+		/// Origin commanded by rank 2 of the kvp Fellowship and with a success of 2.
 		Fellowship2Dan,
-		/// Origin commanded by rank 3 of the Polkadot Fellowship and with a success of 3.
+		/// Origin commanded by rank 3 of the kvp Fellowship and with a success of 3.
 		Fellowship3Dan,
-		/// Origin commanded by rank 4 of the Polkadot Fellowship and with a success of 4.
+		/// Origin commanded by rank 4 of the kvp Fellowship and with a success of 4.
 		Fellowship4Dan,
-		/// Origin commanded by rank 5 of the Polkadot Fellowship and with a success of 5.
+		/// Origin commanded by rank 5 of the kvp Fellowship and with a success of 5.
 		Fellowship5Dan,
-		/// Origin commanded by rank 6 of the Polkadot Fellowship and with a success of 6.
+		/// Origin commanded by rank 6 of the kvp Fellowship and with a success of 6.
 		Fellowship6Dan,
-		/// Origin commanded by rank 7 of the Polkadot Fellowship and with a success of 7.
+		/// Origin commanded by rank 7 of the kvp Fellowship and with a success of 7.
 		Fellowship7Dan,
-		/// Origin commanded by rank 8 of the Polkadot Fellowship and with a success of 8.
+		/// Origin commanded by rank 8 of the kvp Fellowship and with a success of 8.
 		Fellowship8Dan,
-		/// Origin commanded by rank 9 of the Polkadot Fellowship and with a success of 9.
+		/// Origin commanded by rank 9 of the kvp Fellowship and with a success of 9.
 		Fellowship9Dan,
 	}
 

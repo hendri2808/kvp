@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Shows a basic usage of the `Overseer`:
 //!   * Spawning subsystems and subsystem child jobs
@@ -24,15 +24,15 @@ use orchestra::async_trait;
 use std::time::Duration;
 
 use ::test_helpers::{dummy_candidate_descriptor, dummy_hash};
-use polkadot_node_primitives::{BlockData, PoV};
-use polkadot_node_subsystem_types::messages::CandidateValidationMessage;
-use polkadot_overseer::{
+use kvp_node_primitives::{BlockData, PoV};
+use kvp_node_subsystem_types::messages::CandidateValidationMessage;
+use kvp_overseer::{
 	self as overseer,
 	dummy::dummy_overseer_builder,
 	gen::{FromOrchestra, SpawnedSubsystem},
 	HeadSupportsParachains, SubsystemError,
 };
-use polkadot_primitives::{CandidateReceipt, Hash, PvfExecTimeoutKind};
+use kvp_primitives::{CandidateReceipt, Hash, PvfExecTimeoutKind};
 
 struct AlwaysSupportsParachains;
 

@@ -113,8 +113,8 @@ So what are we actually worried about? Things that come to mind:
    binary.
 4. **Stealing keys** - That would be pretty bad. Should not be possible with
    sandboxing. We should at least not allow filesystem-access or network access.
-5. **Taking control over the validator.** E.g. replacing the `polkadot` binary
-   with a `polkadot-evil` binary. Should again not be possible with the above
+5. **Taking control over the validator.** E.g. replacing the `kvp` binary
+   with a `kvp-evil` binary. Should again not be possible with the above
    sandboxing in place.
 6. **Intercepting and manipulating packages** - Effect very similar to the
    above, hard to do without also being able to do 4 or 5.

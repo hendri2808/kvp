@@ -22,7 +22,7 @@ reasons. As a result, all validators must have a up to date view of all possible
 parachain candidates + backing statements that could be placed on-chain in the
 next block.
 
-[This blog post](https://polkadot.network/blog/polkadot-v1-0-sharding-and-economic-security)
+[This blog post](https://kvp.network/blog/kvp-v1-0-sharding-and-economic-security)
 puts it another way: "Validators who aren't assigned to the parachain still
 listen for the attestations [statements] because whichever validator ends up
 being the author of the relay-chain block needs to bundle up attested parachain

@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot test service only.
+//! kvp test service only.
 
 #![warn(missing_docs)]
 
@@ -22,14 +22,14 @@ pub mod chain_spec;
 
 pub use chain_spec::*;
 use futures::{future::Future, stream::StreamExt};
-use polkadot_node_primitives::{CollationGenerationConfig, CollatorFn};
-use polkadot_node_subsystem::messages::{CollationGenerationMessage, CollatorProtocolMessage};
-use polkadot_overseer::Handle;
-use polkadot_primitives::{Balance, CollatorPair, HeadData, Id as ParaId, ValidationCode};
-use polkadot_runtime_common::BlockHashCount;
-use polkadot_runtime_parachains::paras::{ParaGenesisArgs, ParaKind};
-use polkadot_service::{Error, FullClient, IsParachainNode, NewFull, PrometheusConfig};
-use polkadot_test_runtime::{
+use kvp_node_primitives::{CollationGenerationConfig, CollatorFn};
+use kvp_node_subsystem::messages::{CollationGenerationMessage, CollatorProtocolMessage};
+use kvp_overseer::Handle;
+use kvp_primitives::{Balance, CollatorPair, HeadData, Id as ParaId, ValidationCode};
+use kvp_runtime_common::BlockHashCount;
+use kvp_runtime_parachains::paras::{ParaGenesisArgs, ParaKind};
+use kvp_service::{Error, FullClient, IsParachainNode, NewFull, PrometheusConfig};
+use kvp_test_runtime::{
 	ParasCall, ParasSudoWrapperCall, Runtime, SignedExtra, SignedPayload, SudoCall,
 	UncheckedExtrinsic, VERSION,
 };
@@ -65,7 +65,7 @@ use substrate_test_client::{
 /// The client type being used by the test service.
 pub type Client = FullClient;
 
-pub use polkadot_service::{FullBackend, GetLastTimestamp};
+pub use kvp_service::{FullBackend, GetLastTimestamp};
 
 /// Create a new full node.
 #[sc_tracing::logging::prefix_logs_with(config.network.node_name.as_str())]
@@ -76,9 +76,9 @@ pub fn new_full(
 ) -> Result<NewFull, Error> {
 	let workers_path = Some(workers_path.unwrap_or_else(get_relative_workers_path_for_test));
 
-	polkadot_service::new_full(
+	kvp_service::new_full(
 		config,
-		polkadot_service::NewFullParams {
+		kvp_service::NewFullParams {
 			is_parachain_node,
 			grandpa_pause: None,
 			enable_beefy: true,
@@ -87,7 +87,7 @@ pub fn new_full(
 			node_version: None,
 			workers_path,
 			workers_names: None,
-			overseer_gen: polkadot_service::RealOverseerGen,
+			overseer_gen: kvp_service::RealOverseerGen,
 			overseer_message_channel_capacity_override: None,
 			malus_finality_delay: None,
 			hwbench: None,
@@ -113,7 +113,7 @@ pub fn test_prometheus_config(port: u16) -> PrometheusConfig {
 	)
 }
 
-/// Create a Polkadot `Configuration`.
+/// Create a kvp `Configuration`.
 ///
 /// By default an in-memory socket will be used, therefore you need to provide boot
 /// nodes if you want the future node to be connected to other nodes.
@@ -131,7 +131,7 @@ pub fn node_config(
 	let root = base_path.path().join(key.to_string());
 	let role = if is_validator { Role::Authority } else { Role::Full };
 	let key_seed = key.to_seed();
-	let mut spec = polkadot_local_testnet_config();
+	let mut spec = kvp_local_testnet_config();
 	let mut storage = spec.as_storage_builder().build_storage().expect("could not build storage");
 
 	BasicExternalities::execute_with_storage(&mut storage, storage_update_func);
@@ -156,7 +156,7 @@ pub fn node_config(
 	network_config.transport = TransportConfig::MemoryOnly;
 
 	Configuration {
-		impl_name: "polkadot-test-node".to_string(),
+		impl_name: "kvp-test-node".to_string(),
 		impl_version: "0.1".to_string(),
 		role,
 		tokio_handle,
@@ -203,17 +203,17 @@ pub fn node_config(
 pub fn run_validator_node(
 	config: Configuration,
 	worker_program_path: Option<PathBuf>,
-) -> PolkadotTestNode {
+) -> kvpTestNode {
 	let multiaddr = config.network.listen_addresses[0].clone();
 	let NewFull { task_manager, client, network, rpc_handlers, overseer_handle, .. } =
 		new_full(config, IsParachainNode::No, worker_program_path)
-			.expect("could not create Polkadot test service");
+			.expect("could not create kvp test service");
 
 	let overseer_handle = overseer_handle.expect("test node must have an overseer handle");
 	let peer_id = network.local_peer_id();
 	let addr = MultiaddrWithPeerId { multiaddr, peer_id };
 
-	PolkadotTestNode { task_manager, client, overseer_handle, addr, rpc_handlers }
+	kvpTestNode { task_manager, client, overseer_handle, addr, rpc_handlers }
 }
 
 /// Run a test collator node that uses the test runtime.
@@ -227,29 +227,29 @@ pub fn run_validator_node(
 /// # Note
 ///
 /// The collator functionality still needs to be registered at the node! This can be done using
-/// [`PolkadotTestNode::register_collator`].
+/// [`kvpTestNode::register_collator`].
 pub fn run_collator_node(
 	tokio_handle: tokio::runtime::Handle,
 	key: Sr25519Keyring,
 	storage_update_func: impl Fn(),
 	boot_nodes: Vec<MultiaddrWithPeerId>,
 	collator_pair: CollatorPair,
-) -> PolkadotTestNode {
+) -> kvpTestNode {
 	let config = node_config(storage_update_func, tokio_handle, key, boot_nodes, false);
 	let multiaddr = config.network.listen_addresses[0].clone();
 	let NewFull { task_manager, client, network, rpc_handlers, overseer_handle, .. } =
 		new_full(config, IsParachainNode::Collator(collator_pair), None)
-			.expect("could not create Polkadot test service");
+			.expect("could not create kvp test service");
 
 	let overseer_handle = overseer_handle.expect("test node must have an overseer handle");
 	let peer_id = network.local_peer_id();
 	let addr = MultiaddrWithPeerId { multiaddr, peer_id };
 
-	PolkadotTestNode { task_manager, client, overseer_handle, addr, rpc_handlers }
+	kvpTestNode { task_manager, client, overseer_handle, addr, rpc_handlers }
 }
 
-/// A Polkadot test node instance used for testing.
-pub struct PolkadotTestNode {
+/// A kvp test node instance used for testing.
+pub struct kvpTestNode {
 	/// `TaskManager`'s instance.
 	pub task_manager: TaskManager,
 	/// Client's instance.
@@ -263,11 +263,11 @@ pub struct PolkadotTestNode {
 	pub rpc_handlers: RpcHandlers,
 }
 
-impl PolkadotTestNode {
+impl kvpTestNode {
 	/// Send a sudo call to this node.
 	async fn send_sudo(
 		&self,
-		call: impl Into<polkadot_test_runtime::RuntimeCall>,
+		call: impl Into<kvp_test_runtime::RuntimeCall>,
 		caller: Sr25519Keyring,
 		nonce: u32,
 	) -> Result<(), RpcTransactionError> {
@@ -280,7 +280,7 @@ impl PolkadotTestNode {
 	/// Send an extrinsic to this node.
 	pub async fn send_extrinsic(
 		&self,
-		function: impl Into<polkadot_test_runtime::RuntimeCall>,
+		function: impl Into<kvp_test_runtime::RuntimeCall>,
 		caller: Sr25519Keyring,
 	) -> Result<RpcTransactionOutput, RpcTransactionError> {
 		let extrinsic = construct_extrinsic(&self.client, function, caller, 0);
@@ -356,7 +356,7 @@ impl PolkadotTestNode {
 /// Construct an extrinsic that can be applied to the test runtime.
 pub fn construct_extrinsic(
 	client: &Client,
-	function: impl Into<polkadot_test_runtime::RuntimeCall>,
+	function: impl Into<kvp_test_runtime::RuntimeCall>,
 	caller: Sr25519Keyring,
 	nonce: u32,
 ) -> UncheckedExtrinsic {
@@ -394,8 +394,8 @@ pub fn construct_extrinsic(
 	let signature = raw_payload.using_encoded(|e| caller.sign(e));
 	UncheckedExtrinsic::new_signed(
 		function.clone(),
-		polkadot_test_runtime::Address::Id(caller.public().into()),
-		polkadot_primitives::Signature::Sr25519(signature.clone()),
+		kvp_test_runtime::Address::Id(caller.public().into()),
+		kvp_primitives::Signature::Sr25519(signature.clone()),
 		extra.clone(),
 	)
 }
@@ -408,7 +408,7 @@ pub fn construct_transfer_extrinsic(
 	value: Balance,
 ) -> UncheckedExtrinsic {
 	let function =
-		polkadot_test_runtime::RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
+		kvp_test_runtime::RuntimeCall::Balances(pallet_balances::Call::transfer_allow_death {
 			dest: MultiSigner::from(dest.public()).into_account().into(),
 			value,
 		});

@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! A database [`Backend`][crate::backend::Backend] for the chain selection subsystem.
 //!
@@ -37,11 +37,11 @@ use crate::{
 	Error,
 };
 
-use polkadot_node_primitives::BlockWeight;
-use polkadot_primitives::{BlockNumber, Hash};
+use kvp_node_primitives::BlockWeight;
+use kvp_primitives::{BlockNumber, Hash};
 
 use parity_scale_codec::{Decode, Encode};
-use polkadot_node_subsystem_util::database::{DBTransaction, Database};
+use kvp_node_subsystem_util::database::{DBTransaction, Database};
 
 use std::sync::Arc;
 
@@ -401,7 +401,7 @@ mod tests {
 	#[cfg(test)]
 	fn test_db() -> Arc<dyn Database> {
 		let db = kvdb_memorydb::create(1);
-		let db = polkadot_node_subsystem_util::database::kvdb_impl::DbAdapter::new(db, &[0]);
+		let db = kvp_node_subsystem_util::database::kvdb_impl::DbAdapter::new(db, &[0]);
 		Arc::new(db)
 	}
 

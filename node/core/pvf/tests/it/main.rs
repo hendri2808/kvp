@@ -1,31 +1,31 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 #[cfg(feature = "ci-only-tests")]
 use assert_matches::assert_matches;
 use parity_scale_codec::Encode as _;
-use polkadot_node_core_pvf::{
+use kvp_node_core_pvf::{
 	start, Config, InvalidCandidate, Metrics, PrepareJobKind, PvfPrepData, ValidationError,
 	ValidationHost, JOB_TIMEOUT_WALL_CLOCK_FACTOR,
 };
-use polkadot_parachain::primitives::{BlockData, ValidationParams, ValidationResult};
-use polkadot_primitives::ExecutorParams;
+use kvp_parachain::primitives::{BlockData, ValidationParams, ValidationResult};
+use kvp_primitives::ExecutorParams;
 
 #[cfg(feature = "ci-only-tests")]
-use polkadot_primitives::ExecutorParam;
+use kvp_primitives::ExecutorParam;
 
 use std::time::Duration;
 use tokio::sync::Mutex;
@@ -84,7 +84,7 @@ impl TestHost {
 				),
 				TEST_EXECUTION_TIMEOUT,
 				params.encode(),
-				polkadot_node_core_pvf::Priority::Normal,
+				kvp_node_core_pvf::Priority::Normal,
 				result_tx,
 			)
 			.await

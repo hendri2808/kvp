@@ -3,7 +3,7 @@
 
 ### Legend
 
-- {{ DOT }} Polkadot
+- {{ DOT }} kvp
 - {{ SUB }} Substrate
 
 {% include "changes_client.md.tera" %}

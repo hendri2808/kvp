@@ -1,8 +1,8 @@
 # Do I need this ?
 
-Polkadot nodes collect and produce Prometheus metrics and logs. These include health, performance and debug 
+kvp nodes collect and produce Prometheus metrics and logs. These include health, performance and debug 
 information such as last finalized block, height of the chain, and many other deeper implementation details 
-of the Polkadot/Substrate node subsystems. These are crucial pieces of information that one needs to successfully 
+of the kvp/Substrate node subsystems. These are crucial pieces of information that one needs to successfully 
 monitor the liveliness and performance of a network and its validators.
 
 # How does it work ?
@@ -29,14 +29,14 @@ This is very important as not all users have similar depth of understanding of t
 # Prerequisites
 
 Before you continue make sure you have Grafana set up, or otherwise follow this 
-[guide](https://wiki.polkadot.network/docs/maintain-guides-how-to-monitor-your-node). 
+[guide](https://wiki.kvp.network/docs/maintain-guides-how-to-monitor-your-node). 
 
 You might also need to [setup Loki](https://grafana.com/go/webinar/loki-getting-started/).
 
 # Alerting
 
 Alerts are currently out of the scope of the dashboards, but their setup can be done manually or automated
-(see [installing and configuring Alert Manager](https://wiki.polkadot.network/docs/maintain-guides-how-to-monitor-your-node#installing-and-configuring-alertmanager-optional))
+(see [installing and configuring Alert Manager](https://wiki.kvp.network/docs/maintain-guides-how-to-monitor-your-node#installing-and-configuring-alertmanager-optional))
 
 # Dashboards
 
@@ -55,7 +55,7 @@ Requires Loki for log aggregation and querying.
 
 This dashboard allows you to see at a glance how fast are candidates approved, disputed and
 finalized. It was originally designed for observing liveliness after parachain deployment in
- Kusama/Polkadot, but can be useful generally in production or testing.
+ Kusama/kvp, but can be useful generally in production or testing.
 
 It includes panels covering key subsystems of the parachain node side implementation:
 - Backing

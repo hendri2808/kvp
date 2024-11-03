@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! This module uses different approach for selecting dispute votes. It queries the Runtime
 //! about the votes already known onchain and tries to select only relevant votes. Refer to
@@ -20,13 +20,13 @@
 
 use crate::{error::GetOnchainDisputesError, metrics, LOG_TARGET};
 use futures::channel::oneshot;
-use polkadot_node_primitives::{dispute_is_inactive, CandidateVotes, DisputeStatus, Timestamp};
-use polkadot_node_subsystem::{
+use kvp_node_primitives::{dispute_is_inactive, CandidateVotes, DisputeStatus, Timestamp};
+use kvp_node_subsystem::{
 	errors::RuntimeApiError,
 	messages::{DisputeCoordinatorMessage, RuntimeApiMessage, RuntimeApiRequest},
 	overseer, ActivatedLeaf,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	supermajority_threshold, CandidateHash, DisputeState, DisputeStatement, DisputeStatementSet,
 	Hash, MultiDisputeStatementSet, SessionIndex, ValidDisputeStatementKind, ValidatorIndex,
 };

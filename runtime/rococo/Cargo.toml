@@ -84,10 +84,10 @@ frame-try-runtime = { git = "https://github.com/paritytech/substrate", branch = 
 frame-system-benchmarking = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false, optional = true }
 hex-literal = { version = "0.4.1" }
 
-runtime-common = { package = "polkadot-runtime-common", path = "../common", default-features = false, features=["experimental"] }
-runtime-parachains = { package = "polkadot-runtime-parachains", path = "../parachains", default-features = false }
-primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
-polkadot-parachain = { path = "../../parachain", default-features = false }
+runtime-common = { package = "kvp-runtime-common", path = "../common", default-features = false, features=["experimental"] }
+runtime-parachains = { package = "kvp-runtime-parachains", path = "../parachains", default-features = false }
+primitives = { package = "kvp-primitives", path = "../../primitives", default-features = false }
+kvp-parachain = { path = "../../parachain", default-features = false }
 
 xcm = { package = "xcm", path = "../../xcm", default-features = false }
 xcm-executor = { package = "xcm-executor", path = "../../xcm/xcm-executor", default-features = false }
@@ -162,7 +162,7 @@ std = [
 	"pallet-vesting/std",
 	"pallet-babe/std",
 	"pallet-xcm/std",
-	"polkadot-parachain/std",
+	"kvp-parachain/std",
 	"sp-mmr-primitives/std",
 	"sp-runtime/std",
 	"sp-staking/std",

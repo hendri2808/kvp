@@ -1,22 +1,22 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Interface to the Substrate Executor
 
-use polkadot_primitives::{ExecutorParam, ExecutorParams};
+use kvp_primitives::{ExecutorParam, ExecutorParams};
 use sc_executor_common::{
 	error::WasmError,
 	runtime_blob::RuntimeBlob,
@@ -111,7 +111,7 @@ pub fn params_to_wasmtime_semantics(par: &ExecutorParams) -> Result<Semantics, S
 			ExecutorParam::StackLogicalMax(slm) => stack_limit.logical_max = *slm,
 			ExecutorParam::StackNativeMax(snm) => stack_limit.native_stack_max = *snm,
 			ExecutorParam::WasmExtBulkMemory => sem.wasm_bulk_memory = true,
-			// TODO: Not implemented yet; <https://github.com/paritytech/polkadot/issues/6472>.
+			// TODO: Not implemented yet; <https://github.com/paritytech/kvp/issues/6472>.
 			ExecutorParam::PrecheckingMaxMemory(_) => (),
 			ExecutorParam::PvfPrepTimeout(_, _) | ExecutorParam::PvfExecTimeout(_, _) => (), /* Not used here */
 		}

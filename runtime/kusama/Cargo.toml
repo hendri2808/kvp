@@ -103,9 +103,9 @@ frame-system-benchmarking = { git = "https://github.com/paritytech/substrate", b
 pallet-election-provider-support-benchmarking = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false, optional = true }
 hex-literal = "0.4.1"
 
-runtime-common = { package = "polkadot-runtime-common", path = "../common", default-features = false }
-runtime-parachains = { package = "polkadot-runtime-parachains", path = "../parachains", default-features = false }
-primitives = { package = "polkadot-primitives", path = "../../primitives", default-features = false }
+runtime-common = { package = "kvp-runtime-common", path = "../common", default-features = false }
+runtime-parachains = { package = "kvp-runtime-parachains", path = "../parachains", default-features = false }
+primitives = { package = "kvp-primitives", path = "../../primitives", default-features = false }
 
 xcm = { package = "xcm", path = "../../xcm", default-features = false }
 xcm-executor = { package = "xcm-executor", path = "../../xcm/xcm-executor", default-features = false }

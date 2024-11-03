@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::{
 	collections::{HashMap, HashSet},
@@ -26,7 +26,7 @@ use futures::{
 };
 use sp_core::Pair;
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	self as net_protocol,
 	peer_set::{CollationVersion, PeerSet},
 	request_response::{
@@ -36,15 +36,15 @@ use polkadot_node_network_protocol::{
 	v1 as protocol_v1, vstaging as protocol_vstaging, OurView, PeerId,
 	UnifiedReputationChange as Rep, Versioned, View,
 };
-use polkadot_node_primitives::{CollationSecondedSignal, PoV, Statement};
-use polkadot_node_subsystem::{
+use kvp_node_primitives::{CollationSecondedSignal, PoV, Statement};
+use kvp_node_subsystem::{
 	jaeger,
 	messages::{
 		CollatorProtocolMessage, NetworkBridgeEvent, NetworkBridgeTxMessage, RuntimeApiMessage,
 	},
 	overseer, CollatorProtocolSenderTrait, FromOrchestra, OverseerSignal, PerLeafSpan,
 };
-use polkadot_node_subsystem_util::{
+use kvp_node_subsystem_util::{
 	backing_implicit_view::View as ImplicitView,
 	reputation::{ReputationAggregator, REPUTATION_CHANGE_INTERVAL},
 	runtime::{
@@ -53,7 +53,7 @@ use polkadot_node_subsystem_util::{
 	},
 	TimeoutExt,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	AuthorityDiscoveryId, CandidateHash, CandidateReceipt, CollatorPair, CoreIndex, CoreState,
 	GroupIndex, Hash, Id as ParaId, SessionIndex,
 };
@@ -90,7 +90,7 @@ const COST_APPARENT_FLOOD: Rep =
 ///
 /// This is to protect from a single slow validator preventing collations from happening.
 ///
-/// For considerations on this value, see: https://github.com/paritytech/polkadot/issues/4386
+/// For considerations on this value, see: https://github.com/paritytech/kvp/issues/4386
 const MAX_UNSHARED_UPLOAD_TIME: Duration = Duration::from_millis(150);
 
 /// Ensure that collator issues a connection request at least once every this many seconds.
@@ -234,7 +234,7 @@ struct State {
 
 	/// All active leaves observed by us, including both that do and do not
 	/// support prospective parachains. This mapping works as a replacement for
-	/// [`polkadot_node_network_protocol::View`] and can be dropped once the transition
+	/// [`kvp_node_network_protocol::View`] and can be dropped once the transition
 	/// to asynchronous backing is done.
 	active_leaves: HashMap<Hash, ProspectiveParachainsMode>,
 

@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Vote import logic.
 //!
@@ -28,12 +28,12 @@
 
 use std::collections::{BTreeMap, HashMap, HashSet};
 
-use polkadot_node_primitives::{
+use kvp_node_primitives::{
 	disputes::ValidCandidateVotes, CandidateVotes, DisputeStatus, SignedDisputeStatement, Timestamp,
 };
-use polkadot_node_subsystem::overseer;
-use polkadot_node_subsystem_util::runtime::RuntimeInfo;
-use polkadot_primitives::{
+use kvp_node_subsystem::overseer;
+use kvp_node_subsystem_util::runtime::RuntimeInfo;
+use kvp_primitives::{
 	CandidateReceipt, DisputeStatement, Hash, IndexedVec, SessionIndex, SessionInfo,
 	ValidDisputeStatementKind, ValidatorId, ValidatorIndex, ValidatorPair, ValidatorSignature,
 };
@@ -208,14 +208,14 @@ impl CandidateVoteState<CandidateVotes> {
 
 		let n_validators = env.validators().len();
 
-		let supermajority_threshold = polkadot_primitives::supermajority_threshold(n_validators);
+		let supermajority_threshold = kvp_primitives::supermajority_threshold(n_validators);
 
 		// We have a dispute, if we have votes on both sides:
 		let is_disputed = !votes.invalid.is_empty() && !votes.valid.raw().is_empty();
 
 		let (dispute_status, byzantine_threshold_against) = if is_disputed {
 			let mut status = DisputeStatus::active();
-			let byzantine_threshold = polkadot_primitives::byzantine_threshold(n_validators);
+			let byzantine_threshold = kvp_primitives::byzantine_threshold(n_validators);
 			let is_confirmed = votes.voted_indices().len() > byzantine_threshold;
 			if is_confirmed {
 				status = status.confirm();

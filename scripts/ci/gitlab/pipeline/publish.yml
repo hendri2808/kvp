@@ -4,7 +4,7 @@
 # This image is used in testnets
 # Release image is handled by the Github Action here:
 # .github/workflows/publish-docker-release.yml
-publish-polkadot-debug-image:
+publish-kvp-debug-image:
   stage: publish
   extends:
     - .kubernetes-env
@@ -19,8 +19,8 @@ publish-polkadot-debug-image:
     - if: $CI_COMMIT_REF_NAME =~ /^[0-9]+$/ # PRs
     - if: $CI_COMMIT_REF_NAME =~ /^v[0-9]+\.[0-9]+.*$/ # i.e. v1.0, v2.1rc1
   variables:
-    IMAGE_NAME: "polkadot-debug"
-    BINARY: "polkadot,polkadot-execute-worker,polkadot-prepare-worker"
+    IMAGE_NAME: "kvp-debug"
+    BINARY: "kvp,kvp-execute-worker,kvp-prepare-worker"
   needs:
     - job: build-linux-stable
       artifacts: true
@@ -68,7 +68,7 @@ publish-malus-image:
     - .zombienet-refs
   variables:
     IMAGE_NAME: "malus"
-    BINARY: "malus,polkadot-execute-worker,polkadot-prepare-worker"
+    BINARY: "malus,kvp-execute-worker,kvp-prepare-worker"
   needs:
     - job: build-malus
       artifacts: true
@@ -98,19 +98,19 @@ publish-staking-miner-image:
     - job: build-staking-miner
       artifacts: true
 
-publish-polkadot-image-description:
+publish-kvp-image-description:
   stage: publish
   image: paritytech/dockerhub-description
   variables:
     DOCKER_USERNAME: ${Docker_Hub_User_Parity}
     DOCKER_PASSWORD: ${Docker_Hub_Pass_Parity}
-    DOCKERHUB_REPOSITORY: parity/polkadot
-    SHORT_DESCRIPTION: "Polkadot Official Docker Image"
-    README_FILEPATH: $CI_PROJECT_DIR/scripts/ci/dockerfiles/polkadot/polkadot_Dockerfile.README.md
+    DOCKERHUB_REPOSITORY: parity/kvp
+    SHORT_DESCRIPTION: "kvp Official Docker Image"
+    README_FILEPATH: $CI_PROJECT_DIR/scripts/ci/dockerfiles/kvp/kvp_Dockerfile.README.md
   rules:
     - if: $CI_COMMIT_REF_NAME == "master"
       changes:
-        - scripts/ci/dockerfiles/polkadot/polkadot_Dockerfile.README.md
+        - scripts/ci/dockerfiles/kvp/kvp_Dockerfile.README.md
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: never
   script:
@@ -148,7 +148,7 @@ publish-s3-release:
   variables:
     CI_IMAGE: paritytech/awscli:latest
     GIT_STRATEGY: none
-    PREFIX: "builds/polkadot/${ARCH}-${DOCKER_OS}"
+    PREFIX: "builds/kvp/${ARCH}-${DOCKER_OS}"
   rules:
     - if: $CI_PIPELINE_SOURCE == "pipeline"
       when: never
@@ -169,10 +169,10 @@ publish-s3-release:
     - |
       cat <<-EOM
       |
-      |  polkadot binary paths:
+      |  kvp binary paths:
       |
-      |  - https://releases.parity.io/${PREFIX}/${EXTRATAG}/polkadot
-      |  - https://releases.parity.io/${PREFIX}/${VERSION}/polkadot
+      |  - https://releases.parity.io/${PREFIX}/${EXTRATAG}/kvp
+      |  - https://releases.parity.io/${PREFIX}/${VERSION}/kvp
       |
       EOM
   after_script:
@@ -234,7 +234,7 @@ publish-rustdoc:
     - git commit -m "Updated docs for ${CI_COMMIT_REF_NAME}" ||
       echo "___Nothing to commit___"
     - git push origin gh-pages --force
-    - echo "___Rustdoc was successfully published to https://paritytech.github.io/polkadot/___"
+    - echo "___Rustdoc was successfully published to https://paritytech.github.io/kvp/___"
   after_script:
     - rm -rf .git/ ./*
 
@@ -250,14 +250,14 @@ publish-rustdoc:
     - if: $CI_COMMIT_TAG =~ /^v[0-9]+\.[0-9]+\.[0-9]+$/ # e.g. v1.0.0
   script:
     - git clone --depth=1 --branch="$PIPELINE_SCRIPTS_TAG" https://github.com/paritytech/pipeline-scripts
-    - export POLKADOT_BRANCH="polkadot-$CI_COMMIT_TAG"
-    - git clone --depth=1 --branch="$POLKADOT_BRANCH" https://github.com/paritytech/"$TEMPLATE_SOURCE"
+    - export kvp_BRANCH="kvp-$CI_COMMIT_TAG"
+    - git clone --depth=1 --branch="$kvp_BRANCH" https://github.com/paritytech/"$TEMPLATE_SOURCE"
     - cd "$TEMPLATE_SOURCE"
     - ../pipeline-scripts/update_substrate_template.sh
       --repo-name "$TARGET_REPOSITORY"
       --template-path "$TEMPLATE_PATH"
       --github-api-token "$GITHUB_TOKEN"
-      --polkadot-branch "$POLKADOT_BRANCH"
+      --kvp-branch "$kvp_BRANCH"
 
 # Ref: https://github.com/paritytech/opstooling/issues/111
 update-node-template:

@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Contains the logic for preparing PVFs. Used by the polkadot-prepare-worker binary.
+//! Contains the logic for preparing PVFs. Used by the kvp-prepare-worker binary.
 
 mod executor_intf;
 mod memory_stats;
@@ -30,7 +30,7 @@ use crate::memory_stats::max_rss_stat::{extract_max_rss_stat, get_max_rss_thread
 #[cfg(any(target_os = "linux", feature = "jemalloc-allocator"))]
 use crate::memory_stats::memory_tracker::{get_memory_tracker_loop_stats, memory_tracker_loop};
 use parity_scale_codec::{Decode, Encode};
-use polkadot_node_core_pvf_common::{
+use kvp_node_core_pvf_common::{
 	error::{PrepareError, PrepareResult},
 	executor_intf::Executor,
 	framed_recv, framed_send,
@@ -45,7 +45,7 @@ use polkadot_node_core_pvf_common::{
 	},
 	ProcessTime,
 };
-use polkadot_primitives::ExecutorParams;
+use kvp_primitives::ExecutorParams;
 use std::{
 	path::PathBuf,
 	sync::{mpsc::channel, Arc},
@@ -174,7 +174,7 @@ pub fn worker_entrypoint(
 					move || {
 						// Try to enable landlock.
 						#[cfg(target_os = "linux")]
-					let landlock_status = polkadot_node_core_pvf_common::worker::security::landlock::try_restrict_thread()
+					let landlock_status = kvp_node_core_pvf_common::worker::security::landlock::try_restrict_thread()
 						.map(LandlockStatus::from_ruleset_status)
 						.map_err(|e| e.to_string());
 						#[cfg(not(target_os = "linux"))]

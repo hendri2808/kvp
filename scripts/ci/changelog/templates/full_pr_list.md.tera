@@ -9,8 +9,8 @@
  - [S] [`{{ change.number }}`]({{ change.html_url }}) - {{ change.title }}
 {%- endfor %}
 
-## polkadot
+## kvp
 
-{%- for change in  polkadot.changes %}
+{%- for change in  kvp.changes %}
  - [P] [`{{ change.number }}`]({{ change.html_url }}) - {{ change.title }}
 {%- endfor %}

@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        runtime: ["polkadot", "kusama", "westend", "rococo"]
+        runtime: ["kvp", "kusama", "westend", "rococo"]
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
@@ -73,7 +73,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          path: polkadot
+          path: kvp
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
@@ -85,7 +85,7 @@ jobs:
 
       - name: Prepare tooling
         run: |
-          cd polkadot/scripts/ci/changelog
+          cd kvp/scripts/ci/changelog
           gem install bundler changelogerator:0.9.1
           bundle install
           changelogerator --help
@@ -105,16 +105,16 @@ jobs:
           ROCOCO_DIGEST: ${{ github.workspace}}/rococo-srtool-json/rococo_srtool_output.json
           WESTEND_DIGEST: ${{ github.workspace}}/westend-srtool-json/westend_srtool_output.json
           KUSAMA_DIGEST: ${{ github.workspace}}/kusama-srtool-json/kusama_srtool_output.json
-          POLKADOT_DIGEST: ${{ github.workspace}}/polkadot-srtool-json/polkadot_srtool_output.json
+          kvp_DIGEST: ${{ github.workspace}}/kvp-srtool-json/kvp_srtool_output.json
           PRE_RELEASE: ${{ github.event.inputs.pre_release }}
         run: |
           find ${{env.GITHUB_WORKSPACE}} -type f -name "*_srtool_output.json"
           ls -al $ROCOCO_DIGEST
           ls -al $WESTEND_DIGEST
           ls -al $KUSAMA_DIGEST
-          ls -al $POLKADOT_DIGEST
+          ls -al $kvp_DIGEST
 
-          cd polkadot/scripts/ci/changelog
+          cd kvp/scripts/ci/changelog
 
           ./bin/changelog ${GITHUB_REF}
           ls -al release-notes.md
@@ -125,7 +125,7 @@ jobs:
         with:
           name: release-notes-context
           path: |
-            polkadot/scripts/ci/changelog/context.json
+            kvp/scripts/ci/changelog/context.json
             **/*_srtool_output.json
 
       - name: Create draft release
@@ -135,8 +135,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref }}
-          release_name: Polkadot ${{ github.ref }}
-          body_path: ./polkadot/scripts/ci/changelog/release-notes.md
+          release_name: kvp ${{ github.ref }}
+          body_path: ./kvp/scripts/ci/changelog/release-notes.md
           draft: true
 
   publish-runtimes:
@@ -146,7 +146,7 @@ jobs:
       RUNTIME_DIR: runtime
     strategy:
       matrix:
-        runtime: ["polkadot", "kusama", "westend", "rococo"]
+        runtime: ["kvp", "kusama", "westend", "rococo"]
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
@@ -184,7 +184,7 @@ jobs:
     strategy:
       matrix:
         channel:
-          - name: "RelEng: Polkadot Release Coordination"
+          - name: "RelEng: kvp Release Coordination"
             room: '!cqAmzdIcbOFwrdrubV:parity.io'
 
     steps:
@@ -195,5 +195,5 @@ jobs:
           access_token: ${{ secrets.RELEASENOTES_MATRIX_V2_ACCESS_TOKEN }}
           server: m.parity.io
           message: |
-            **New version of polkadot tagged**: ${{ github.ref }}<br/>
+            **New version of kvp tagged**: ${{ github.ref }}<br/>
             Draft release created: ${{ needs.publish-draft-release.outputs.release_url }}

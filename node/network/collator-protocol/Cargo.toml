@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-collator-protocol"
+name = "kvp-collator-protocol"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -15,11 +15,11 @@ sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-node-network-protocol = { path = "../../network/protocol" }
-polkadot-node-primitives = { path = "../../primitives" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util" }
-polkadot-node-subsystem = {path = "../../subsystem" }
+kvp-primitives = { path = "../../../primitives" }
+kvp-node-network-protocol = { path = "../../network/protocol" }
+kvp-node-primitives = { path = "../../primitives" }
+kvp-node-subsystem-util = { path = "../../subsystem-util" }
+kvp-node-subsystem = {path = "../../subsystem" }
 fatality = "0.0.6"
 thiserror = "1.0.31"
 tokio-util = "0.7.1"
@@ -35,5 +35,5 @@ sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "maste
 sc-network = { git = "https://github.com/paritytech/substrate", branch = "master" }
 parity-scale-codec = { version = "3.6.1", features = ["std"] }
 
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
-polkadot-primitives-test-helpers = { path = "../../../primitives/test-helpers" }
+kvp-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+kvp-primitives-test-helpers = { path = "../../../primitives/test-helpers" }

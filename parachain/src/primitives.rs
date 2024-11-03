@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Primitive types which are strictly necessary from a parachain-execution point
 //! of view.
@@ -27,10 +27,10 @@ use serde::{Deserialize, Serialize};
 use sp_core::{bytes, RuntimeDebug, TypeId};
 use sp_runtime::traits::Hash as _;
 
-use polkadot_core_primitives::{Hash, OutboundHrmpMessage};
+use kvp_core_primitives::{Hash, OutboundHrmpMessage};
 
 /// Block number type used by the relay chain.
-pub use polkadot_core_primitives::BlockNumber as RelayChainBlockNumber;
+pub use kvp_core_primitives::BlockNumber as RelayChainBlockNumber;
 
 /// Parachain head data included in the chain.
 #[derive(
@@ -368,7 +368,7 @@ impl XcmpMessageHandler for () {
 }
 
 /// Validation parameters for evaluating the parachain validity function.
-// TODO: balance downloads (https://github.com/paritytech/polkadot/issues/220)
+// TODO: balance downloads (https://github.com/paritytech/kvp/issues/220)
 #[derive(PartialEq, Eq, Decode, Clone)]
 #[cfg_attr(feature = "std", derive(Debug, Encode))]
 pub struct ValidationParams {
@@ -399,7 +399,7 @@ pub type HorizontalMessages =
 	BoundedVec<OutboundHrmpMessage<Id>, ConstU32<MAX_HORIZONTAL_MESSAGE_NUM>>;
 
 /// The result of parachain validation.
-// TODO: balance uploads (https://github.com/paritytech/polkadot/issues/220)
+// TODO: balance uploads (https://github.com/paritytech/kvp/issues/220)
 #[derive(PartialEq, Eq, Clone, Encode)]
 #[cfg_attr(feature = "std", derive(Debug, Decode))]
 pub struct ValidationResult {

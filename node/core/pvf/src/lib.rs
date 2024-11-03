@@ -1,26 +1,26 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 #![warn(missing_docs)]
 
 //! The PVF validation host. Responsible for coordinating preparation and execution of PVFs.
 //!
 //! For more background, refer to the Implementer's Guide: [PVF
-//! Pre-checking](https://paritytech.github.io/polkadot/book/pvf-prechecking.html) and [Candidate
-//! Validation](https://paritytech.github.io/polkadot/book/node/utility/candidate-validation.html#pvf-host).
+//! Pre-checking](https://paritytech.github.io/kvp/book/pvf-prechecking.html) and [Candidate
+//! Validation](https://paritytech.github.io/kvp/book/node/utility/candidate-validation.html#pvf-host).
 //!
 //! # Entrypoint
 //!
@@ -33,7 +33,7 @@
 //! compile) in order to pre-check its validity.
 //!
 //! (b) PVF execution. This accepts the PVF
-//! [`params`][`polkadot_parachain::primitives::ValidationParams`]     and the `Pvf` code, prepares
+//! [`params`][`kvp_parachain::primitives::ValidationParams`]     and the `Pvf` code, prepares
 //! (verifies and compiles) the code, and then executes PVF     with the `params`.
 //!
 //! (c) Heads up. This request allows to signal that the given PVF may be needed soon and that it
@@ -86,7 +86,7 @@
 //!
 //! The execute workers will be fed by the requests from the execution queue, which is basically a
 //! combination of a path to the compiled artifact and the
-//! [`params`][`polkadot_parachain::primitives::ValidationParams`].
+//! [`params`][`kvp_parachain::primitives::ValidationParams`].
 
 mod artifacts;
 mod error;
@@ -111,7 +111,7 @@ pub use priority::Priority;
 pub use worker_intf::{framed_recv, framed_send, JOB_TIMEOUT_WALL_CLOCK_FACTOR};
 
 // Re-export some common types.
-pub use polkadot_node_core_pvf_common::{
+pub use kvp_node_core_pvf_common::{
 	error::{InternalValidationError, PrepareError},
 	prepare::{PrepareJobKind, PrepareStats},
 	pvf::PvfPrepData,
@@ -119,9 +119,9 @@ pub use polkadot_node_core_pvf_common::{
 
 // Re-export worker entrypoints.
 #[cfg(feature = "test-utils")]
-pub use polkadot_node_core_pvf_execute_worker::worker_entrypoint as execute_worker_entrypoint;
+pub use kvp_node_core_pvf_execute_worker::worker_entrypoint as execute_worker_entrypoint;
 #[cfg(feature = "test-utils")]
-pub use polkadot_node_core_pvf_prepare_worker::worker_entrypoint as prepare_worker_entrypoint;
+pub use kvp_node_core_pvf_prepare_worker::worker_entrypoint as prepare_worker_entrypoint;
 
 /// The log target for this crate.
 pub const LOG_TARGET: &str = "parachain::pvf";

@@ -25,7 +25,7 @@ cargo-fmt:
     - cargo +nightly fmt --all -- --check
   allow_failure: true
 
-# Disabled in https://github.com/paritytech/polkadot/pull/7512
+# Disabled in https://github.com/paritytech/kvp/pull/7512
 .spellcheck_disabled:
   stage: check
   extends:
@@ -51,7 +51,7 @@ check-try-runtime:
     # Check that everything compiles with `try-runtime` feature flag.
     - cargo check --locked --features try-runtime --all
 
-# More info can be found here: https://github.com/paritytech/polkadot/pull/5865
+# More info can be found here: https://github.com/paritytech/kvp/pull/5865
 .check-runtime-migration:
   stage: check
   extends:
@@ -68,7 +68,7 @@ check-try-runtime:
           --runtime ./target/release/wbuild/"$NETWORK"-runtime/target/wasm32-unknown-unknown/release/"$NETWORK"_runtime.wasm \
           on-runtime-upgrade --checks=pre-and-post live --uri wss://${NETWORK}-try-runtime-node.parity-chains.parity.io:443
 
-check-runtime-migration-polkadot:
+check-runtime-migration-kvp:
   stage: check
   extends:
     - .docker-env
@@ -76,7 +76,7 @@ check-runtime-migration-polkadot:
     - .compiler-info
     - .check-runtime-migration
   variables:
-    NETWORK: "polkadot"
+    NETWORK: "kvp"
   allow_failure: true # FIXME https://github.com/paritytech/substrate/issues/13107
 
 check-runtime-migration-kusama:
@@ -120,7 +120,7 @@ check-no-default-features:
     - .test-refs
     - .compiler-info
   script:
-    # Check that polkadot-cli will compile no default features.
+    # Check that kvp-cli will compile no default features.
     - pushd ./node/service && cargo check --locked --no-default-features && popd
     - pushd ./cli && cargo check --locked --no-default-features --features "service" && popd
     - exit 0

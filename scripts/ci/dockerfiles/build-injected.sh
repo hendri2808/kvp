@@ -24,7 +24,7 @@ VERSION_TOML=$(grep "^version " $PROJECT_ROOT/Cargo.toml | grep -oE "([0-9\.]+-?
 DOCKER_OWNER=${DOCKER_OWNER:-parity}
 
 # We may get 1..n binaries, comma separated
-BINARY=${BINARY:-polkadot}
+BINARY=${BINARY:-kvp}
 IFS=',' read -r -a BINARIES <<< "$BINARY"
 
 VERSION=${VERSION:-$VERSION_TOML}

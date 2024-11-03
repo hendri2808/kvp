@@ -22,8 +22,8 @@ frame-system = { git = "https://github.com/paritytech/substrate", branch = "mast
 pallet-transaction-payment = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
 log = { version = "0.4.17", default-features = false }
 
-# Polkadot dependencies
-polkadot-parachain = { path = "../../parachain", default-features = false }
+# kvp dependencies
+kvp-parachain = { path = "../../parachain", default-features = false }
 
 [dev-dependencies]
 primitive-types = "0.12.1"
@@ -31,10 +31,10 @@ pallet-balances = { git = "https://github.com/paritytech/substrate", branch = "m
 pallet-xcm = { path = "../pallet-xcm" }
 pallet-salary = { git = "https://github.com/paritytech/substrate", branch = "master" }
 pallet-assets = { git = "https://github.com/paritytech/substrate", branch = "master" }
-primitives = { package = "polkadot-primitives", path = "../../primitives" }
-polkadot-runtime-parachains = { path = "../../runtime/parachains" }
+primitives = { package = "kvp-primitives", path = "../../primitives" }
+kvp-runtime-parachains = { path = "../../runtime/parachains" }
 assert_matches = "1.5.0"
-polkadot-test-runtime = { path = "../../runtime/test-runtime" }
+kvp-test-runtime = { path = "../../runtime/test-runtime" }
 
 [features]
 default = ["std"]
@@ -57,6 +57,6 @@ std = [
 	"sp-weights/std",
 	"frame-support/std",
 	"frame-system/std",
-	"polkadot-parachain/std",
+	"kvp-parachain/std",
 	"pallet-transaction-payment/std",
 ]

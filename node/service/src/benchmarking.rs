@@ -1,22 +1,22 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Code related to benchmarking a [`crate::Client`].
 
-use polkadot_primitives::AccountId;
+use kvp_primitives::AccountId;
 use sc_client_api::UsageProvider;
 use sp_keyring::Sr25519Keyring;
 use sp_runtime::OpaqueExtrinsic;
@@ -34,19 +34,19 @@ macro_rules! identify_chain {
 		$generic_code:expr $(,)*
 	) => {
 		match $chain {
-			Chain::Polkadot => {
-				#[cfg(feature = "polkadot-native")]
+			Chain::kvp => {
+				#[cfg(feature = "kvp-native")]
 				{
-					use polkadot_runtime as runtime;
+					use kvp_runtime as runtime;
 
 					let call = $generic_code;
 
-					Ok(polkadot_sign_call(call, $nonce, $current_block, $period, $genesis, $signer))
+					Ok(kvp_sign_call(call, $nonce, $current_block, $period, $genesis, $signer))
 				}
 
-				#[cfg(not(feature = "polkadot-native"))]
+				#[cfg(not(feature = "kvp-native"))]
 				{
-					Err("`polkadot-native` feature not enabled")
+					Err("`kvp-native` feature not enabled")
 				}
 			},
 			Chain::Kusama => {
@@ -130,7 +130,7 @@ impl frame_benchmarking_cli::ExtrinsicBuilder for RemarkBuilder {
 	}
 
 	fn build(&self, nonce: u32) -> std::result::Result<OpaqueExtrinsic, &'static str> {
-		let period = polkadot_runtime_common::BlockHashCount::get()
+		let period = kvp_runtime_common::BlockHashCount::get()
 			.checked_next_power_of_two()
 			.map(|c| c / 2)
 			.unwrap_or(2) as u64;
@@ -181,7 +181,7 @@ impl frame_benchmarking_cli::ExtrinsicBuilder for TransferKeepAliveBuilder {
 
 	fn build(&self, nonce: u32) -> std::result::Result<OpaqueExtrinsic, &'static str> {
 		let signer = Sr25519Keyring::Bob.pair();
-		let period = polkadot_runtime_common::BlockHashCount::get()
+		let period = kvp_runtime_common::BlockHashCount::get()
 			.checked_next_power_of_two()
 			.map(|c| c / 2)
 			.unwrap_or(2) as u64;
@@ -206,9 +206,9 @@ impl frame_benchmarking_cli::ExtrinsicBuilder for TransferKeepAliveBuilder {
 	}
 }
 
-#[cfg(feature = "polkadot-native")]
-fn polkadot_sign_call(
-	call: polkadot_runtime::RuntimeCall,
+#[cfg(feature = "kvp-native")]
+fn kvp_sign_call(
+	call: kvp_runtime::RuntimeCall,
 	nonce: u32,
 	current_block: u64,
 	period: u64,
@@ -216,7 +216,7 @@ fn polkadot_sign_call(
 	acc: sp_core::sr25519::Pair,
 ) -> OpaqueExtrinsic {
 	use codec::Encode;
-	use polkadot_runtime as runtime;
+	use kvp_runtime as runtime;
 	use sp_core::Pair;
 
 	let extra: runtime::SignedExtra = (
@@ -231,7 +231,7 @@ fn polkadot_sign_call(
 		frame_system::CheckNonce::<runtime::Runtime>::from(nonce),
 		frame_system::CheckWeight::<runtime::Runtime>::new(),
 		pallet_transaction_payment::ChargeTransactionPayment::<runtime::Runtime>::from(0),
-		polkadot_runtime_common::claims::PrevalidateAttests::<runtime::Runtime>::new(),
+		kvp_runtime_common::claims::PrevalidateAttests::<runtime::Runtime>::new(),
 	);
 
 	let payload = runtime::SignedPayload::from_raw(
@@ -254,7 +254,7 @@ fn polkadot_sign_call(
 	runtime::UncheckedExtrinsic::new_signed(
 		call,
 		sp_runtime::AccountId32::from(acc.public()).into(),
-		polkadot_core_primitives::Signature::Sr25519(signature.clone()),
+		kvp_core_primitives::Signature::Sr25519(signature.clone()),
 		extra,
 	)
 	.into()
@@ -306,7 +306,7 @@ fn westend_sign_call(
 	runtime::UncheckedExtrinsic::new_signed(
 		call,
 		sp_runtime::AccountId32::from(acc.public()).into(),
-		polkadot_core_primitives::Signature::Sr25519(signature.clone()),
+		kvp_core_primitives::Signature::Sr25519(signature.clone()),
 		extra,
 	)
 	.into()
@@ -358,7 +358,7 @@ fn kusama_sign_call(
 	runtime::UncheckedExtrinsic::new_signed(
 		call,
 		sp_runtime::AccountId32::from(acc.public()).into(),
-		polkadot_core_primitives::Signature::Sr25519(signature.clone()),
+		kvp_core_primitives::Signature::Sr25519(signature.clone()),
 		extra,
 	)
 	.into()
@@ -410,17 +410,17 @@ fn rococo_sign_call(
 	runtime::UncheckedExtrinsic::new_signed(
 		call,
 		sp_runtime::AccountId32::from(acc.public()).into(),
-		polkadot_core_primitives::Signature::Sr25519(signature.clone()),
+		kvp_core_primitives::Signature::Sr25519(signature.clone()),
 		extra,
 	)
 	.into()
 }
 
-/// Generates inherent data for benchmarking Polkadot, Kusama, Westend and Rococo.
+/// Generates inherent data for benchmarking kvp, Kusama, Westend and Rococo.
 ///
 /// Not to be used outside of benchmarking since it returns mocked values.
 pub fn benchmark_inherent_data(
-	header: polkadot_core_primitives::Header,
+	header: kvp_core_primitives::Header,
 ) -> std::result::Result<sp_inherents::InherentData, sp_inherents::Error> {
 	use sp_inherents::InherentDataProvider;
 	let mut inherent_data = sp_inherents::InherentData::new();
@@ -430,14 +430,14 @@ pub fn benchmark_inherent_data(
 	let timestamp = sp_timestamp::InherentDataProvider::new(d.into());
 	futures::executor::block_on(timestamp.provide_inherent_data(&mut inherent_data))?;
 
-	let para_data = polkadot_primitives::InherentData {
+	let para_data = kvp_primitives::InherentData {
 		bitfields: Vec::new(),
 		backed_candidates: Vec::new(),
 		disputes: Vec::new(),
 		parent_header: header,
 	};
 
-	inherent_data.put_data(polkadot_primitives::PARACHAINS_INHERENT_IDENTIFIER, &para_data)?;
+	inherent_data.put_data(kvp_primitives::PARACHAINS_INHERENT_IDENTIFIER, &para_data)?;
 
 	Ok(inherent_data)
 }

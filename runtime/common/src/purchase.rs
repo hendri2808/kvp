@@ -1,5 +1,5 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
 // Substrate is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -429,7 +429,7 @@ impl<T: Config> Pallet<T> {
 			.ok_or(Error::<T>::InvalidSignature)?
 			.into();
 
-		// In Polkadot, the AccountId is always the same as the 32 byte public key.
+		// In kvp, the AccountId is always the same as the 32 byte public key.
 		let account_bytes: [u8; 32] = account_to_bytes(who)?;
 		let public_key = sr25519::Public::from_raw(account_bytes);
 

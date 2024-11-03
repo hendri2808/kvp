@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Implements the Runtime API Subsystem
 //!
@@ -22,13 +22,13 @@
 #![deny(unused_crate_dependencies)]
 #![warn(missing_docs)]
 
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	errors::RuntimeApiError,
 	messages::{RuntimeApiMessage, RuntimeApiRequest as Request},
 	overseer, FromOrchestra, OverseerSignal, SpawnedSubsystem, SubsystemError, SubsystemResult,
 };
-use polkadot_node_subsystem_types::RuntimeApiSubsystemClient;
-use polkadot_primitives::Hash;
+use kvp_node_subsystem_types::RuntimeApiSubsystemClient;
+use kvp_primitives::Hash;
 
 use cache::{RequestResult, RequestResultCache};
 use futures::{channel::oneshot, prelude::*, select, stream::FuturesUnordered};
@@ -49,7 +49,7 @@ const LOG_TARGET: &str = "parachain::runtime-api";
 const MAX_PARALLEL_REQUESTS: usize = 4;
 
 /// The name of the blocking task that executes a runtime API request.
-const API_REQUEST_TASK_NAME: &str = "polkadot-runtime-api-request";
+const API_REQUEST_TASK_NAME: &str = "kvp-runtime-api-request";
 
 /// The `RuntimeApiSubsystem`. See module docs for more details.
 pub struct RuntimeApiSubsystem<Client> {
@@ -310,7 +310,7 @@ where
 		let metrics = self.metrics.clone();
 		let (sender, receiver) = oneshot::channel();
 
-		// TODO: make the cache great again https://github.com/paritytech/polkadot/issues/5546
+		// TODO: make the cache great again https://github.com/paritytech/kvp/issues/5546
 		let request = match self.query_cache(relay_parent, request) {
 			Some(request) => request,
 			None => return,

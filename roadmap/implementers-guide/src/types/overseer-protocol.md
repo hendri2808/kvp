@@ -452,7 +452,7 @@ enum CollatorProtocolMessage {
 
 Messages received by the [Collation Generation subsystem](../node/collators/collation-generation.md)
 
-This is the core interface by which collators built on top of a Polkadot node submit collations to validators. As such, these messages are not sent by any subsystem but are instead sent from outside of the overseer.
+This is the core interface by which collators built on top of a kvp node submit collations to validators. As such, these messages are not sent by any subsystem but are instead sent from outside of the overseer.
 
 ```rust
 /// A function provided to the subsystem which it uses to pull new collations.

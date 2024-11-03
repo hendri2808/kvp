@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Support data structures for `MultiLocation`, primarily the `Junction` datatype.
 
@@ -33,7 +33,7 @@ use serde::{Deserialize, Serialize};
 /// A global identifier of a data structure existing within consensus.
 ///
 /// Maintenance note: Networks with global consensus and which are practically bridgeable within the
-/// Polkadot ecosystem are given preference over explicit naming in this enumeration.
+/// kvp ecosystem are given preference over explicit naming in this enumeration.
 #[derive(
 	Copy,
 	Clone,
@@ -54,8 +54,8 @@ pub enum NetworkId {
 	ByGenesis([u8; 32]),
 	/// Network defined by the first 32-bytes of the hash and number of some block it contains.
 	ByFork { block_number: u64, block_hash: [u8; 32] },
-	/// The Polkadot mainnet Relay-chain.
-	Polkadot,
+	/// The kvp mainnet Relay-chain.
+	kvp,
 	/// The Kusama canary-net Relay-chain.
 	Kusama,
 	/// The Westend testnet Relay-chain.
@@ -82,7 +82,7 @@ impl From<OldNetworkId> for Option<NetworkId> {
 		match old {
 			Any => None,
 			Named(_) => None,
-			Polkadot => Some(NetworkId::Polkadot),
+			kvp => Some(NetworkId::kvp),
 			Kusama => Some(NetworkId::Kusama),
 		}
 	}
@@ -94,7 +94,7 @@ impl TryFrom<OldNetworkId> for NetworkId {
 		use OldNetworkId::*;
 		match old {
 			Any | Named(_) => Err(()),
-			Polkadot => Ok(NetworkId::Polkadot),
+			kvp => Ok(NetworkId::kvp),
 			Kusama => Ok(NetworkId::Kusama),
 		}
 	}
@@ -123,23 +123,23 @@ pub enum BodyId {
 	Moniker([u8; 4]),
 	/// An indexed body.
 	Index(#[codec(compact)] u32),
-	/// The unambiguous executive body (for Polkadot, this would be the Polkadot council).
+	/// The unambiguous executive body (for kvp, this would be the kvp council).
 	Executive,
-	/// The unambiguous technical body (for Polkadot, this would be the Technical Committee).
+	/// The unambiguous technical body (for kvp, this would be the Technical Committee).
 	Technical,
-	/// The unambiguous legislative body (for Polkadot, this could be considered the opinion of a
+	/// The unambiguous legislative body (for kvp, this could be considered the opinion of a
 	/// majority of lock-voters).
 	Legislative,
-	/// The unambiguous judicial body (this doesn't exist on Polkadot, but if it were to get a
+	/// The unambiguous judicial body (this doesn't exist on kvp, but if it were to get a
 	/// "grand oracle", it may be considered as that).
 	Judicial,
-	/// The unambiguous defense body (for Polkadot, an opinion on the topic given via a public
+	/// The unambiguous defense body (for kvp, an opinion on the topic given via a public
 	/// referendum on the `staking_admin` track).
 	Defense,
-	/// The unambiguous administration body (for Polkadot, an opinion on the topic given via a
+	/// The unambiguous administration body (for kvp, an opinion on the topic given via a
 	/// public referendum on the `general_admin` track).
 	Administration,
-	/// The unambiguous treasury body (for Polkadot, an opinion on the topic given via a public
+	/// The unambiguous treasury body (for kvp, an opinion on the topic given via a public
 	/// referendum on the `treasurer` track).
 	Treasury,
 }
@@ -264,7 +264,7 @@ impl TryFrom<OldBodyPart> for BodyPart {
 pub enum Junction {
 	/// An indexed parachain belonging to and operated by the context.
 	///
-	/// Generally used when the context is a Polkadot Relay-chain.
+	/// Generally used when the context is a kvp Relay-chain.
 	Parachain(#[codec(compact)] u32),
 	/// A 32-byte identifier for an account of a specific network that is respected as a sovereign
 	/// endpoint within the context.

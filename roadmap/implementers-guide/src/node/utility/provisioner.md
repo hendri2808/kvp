@@ -102,7 +102,7 @@ The state of the provisioner `PerRelayParent` tracks an important setting, `Pros
 `ProspectiveParachainsMode::Disabled` - The provisioner uses its own internal legacy candidate selection. 
 `ProspectiveParachainsMode::Enabled` - The provisioner requests that [prospective parachains](../backing/prospective-parachains.md) provide selected candidates.
 
-Candidates selected with `ProspectiveParachainsMode::Enabled` are able to benefit from the increased block production time asynchronous backing allows. For this reason all Polkadot protocol networks will eventually use prospective parachains candidate selection. Then legacy candidate selection will be removed as obsolete.
+Candidates selected with `ProspectiveParachainsMode::Enabled` are able to benefit from the increased block production time asynchronous backing allows. For this reason all kvp protocol networks will eventually use prospective parachains candidate selection. Then legacy candidate selection will be removed as obsolete.
 
 ### Prospective Parachains Candidate Selection
 

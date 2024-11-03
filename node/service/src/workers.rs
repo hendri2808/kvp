@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Utilities and tests for locating the PVF worker binaries.
 
@@ -23,7 +23,7 @@ use std::{path::PathBuf, process::Command};
 #[cfg(test)]
 use std::sync::{Mutex, OnceLock};
 
-/// Override the workers polkadot binary directory path, used for testing.
+/// Override the workers kvp binary directory path, used for testing.
 #[cfg(test)]
 fn workers_exe_path_override() -> &'static Mutex<Option<PathBuf>> {
 	static OVERRIDE: OnceLock<Mutex<Option<PathBuf>>> = OnceLock::new();
@@ -133,7 +133,7 @@ fn list_workers_paths(
 
 	let mut workers_paths = vec![];
 
-	// Consider the polkadot binary directory.
+	// Consider the kvp binary directory.
 	{
 		let exe_path = get_exe_path()?;
 
@@ -152,10 +152,10 @@ fn list_workers_paths(
 		}
 	}
 
-	// Consider the /usr/lib/polkadot/ directory.
+	// Consider the /usr/lib/kvp/ directory.
 	{
 		#[allow(unused_mut)]
-		let mut lib_path = PathBuf::from("/usr/lib/polkadot");
+		let mut lib_path = PathBuf::from("/usr/lib/kvp");
 		#[cfg(test)]
 		if let Some(ref path_override) = *workers_lib_path_override().lock().unwrap() {
 			lib_path = path_override.clone();
@@ -166,7 +166,7 @@ fn list_workers_paths(
 		// Add to set if both workers exist. Warn on partial installs.
 		let (prep_worker_exists, exec_worker_exists) = (prep_worker.exists(), exec_worker.exists());
 		if prep_worker_exists && exec_worker_exists {
-			log::trace!("Worker binaries found at /usr/lib/polkadot");
+			log::trace!("Worker binaries found at /usr/lib/kvp");
 			workers_paths.push((prep_worker, exec_worker));
 		} else if prep_worker_exists {
 			log::warn!("Worker binary found at {:?} but not {:?}", prep_worker, exec_worker);
@@ -193,8 +193,8 @@ fn build_worker_paths(
 	workers_names: Option<(String, String)>,
 ) -> (PathBuf, PathBuf) {
 	let (prep_worker_name, exec_worker_name) = workers_names.unwrap_or((
-		polkadot_node_core_pvf::PREPARE_BINARY_NAME.to_string(),
-		polkadot_node_core_pvf::EXECUTE_BINARY_NAME.to_string(),
+		kvp_node_core_pvf::PREPARE_BINARY_NAME.to_string(),
+		kvp_node_core_pvf::EXECUTE_BINARY_NAME.to_string(),
 	));
 
 	let mut prep_worker = worker_dir.clone();
@@ -258,10 +258,10 @@ echo {}
 	fn with_temp_dir_structure(
 		f: impl FnOnce(PathBuf, PathBuf) -> Result<(), Box<dyn std::error::Error>>,
 	) -> Result<(), Box<dyn std::error::Error>> {
-		// Set up <tmp>/usr/lib/polkadot and <tmp>/usr/bin, both empty.
+		// Set up <tmp>/usr/lib/kvp and <tmp>/usr/bin, both empty.
 
 		let tempdir = temp_dir();
-		let lib_path = tempdir.join("usr/lib/polkadot");
+		let lib_path = tempdir.join("usr/lib/kvp");
 		let _ = fs::remove_dir_all(&lib_path);
 		fs::create_dir_all(&lib_path)?;
 		*workers_lib_path_override().lock()? = Some(lib_path);
@@ -292,10 +292,10 @@ echo {}
 			);
 
 			// Try with provided workers path that has non-executable binaries.
-			let prepare_worker_path = given_workers_path.join("polkadot-prepare-worker");
+			let prepare_worker_path = given_workers_path.join("kvp-prepare-worker");
 			write_worker_exe(&prepare_worker_path)?;
 			fs::set_permissions(&prepare_worker_path, fs::Permissions::from_mode(0o644))?;
-			let execute_worker_path = given_workers_path.join("polkadot-execute-worker");
+			let execute_worker_path = given_workers_path.join("kvp-execute-worker");
 			write_worker_exe(&execute_worker_path)?;
 			fs::set_permissions(&execute_worker_path, fs::Permissions::from_mode(0o644))?;
 			assert_matches!(
@@ -335,7 +335,7 @@ echo {}
 			);
 
 			// Try with only prep worker (at bin location).
-			let prepare_worker_path = tempdir.join("usr/bin/polkadot-prepare-worker");
+			let prepare_worker_path = tempdir.join("usr/bin/kvp-prepare-worker");
 			write_worker_exe(&prepare_worker_path)?;
 			assert_matches!(
 				determine_workers_paths(None, None, Some(NODE_VERSION.into())),
@@ -344,7 +344,7 @@ echo {}
 
 			// Try with only exec worker (at bin location).
 			fs::remove_file(&prepare_worker_path)?;
-			let execute_worker_path = tempdir.join("usr/bin/polkadot-execute-worker");
+			let execute_worker_path = tempdir.join("usr/bin/kvp-execute-worker");
 			write_worker_exe(&execute_worker_path)?;
 			assert_matches!(
 				determine_workers_paths(None, None, Some(NODE_VERSION.into())),
@@ -353,7 +353,7 @@ echo {}
 
 			// Try with only prep worker (at lib location).
 			fs::remove_file(&execute_worker_path)?;
-			let prepare_worker_path = tempdir.join("usr/lib/polkadot/polkadot-prepare-worker");
+			let prepare_worker_path = tempdir.join("usr/lib/kvp/kvp-prepare-worker");
 			write_worker_exe(&prepare_worker_path)?;
 			assert_matches!(
 				determine_workers_paths(None, None, Some(NODE_VERSION.into())),
@@ -362,7 +362,7 @@ echo {}
 
 			// Try with only exec worker (at lib location).
 			fs::remove_file(&prepare_worker_path)?;
-			let execute_worker_path = tempdir.join("usr/lib/polkadot/polkadot-execute-worker");
+			let execute_worker_path = tempdir.join("usr/lib/kvp/kvp-execute-worker");
 			write_worker_exe(execute_worker_path)?;
 			assert_matches!(
 				determine_workers_paths(None, None, Some(NODE_VERSION.into())),
@@ -378,16 +378,16 @@ echo {}
 	#[serial]
 	fn should_find_workers_at_all_locations() {
 		with_temp_dir_structure(|tempdir, _| {
-				let prepare_worker_bin_path = tempdir.join("usr/bin/polkadot-prepare-worker");
+				let prepare_worker_bin_path = tempdir.join("usr/bin/kvp-prepare-worker");
 				write_worker_exe(&prepare_worker_bin_path)?;
 
-				let execute_worker_bin_path = tempdir.join("usr/bin/polkadot-execute-worker");
+				let execute_worker_bin_path = tempdir.join("usr/bin/kvp-execute-worker");
 				write_worker_exe(&execute_worker_bin_path)?;
 
-				let prepare_worker_lib_path = tempdir.join("usr/lib/polkadot/polkadot-prepare-worker");
+				let prepare_worker_lib_path = tempdir.join("usr/lib/kvp/kvp-prepare-worker");
 				write_worker_exe(&prepare_worker_lib_path)?;
 
-				let execute_worker_lib_path = tempdir.join("usr/lib/polkadot/polkadot-execute-worker");
+				let execute_worker_lib_path = tempdir.join("usr/lib/kvp/kvp-execute-worker");
 				write_worker_exe(&execute_worker_lib_path)?;
 
 				assert_matches!(
@@ -412,10 +412,10 @@ echo {}
 			let execute_worker_bin_path = tempdir.join("usr/bin").join(exec_worker_name);
 			write_worker_exe(&execute_worker_bin_path)?;
 
-			let prepare_worker_lib_path = tempdir.join("usr/lib/polkadot").join(prep_worker_name);
+			let prepare_worker_lib_path = tempdir.join("usr/lib/kvp").join(prep_worker_name);
 			write_worker_exe(&prepare_worker_lib_path)?;
 
-			let execute_worker_lib_path = tempdir.join("usr/lib/polkadot").join(exec_worker_name);
+			let execute_worker_lib_path = tempdir.join("usr/lib/kvp").join(exec_worker_name);
 			write_worker_exe(&execute_worker_lib_path)?;
 
 			assert_matches!(
@@ -435,8 +435,8 @@ echo {}
 
 		with_temp_dir_structure(|tempdir, _| {
 			// Workers at bin location return bad version.
-			let prepare_worker_bin_path = tempdir.join("usr/bin/polkadot-prepare-worker");
-			let execute_worker_bin_path = tempdir.join("usr/bin/polkadot-execute-worker");
+			let prepare_worker_bin_path = tempdir.join("usr/bin/kvp-prepare-worker");
+			let execute_worker_bin_path = tempdir.join("usr/bin/kvp-execute-worker");
 			write_worker_exe_invalid_version(&prepare_worker_bin_path, bad_version)?;
 			write_worker_exe(&execute_worker_bin_path)?;
 			assert_matches!(
@@ -447,8 +447,8 @@ echo {}
 			// Workers at lib location return bad version.
 			fs::remove_file(prepare_worker_bin_path)?;
 			fs::remove_file(execute_worker_bin_path)?;
-			let prepare_worker_lib_path = tempdir.join("usr/lib/polkadot/polkadot-prepare-worker");
-			let execute_worker_lib_path = tempdir.join("usr/lib/polkadot/polkadot-execute-worker");
+			let prepare_worker_lib_path = tempdir.join("usr/lib/kvp/kvp-prepare-worker");
+			let execute_worker_lib_path = tempdir.join("usr/lib/kvp/kvp-execute-worker");
 			write_worker_exe(&prepare_worker_lib_path)?;
 			write_worker_exe_invalid_version(&execute_worker_lib_path, bad_version)?;
 			assert_matches!(
@@ -458,8 +458,8 @@ echo {}
 
 			// Workers at provided workers location return bad version.
 			let given_workers_path = tempdir.join("usr/local/bin");
-			let prepare_worker_path = given_workers_path.join("polkadot-prepare-worker");
-			let execute_worker_path = given_workers_path.join("polkadot-execute-worker");
+			let prepare_worker_path = given_workers_path.join("kvp-prepare-worker");
+			let execute_worker_path = given_workers_path.join("kvp-execute-worker");
 			write_worker_exe_invalid_version(&prepare_worker_path, bad_version)?;
 			write_worker_exe_invalid_version(&execute_worker_path, bad_version)?;
 			assert_matches!(
@@ -485,10 +485,10 @@ echo {}
 	fn should_find_valid_workers() {
 		// Test bin location.
 		with_temp_dir_structure(|tempdir, _| {
-			let prepare_worker_bin_path = tempdir.join("usr/bin/polkadot-prepare-worker");
+			let prepare_worker_bin_path = tempdir.join("usr/bin/kvp-prepare-worker");
 			write_worker_exe(&prepare_worker_bin_path)?;
 
-			let execute_worker_bin_path = tempdir.join("usr/bin/polkadot-execute-worker");
+			let execute_worker_bin_path = tempdir.join("usr/bin/kvp-execute-worker");
 			write_worker_exe(&execute_worker_bin_path)?;
 
 			assert_matches!(
@@ -502,10 +502,10 @@ echo {}
 
 		// Test lib location.
 		with_temp_dir_structure(|tempdir, _| {
-			let prepare_worker_lib_path = tempdir.join("usr/lib/polkadot/polkadot-prepare-worker");
+			let prepare_worker_lib_path = tempdir.join("usr/lib/kvp/kvp-prepare-worker");
 			write_worker_exe(&prepare_worker_lib_path)?;
 
-			let execute_worker_lib_path = tempdir.join("usr/lib/polkadot/polkadot-execute-worker");
+			let execute_worker_lib_path = tempdir.join("usr/lib/kvp/kvp-execute-worker");
 			write_worker_exe(&execute_worker_lib_path)?;
 
 			assert_matches!(

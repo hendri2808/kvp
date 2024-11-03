@@ -2,7 +2,7 @@ FROM docker.io/parity/base-bin
 
 # This file allows building a Generic container image
 # based on one or multiple pre-built Linux binaries.
-# Some defaults are set to polkadot but all can be overriden.
+# Some defaults are set to kvp but all can be overriden.
 
 SHELL ["/bin/bash", "-c"]
 
@@ -12,11 +12,11 @@ ARG BUILD_DATE
 ARG IMAGE_NAME
 
 # That can be a single one or a comma separated list
-ARG BINARY=polkadot
+ARG BINARY=kvp
 
 ARG BIN_FOLDER=.
-ARG DOC_URL=https://github.com/paritytech/polkadot
-ARG DESCRIPTION="Polkadot: a platform for web3"
+ARG DOC_URL=https://github.com/paritytech/kvp
+ARG DESCRIPTION="kvp: a platform for web3"
 ARG AUTHORS="devops-team@parity.io"
 ARG VENDOR="Parity Technologies"
 
@@ -27,13 +27,13 @@ LABEL io.parity.image.authors=${AUTHORS} \
 	io.parity.image.created="${BUILD_DATE}" \
 	io.parity.image.documentation="${DOC_URL}" \
 	io.parity.image.description="${DESCRIPTION}" \
-	io.parity.image.source="https://github.com/paritytech/polkadot/blob/${VCS_REF}/scripts/ci/dockerfiles/binary_injected.Dockerfile"
+	io.parity.image.source="https://github.com/paritytech/kvp/blob/${VCS_REF}/scripts/ci/dockerfiles/binary_injected.Dockerfile"
 
 USER root
 WORKDIR /app
 
-# add polkadot binary to docker image
-# sample for polkadot: COPY ./polkadot ./polkadot-*-worker /usr/local/bin/
+# add kvp binary to docker image
+# sample for kvp: COPY ./kvp ./kvp-*-worker /usr/local/bin/
 COPY entrypoint.sh .
 COPY "bin/*" "/usr/local/bin/"
 RUN chmod -R a+rx "/usr/local/bin"

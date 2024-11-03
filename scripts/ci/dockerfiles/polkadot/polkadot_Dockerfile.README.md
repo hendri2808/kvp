@@ -1,7 +1,7 @@
-# Polkadot official Docker image
+# kvp official Docker image
 
-## [Polkadot](https://polkadot.network/)
+## [kvp](https://kvp.network/)
 
-## [GitHub](https://github.com/paritytech/polkadot)
+## [GitHub](https://github.com/paritytech/kvp)
 
-## [Polkadot Wiki](https://wiki.polkadot.network/)
+## [kvp Wiki](https://wiki.kvp.network/)

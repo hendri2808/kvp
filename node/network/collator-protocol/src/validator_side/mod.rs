@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use futures::{
 	channel::oneshot, future::BoxFuture, select, stream::FuturesUnordered, FutureExt, StreamExt,
@@ -29,7 +29,7 @@ use tokio_util::sync::CancellationToken;
 
 use sp_keystore::KeystorePtr;
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	self as net_protocol,
 	peer_set::{CollationVersion, PeerSet},
 	request_response::{
@@ -39,8 +39,8 @@ use polkadot_node_network_protocol::{
 	v1 as protocol_v1, vstaging as protocol_vstaging, OurView, PeerId,
 	UnifiedReputationChange as Rep, Versioned, View,
 };
-use polkadot_node_primitives::{SignedFullStatement, Statement};
-use polkadot_node_subsystem::{
+use kvp_node_primitives::{SignedFullStatement, Statement};
+use kvp_node_subsystem::{
 	jaeger,
 	messages::{
 		CanSecondRequest, CandidateBackingMessage, CollatorProtocolMessage, IfDisconnected,
@@ -49,12 +49,12 @@ use polkadot_node_subsystem::{
 	},
 	overseer, CollatorProtocolSenderTrait, FromOrchestra, OverseerSignal, PerLeafSpan,
 };
-use polkadot_node_subsystem_util::{
+use kvp_node_subsystem_util::{
 	backing_implicit_view::View as ImplicitView,
 	reputation::{ReputationAggregator, REPUTATION_CHANGE_INTERVAL},
 	runtime::{prospective_parachains_mode, ProspectiveParachainsMode},
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	CandidateHash, CollatorId, CoreState, Hash, Id as ParaId, OccupiedCoreAssumption,
 	PersistedValidationData,
 };
@@ -380,7 +380,7 @@ struct State {
 
 	/// All active leaves observed by us, including both that do and do not
 	/// support prospective parachains. This mapping works as a replacement for
-	/// [`polkadot_node_network_protocol::View`] and can be dropped once the transition
+	/// [`kvp_node_network_protocol::View`] and can be dropped once the transition
 	/// to asynchronous backing is done.
 	active_leaves: HashMap<Hash, ProspectiveParachainsMode>,
 
@@ -460,24 +460,24 @@ async fn assign_incoming<Sender>(
 where
 	Sender: CollatorProtocolSenderTrait,
 {
-	let validators = polkadot_node_subsystem_util::request_validators(relay_parent, sender)
+	let validators = kvp_node_subsystem_util::request_validators(relay_parent, sender)
 		.await
 		.await
 		.map_err(Error::CancelledActiveValidators)??;
 
 	let (groups, rotation_info) =
-		polkadot_node_subsystem_util::request_validator_groups(relay_parent, sender)
+		kvp_node_subsystem_util::request_validator_groups(relay_parent, sender)
 			.await
 			.await
 			.map_err(Error::CancelledValidatorGroups)??;
 
-	let cores = polkadot_node_subsystem_util::request_availability_cores(relay_parent, sender)
+	let cores = kvp_node_subsystem_util::request_availability_cores(relay_parent, sender)
 		.await
 		.await
 		.map_err(Error::CancelledAvailabilityCores)??;
 
-	let para_now = match polkadot_node_subsystem_util::signing_key_and_index(&validators, keystore)
-		.and_then(|(_, index)| polkadot_node_subsystem_util::find_validator_group(&groups, index))
+	let para_now = match kvp_node_subsystem_util::signing_key_and_index(&validators, keystore)
+		.and_then(|(_, index)| kvp_node_subsystem_util::find_validator_group(&groups, index))
 	{
 		Some(group) => {
 			let core_now = rotation_info.core_for_group(group, cores.len());
@@ -1739,7 +1739,7 @@ where
 	Sender: CollatorProtocolSenderTrait,
 {
 	// The core is guaranteed to be scheduled since we accepted the advertisement.
-	polkadot_node_subsystem_util::request_persisted_validation_data(
+	kvp_node_subsystem_util::request_persisted_validation_data(
 		relay_parent,
 		para_id,
 		OccupiedCoreAssumption::Free,
@@ -1924,7 +1924,7 @@ async fn handle_collation_fetch_response(
 				"Request timed out"
 			);
 			// For now we don't want to change reputation on timeout, to mitigate issues like
-			// this: https://github.com/paritytech/polkadot/issues/4617
+			// this: https://github.com/paritytech/kvp/issues/4617
 			Err(None)
 		},
 		Err(RequestError::NetworkError(err)) => {

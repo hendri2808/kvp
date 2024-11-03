@@ -246,7 +246,7 @@ This is probably an argument for not imposing a too low rate limit, although the
 issue is more general: Even without any rate limit, if an attacker generates
 disputes at a very high rate, nodes will be having trouble keeping participation
 up, hence the problem should be mitigated at a [more fundamental
-layer](https://github.com/paritytech/polkadot/issues/5898).
+layer](https://github.com/paritytech/kvp/issues/5898).
 
 For nodes that have been offline for a while, the same argument as for session
 changes holds, but matters even less: We assume 2/3 of nodes to be online, so

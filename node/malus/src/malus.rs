@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! A malus or nemesis node launch code.
 
@@ -28,7 +28,7 @@ use variants::*;
 
 /// Define the different variants of behavior.
 #[derive(Debug, Parser)]
-#[command(about = "Malus - the nemesis of polkadot.", version, rename_all = "kebab-case")]
+#[command(about = "Malus - the nemesis of kvp.", version, rename_all = "kebab-case")]
 enum NemesisVariant {
 	/// Suggest a candidate with an invalid proof of validity.
 	SuggestGarbageCandidate(SuggestGarbageCandidateOptions),
@@ -55,12 +55,12 @@ impl MalusCli {
 			NemesisVariant::BackGarbageCandidate(opts) => {
 				let BackGarbageCandidateOptions { percentage, cli } = opts;
 
-				polkadot_cli::run_node(cli, BackGarbageCandidates { percentage }, finality_delay)?
+				kvp_cli::run_node(cli, BackGarbageCandidates { percentage }, finality_delay)?
 			},
 			NemesisVariant::SuggestGarbageCandidate(opts) => {
 				let SuggestGarbageCandidateOptions { percentage, cli } = opts;
 
-				polkadot_cli::run_node(
+				kvp_cli::run_node(
 					cli,
 					SuggestGarbageCandidates { percentage },
 					finality_delay,
@@ -74,7 +74,7 @@ impl MalusCli {
 					cli,
 				} = opts;
 
-				polkadot_cli::run_node(
+				kvp_cli::run_node(
 					cli,
 					DisputeValidCandidates { fake_validation, fake_validation_error, percentage },
 					finality_delay,

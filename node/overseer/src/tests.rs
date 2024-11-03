@@ -1,35 +1,35 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use async_trait::async_trait;
 use futures::{executor, pending, pin_mut, poll, select, stream, FutureExt};
 use std::{collections::HashMap, sync::atomic, task::Poll};
 
 use ::test_helpers::{dummy_candidate_descriptor, dummy_candidate_receipt, dummy_hash};
-use polkadot_node_network_protocol::{PeerId, UnifiedReputationChange};
-use polkadot_node_primitives::{
+use kvp_node_network_protocol::{PeerId, UnifiedReputationChange};
+use kvp_node_primitives::{
 	BlockData, CollationGenerationConfig, CollationResult, DisputeMessage, InvalidDisputeVote, PoV,
 	UncheckedDisputeMessage, ValidDisputeVote,
 };
-use polkadot_node_subsystem_types::{
+use kvp_node_subsystem_types::{
 	jaeger,
 	messages::{NetworkBridgeEvent, ReportPeerMessage, RuntimeApiRequest},
 	ActivatedLeaf, LeafStatus,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	CandidateHash, CandidateReceipt, CollatorPair, Id as ParaId, InvalidDisputeStatementKind,
 	PvfExecTimeoutKind, SessionIndex, ValidDisputeStatementKind, ValidatorIndex,
 };
@@ -266,9 +266,9 @@ fn extract_metrics(registry: &prometheus::Registry) -> HashMap<&'static str, u64
 			.get_value() as u64
 	};
 
-	let activated = extract("polkadot_parachain_activated_heads_total");
-	let deactivated = extract("polkadot_parachain_deactivated_heads_total");
-	let relayed = extract("polkadot_parachain_messages_relayed_total");
+	let activated = extract("kvp_parachain_activated_heads_total");
+	let deactivated = extract("kvp_parachain_deactivated_heads_total");
+	let relayed = extract("kvp_parachain_messages_relayed_total");
 	let mut result = HashMap::new();
 	result.insert("activated", activated);
 	result.insert("deactivated", deactivated);

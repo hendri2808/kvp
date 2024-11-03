@@ -25,19 +25,19 @@ build-linux-stable:
     # pack artifacts
     - mkdir -p ./artifacts
     - VERSION="${CI_COMMIT_REF_NAME}" # will be tag or branch name
-    - mv ./target/testnet/polkadot ./artifacts/.
-    - mv ./target/testnet/polkadot-prepare-worker ./artifacts/.
-    - mv ./target/testnet/polkadot-execute-worker ./artifacts/.
+    - mv ./target/testnet/kvp ./artifacts/.
+    - mv ./target/testnet/kvp-prepare-worker ./artifacts/.
+    - mv ./target/testnet/kvp-execute-worker ./artifacts/.
     - pushd artifacts
-    - sha256sum polkadot | tee polkadot.sha256
-    - shasum -c polkadot.sha256
+    - sha256sum kvp | tee kvp.sha256
+    - shasum -c kvp.sha256
     - popd
     - EXTRATAG="${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}"
-    - echo "Polkadot version = ${VERSION} (EXTRATAG = ${EXTRATAG})"
+    - echo "kvp version = ${VERSION} (EXTRATAG = ${EXTRATAG})"
     - echo -n ${VERSION} > ./artifacts/VERSION
     - echo -n ${EXTRATAG} > ./artifacts/EXTRATAG
     - echo -n ${CI_JOB_ID} > ./artifacts/BUILD_LINUX_JOB_ID
-    - RELEASE_VERSION=$(./artifacts/polkadot -V | awk '{print $2}'| awk -F "-" '{print $1}')
+    - RELEASE_VERSION=$(./artifacts/kvp -V | awk '{print $2}'| awk -F "-" '{print $1}')
     - echo -n "v${RELEASE_VERSION}" > ./artifacts/BUILD_RELEASE_VERSION
 
 build-test-collators:
@@ -77,15 +77,15 @@ build-malus:
     - .compiler-info
     - .collect-artifacts
   script:
-    - time cargo build --locked --profile testnet --verbose -p polkadot-test-malus
+    - time cargo build --locked --profile testnet --verbose -p kvp-test-malus
     # pack artifacts
     - mkdir -p ./artifacts
     - mv ./target/testnet/malus ./artifacts/.
-    - mv ./target/testnet/polkadot-execute-worker ./artifacts/.
-    - mv ./target/testnet/polkadot-prepare-worker ./artifacts/.
+    - mv ./target/testnet/kvp-execute-worker ./artifacts/.
+    - mv ./target/testnet/kvp-prepare-worker ./artifacts/.
     - echo -n "${CI_COMMIT_REF_NAME}" > ./artifacts/VERSION
     - echo -n "${CI_COMMIT_REF_NAME}-${CI_COMMIT_SHORT_SHA}" > ./artifacts/EXTRATAG
-    - echo "polkadot-test-malus = $(cat ./artifacts/VERSION) (EXTRATAG = $(cat ./artifacts/EXTRATAG))"
+    - echo "kvp-test-malus = $(cat ./artifacts/VERSION) (EXTRATAG = $(cat ./artifacts/EXTRATAG))"
 
 build-staking-miner:
   stage: build
@@ -134,7 +134,7 @@ build-rustdoc:
     - mv ./target/doc ./crate-docs
     # FIXME: remove me after CI image gets nonroot
     - chown -R nonroot:nonroot ./crate-docs
-    - echo "<meta http-equiv=refresh content=0;url=polkadot_service/index.html>" > ./crate-docs/index.html
+    - echo "<meta http-equiv=refresh content=0;url=kvp_service/index.html>" > ./crate-docs/index.html
 
 build-implementers-guide:
   stage: build
@@ -147,7 +147,7 @@ build-implementers-guide:
     - .kubernetes-env
     - .test-refs
     - .collect-artifacts-short
-  # git depth is set on purpose: https://github.com/paritytech/polkadot/issues/6284
+  # git depth is set on purpose: https://github.com/paritytech/kvp/issues/6284
   variables:
     GIT_STRATEGY: clone
     GIT_DEPTH: 0
@@ -171,4 +171,4 @@ build-short-benchmark:
   script:
     - cargo build --profile release --locked --features=runtime-benchmarks
     - mkdir artifacts
-    - cp ./target/release/polkadot ./artifacts/
+    - cp ./target/release/kvp ./artifacts/

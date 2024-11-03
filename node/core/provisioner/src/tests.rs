@@ -1,23 +1,23 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use ::test_helpers::{dummy_candidate_descriptor, dummy_hash};
 use bitvec::bitvec;
-use polkadot_primitives::{OccupiedCore, ScheduledCore};
+use kvp_primitives::{OccupiedCore, ScheduledCore};
 
 const MOCK_GROUP_SIZE: usize = 5;
 
@@ -58,7 +58,7 @@ pub fn scheduled_core(id: u32) -> ScheduledCore {
 
 mod select_availability_bitfields {
 	use super::{super::*, default_bitvec, occupied_core};
-	use polkadot_primitives::{ScheduledCore, SigningContext, ValidatorId, ValidatorIndex};
+	use kvp_primitives::{ScheduledCore, SigningContext, ValidatorId, ValidatorIndex};
 	use sp_application_crypto::AppCrypto;
 	use sp_keystore::{testing::MemoryKeystore, Keystore, KeystorePtr};
 	use std::sync::Arc;
@@ -214,8 +214,8 @@ mod select_availability_bitfields {
 pub(crate) mod common {
 	use super::super::*;
 	use futures::channel::mpsc;
-	use polkadot_node_subsystem::messages::AllMessages;
-	use polkadot_node_subsystem_test_helpers::TestSubsystemSender;
+	use kvp_node_subsystem::messages::AllMessages;
+	use kvp_node_subsystem_test_helpers::TestSubsystemSender;
 
 	pub fn test_harness<OverseerFactory, Overseer, TestFactory, Test>(
 		overseer_factory: OverseerFactory,
@@ -226,7 +226,7 @@ pub(crate) mod common {
 		TestFactory: FnOnce(TestSubsystemSender) -> Test,
 		Test: Future<Output = ()>,
 	{
-		let (tx, rx) = polkadot_node_subsystem_test_helpers::sender_receiver();
+		let (tx, rx) = kvp_node_subsystem_test_helpers::sender_receiver();
 		let overseer = overseer_factory(rx);
 		let test = test_factory(tx);
 
@@ -243,15 +243,15 @@ mod select_candidates {
 	};
 	use ::test_helpers::{dummy_candidate_descriptor, dummy_hash};
 	use futures::channel::mpsc;
-	use polkadot_node_subsystem::messages::{
+	use kvp_node_subsystem::messages::{
 		AllMessages, RuntimeApiMessage,
 		RuntimeApiRequest::{
 			AvailabilityCores, PersistedValidationData as PersistedValidationDataReq,
 		},
 	};
-	use polkadot_node_subsystem_test_helpers::TestSubsystemSender;
-	use polkadot_node_subsystem_util::runtime::ProspectiveParachainsMode;
-	use polkadot_primitives::{
+	use kvp_node_subsystem_test_helpers::TestSubsystemSender;
+	use kvp_node_subsystem_util::runtime::ProspectiveParachainsMode;
+	use kvp_primitives::{
 		BlockNumber, CandidateCommitments, CommittedCandidateReceipt, PersistedValidationData,
 	};
 

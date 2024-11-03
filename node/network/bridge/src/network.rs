@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use std::{collections::HashSet, sync::Arc};
 
@@ -27,12 +27,12 @@ use sc_network::{
 	NetworkService, OutboundFailure, ReputationChange, RequestFailure,
 };
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	peer_set::{PeerSet, PeerSetProtocolNames, ProtocolVersion},
 	request_response::{OutgoingRequest, Recipient, ReqProtocolNames, Requests},
 	PeerId,
 };
-use polkadot_primitives::{AuthorityDiscoveryId, Block, Hash};
+use kvp_primitives::{AuthorityDiscoveryId, Block, Hash};
 
 use crate::validator_discovery::AuthorityDiscovery;
 
@@ -85,7 +85,7 @@ pub(crate) fn send_message<M>(
 #[async_trait]
 pub trait Network: Clone + Send + 'static {
 	/// Get a stream of all events occurring on the network. This may include events unrelated
-	/// to the Polkadot protocol - the user of this function should filter only for events related
+	/// to the kvp protocol - the user of this function should filter only for events related
 	/// to the [`VALIDATION_PROTOCOL_NAME`](VALIDATION_PROTOCOL_NAME)
 	/// or [`COLLATION_PROTOCOL_NAME`](COLLATION_PROTOCOL_NAME)
 	fn event_stream(&mut self) -> BoxStream<'static, NetworkEvent>;
@@ -128,7 +128,7 @@ pub trait Network: Clone + Send + 'static {
 #[async_trait]
 impl Network for Arc<NetworkService<Block, Hash>> {
 	fn event_stream(&mut self) -> BoxStream<'static, NetworkEvent> {
-		NetworkService::event_stream(self, "polkadot-network-bridge").boxed()
+		NetworkService::event_stream(self, "kvp-network-bridge").boxed()
 	}
 
 	async fn set_reserved_peers(

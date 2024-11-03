@@ -17,6 +17,6 @@ sp-std = { git = "https://github.com/paritytech/substrate", branch = "master" }
 xcm = { path = "../" }
 xcm-executor = { path = "../xcm-executor" }
 xcm-builder = { path = "../xcm-builder" }
-polkadot-core-primitives = { path = "../../core-primitives"}
-polkadot-parachain = { path = "../../parachain" }
-polkadot-runtime-parachains = { path = "../../runtime/parachains" }
+kvp-core-primitives = { path = "../../core-primitives"}
+kvp-parachain = { path = "../../parachain" }
+kvp-runtime-parachains = { path = "../../runtime/parachains" }

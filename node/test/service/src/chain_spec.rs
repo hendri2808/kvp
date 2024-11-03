@@ -1,29 +1,29 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Chain specifications for the test runtime.
 
 use babe_primitives::AuthorityId as BabeId;
 use grandpa::AuthorityId as GrandpaId;
 use pallet_staking::Forcing;
-use polkadot_primitives::{AccountId, AssignmentId, ValidatorId, MAX_CODE_SIZE, MAX_POV_SIZE};
-use polkadot_service::chain_spec::{
-	get_account_id_from_seed, get_from_seed, polkadot_chain_spec_properties, Extensions,
+use kvp_primitives::{AccountId, AssignmentId, ValidatorId, MAX_CODE_SIZE, MAX_POV_SIZE};
+use kvp_service::chain_spec::{
+	get_account_id_from_seed, get_from_seed, kvp_chain_spec_properties, Extensions,
 };
-use polkadot_test_runtime::BABE_GENESIS_EPOCH_CONFIG;
+use kvp_test_runtime::BABE_GENESIS_EPOCH_CONFIG;
 use sc_chain_spec::{ChainSpec, ChainType};
 use sp_authority_discovery::AuthorityId as AuthorityDiscoveryId;
 use sp_core::sr25519;
@@ -32,29 +32,29 @@ use test_runtime_constants::currency::DOTS;
 
 const DEFAULT_PROTOCOL_ID: &str = "dot";
 
-/// The `ChainSpec` parameterized for polkadot test runtime.
-pub type PolkadotChainSpec =
-	sc_service::GenericChainSpec<polkadot_test_runtime::RuntimeGenesisConfig, Extensions>;
+/// The `ChainSpec` parameterized for kvp test runtime.
+pub type kvpChainSpec =
+	sc_service::GenericChainSpec<kvp_test_runtime::RuntimeGenesisConfig, Extensions>;
 
 /// Local testnet config (multivalidator Alice + Bob)
-pub fn polkadot_local_testnet_config() -> PolkadotChainSpec {
-	PolkadotChainSpec::from_genesis(
+pub fn kvp_local_testnet_config() -> kvpChainSpec {
+	kvpChainSpec::from_genesis(
 		"Local Testnet",
 		"local_testnet",
 		ChainType::Local,
-		|| polkadot_local_testnet_genesis(),
+		|| kvp_local_testnet_genesis(),
 		vec![],
 		None,
 		Some(DEFAULT_PROTOCOL_ID),
 		None,
-		Some(polkadot_chain_spec_properties()),
+		Some(kvp_chain_spec_properties()),
 		Default::default(),
 	)
 }
 
 /// Local testnet genesis config (multivalidator Alice + Bob)
-pub fn polkadot_local_testnet_genesis() -> polkadot_test_runtime::RuntimeGenesisConfig {
-	polkadot_testnet_genesis(
+pub fn kvp_local_testnet_genesis() -> kvp_test_runtime::RuntimeGenesisConfig {
+	kvp_testnet_genesis(
 		vec![get_authority_keys_from_seed("Alice"), get_authority_keys_from_seed("Bob")],
 		get_account_id_from_seed::<sr25519::Public>("Alice"),
 		None,
@@ -93,8 +93,8 @@ fn testnet_accounts() -> Vec<AccountId> {
 	]
 }
 
-/// Helper function to create polkadot `RuntimeGenesisConfig` for testing
-fn polkadot_testnet_genesis(
+/// Helper function to create kvp `RuntimeGenesisConfig` for testing
+fn kvp_testnet_genesis(
 	initial_authorities: Vec<(
 		AccountId,
 		AccountId,
@@ -106,8 +106,8 @@ fn polkadot_testnet_genesis(
 	)>,
 	root_key: AccountId,
 	endowed_accounts: Option<Vec<AccountId>>,
-) -> polkadot_test_runtime::RuntimeGenesisConfig {
-	use polkadot_test_runtime as runtime;
+) -> kvp_test_runtime::RuntimeGenesisConfig {
+	use kvp_test_runtime as runtime;
 
 	let endowed_accounts: Vec<AccountId> = endowed_accounts.unwrap_or_else(testnet_accounts);
 
@@ -167,7 +167,7 @@ fn polkadot_testnet_genesis(
 		vesting: runtime::VestingConfig { vesting: vec![] },
 		sudo: runtime::SudoConfig { key: Some(root_key) },
 		configuration: runtime::ConfigurationConfig {
-			config: polkadot_runtime_parachains::configuration::HostConfiguration {
+			config: kvp_runtime_parachains::configuration::HostConfiguration {
 				validation_upgrade_cooldown: 10u32,
 				validation_upgrade_delay: 5,
 				code_retention_period: 1200,

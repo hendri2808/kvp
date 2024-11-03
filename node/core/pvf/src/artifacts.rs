@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! PVF artifacts (final compiled code blobs).
 //!
@@ -57,9 +57,9 @@
 
 use crate::host::PrepareResultSender;
 use always_assert::always;
-use polkadot_node_core_pvf_common::{error::PrepareError, prepare::PrepareStats, pvf::PvfPrepData};
-use polkadot_parachain::primitives::ValidationCodeHash;
-use polkadot_primitives::ExecutorParamsHash;
+use kvp_node_core_pvf_common::{error::PrepareError, prepare::PrepareStats, pvf::PvfPrepData};
+use kvp_parachain::primitives::ValidationCodeHash;
+use kvp_primitives::ExecutorParamsHash;
 use std::{
 	collections::HashMap,
 	path::{Path, PathBuf},
@@ -89,7 +89,7 @@ impl ArtifactId {
 	/// Tries to recover the artifact id from the given file name.
 	#[cfg(test)]
 	pub fn from_file_name(file_name: &str) -> Option<Self> {
-		use polkadot_core_primitives::Hash;
+		use kvp_core_primitives::Hash;
 		use std::str::FromStr as _;
 
 		let file_name = file_name.strip_prefix(Self::PREFIX)?;
@@ -253,7 +253,7 @@ impl Artifacts {
 #[cfg(test)]
 mod tests {
 	use super::{ArtifactId, Artifacts};
-	use polkadot_primitives::ExecutorParamsHash;
+	use kvp_primitives::ExecutorParamsHash;
 	use sp_core::H256;
 	use std::{path::Path, str::FromStr};
 

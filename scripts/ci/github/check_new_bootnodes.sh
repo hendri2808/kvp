@@ -5,7 +5,7 @@ source "$(dirname "${0}")/../common/lib.sh"
 
 # This script checks any new bootnodes added since the last git commit
 
-RUNTIMES=( kusama westend polkadot )
+RUNTIMES=( kusama westend kvp )
 
 WAS_ERROR=0
 

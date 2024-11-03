@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! `V2` Primitives.
 
@@ -35,14 +35,14 @@ use sp_arithmetic::traits::{BaseArithmetic, Saturating};
 pub use runtime_primitives::traits::{BlakeTwo256, Hash as HashT};
 
 // Export some core primitives.
-pub use polkadot_core_primitives::v2::{
+pub use kvp_core_primitives::v2::{
 	AccountId, AccountIndex, AccountPublic, Balance, Block, BlockId, BlockNumber, CandidateHash,
 	ChainId, DownwardMessage, Hash, Header, InboundDownwardMessage, InboundHrmpMessage, Moment,
 	Nonce, OutboundHrmpMessage, Remark, Signature, UncheckedExtrinsic,
 };
 
-// Export some polkadot-parachain primitives
-pub use polkadot_parachain::primitives::{
+// Export some kvp-parachain primitives
+pub use kvp_parachain::primitives::{
 	HeadData, HorizontalMessages, HrmpChannelId, Id, UpwardMessage, UpwardMessages, ValidationCode,
 	ValidationCodeHash, LOWEST_PUBLIC_ID, LOWEST_USER_ID,
 };
@@ -109,7 +109,7 @@ pub trait TypeIndex {
 #[cfg_attr(feature = "std", derive(Serialize, Deserialize, Hash))]
 pub struct ValidatorIndex(pub u32);
 
-// We should really get https://github.com/paritytech/polkadot/issues/2403 going ..
+// We should really get https://github.com/paritytech/kvp/issues/2403 going ..
 impl From<u32> for ValidatorIndex {
 	fn from(n: u32) -> Self {
 		ValidatorIndex(n)
@@ -298,7 +298,7 @@ pub mod well_known_keys {
 
 	/// The MQC head for the downward message queue of the given para. See more in the `Dmp` module.
 	///
-	/// The storage entry stores a `Hash`. This is polkadot hash which is at the moment
+	/// The storage entry stores a `Hash`. This is kvp hash which is at the moment
 	/// `blake2b-256`.
 	pub fn dmq_mqc_head(para_id: Id) -> Vec<u8> {
 		let prefix = hex!["63f78c98723ddc9073523ef3beefda0c4d7fefc408aac59dbfe80a72ac8e3ce5"];
@@ -587,7 +587,7 @@ impl PartialOrd for CommittedCandidateReceipt {
 impl Ord for CommittedCandidateReceipt {
 	fn cmp(&self, other: &Self) -> sp_std::cmp::Ordering {
 		// TODO: compare signatures or something more sane
-		// https://github.com/paritytech/polkadot/issues/222
+		// https://github.com/paritytech/kvp/issues/222
 		self.descriptor()
 			.para_id
 			.cmp(&other.descriptor().para_id)
@@ -1009,7 +1009,7 @@ impl<H, N> OccupiedCore<H, N> {
 pub struct ScheduledCore {
 	/// The ID of a para scheduled.
 	pub para_id: Id,
-	/// DEPRECATED: see: https://github.com/paritytech/polkadot/issues/7575
+	/// DEPRECATED: see: https://github.com/paritytech/kvp/issues/7575
 	///
 	/// Will be removed in a future version.
 	pub collator: Option<CollatorId>,
@@ -1115,7 +1115,7 @@ impl ApprovalVote {
 	}
 }
 
-/// Custom validity errors used in Polkadot while validating transactions.
+/// Custom validity errors used in kvp while validating transactions.
 #[repr(u8)]
 pub enum ValidityError {
 	/// The Ethereum signature is invalid.
@@ -1229,10 +1229,10 @@ pub enum UpgradeGoAhead {
 	GoAhead,
 }
 
-/// Consensus engine id for polkadot v1 consensus engine.
-pub const POLKADOT_ENGINE_ID: runtime_primitives::ConsensusEngineId = *b"POL1";
+/// Consensus engine id for kvp v1 consensus engine.
+pub const kvp_ENGINE_ID: runtime_primitives::ConsensusEngineId = *b"POL1";
 
-/// A consensus log item for polkadot validation. To be used with [`POLKADOT_ENGINE_ID`].
+/// A consensus log item for kvp validation. To be used with [`kvp_ENGINE_ID`].
 #[derive(Decode, Encode, Clone, PartialEq, Eq)]
 pub enum ConsensusLog {
 	/// A parachain upgraded its code.
@@ -1263,7 +1263,7 @@ impl ConsensusLog {
 		digest_item: &runtime_primitives::DigestItem,
 	) -> Result<Option<Self>, parity_scale_codec::Error> {
 		match digest_item {
-			runtime_primitives::DigestItem::Consensus(id, encoded) if id == &POLKADOT_ENGINE_ID =>
+			runtime_primitives::DigestItem::Consensus(id, encoded) if id == &kvp_ENGINE_ID =>
 				Ok(Some(Self::decode(&mut &encoded[..])?)),
 			_ => Ok(None),
 		}
@@ -1272,7 +1272,7 @@ impl ConsensusLog {
 
 impl From<ConsensusLog> for runtime_primitives::DigestItem {
 	fn from(c: ConsensusLog) -> runtime_primitives::DigestItem {
-		Self::Consensus(POLKADOT_ENGINE_ID, c.encode())
+		Self::Consensus(kvp_ENGINE_ID, c.encode())
 	}
 }
 
@@ -1698,7 +1698,7 @@ pub const fn supermajority_threshold(n: usize) -> usize {
 /// Information about validator sets of a session.
 ///
 /// NOTE: `SessionInfo` is frozen. Do not include new fields, consider creating a separate runtime
-/// API. Reasoning and further outlook [here](https://github.com/paritytech/polkadot/issues/6586).
+/// API. Reasoning and further outlook [here](https://github.com/paritytech/kvp/issues/6586).
 #[derive(Clone, Encode, Decode, RuntimeDebug, TypeInfo)]
 #[cfg_attr(feature = "std", derive(PartialEq))]
 pub struct SessionInfo {
@@ -1716,7 +1716,7 @@ pub struct SessionInfo {
 	///
 	/// NOTE: There might be more authorities in the current session, than `validators`
 	/// participating in parachain consensus. See
-	/// [`max_validators`](https://github.com/paritytech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
+	/// [`max_validators`](https://github.com/paritytech/kvp/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
 	///
 	/// `SessionInfo::validators` will be limited to to `max_validators` when set.
 	pub validators: IndexedVec<ValidatorIndex, ValidatorId>,
@@ -1725,13 +1725,13 @@ pub struct SessionInfo {
 	/// NOTE: The first `validators.len()` entries will match the corresponding validators in
 	/// `validators`, afterwards any remaining authorities can be found. This is any authorities
 	/// not participating in parachain consensus - see
-	/// [`max_validators`](https://github.com/paritytech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148)
+	/// [`max_validators`](https://github.com/paritytech/kvp/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148)
 	pub discovery_keys: Vec<AuthorityDiscoveryId>,
 	/// The assignment keys for validators.
 	///
 	/// NOTE: There might be more authorities in the current session, than validators participating
 	/// in parachain consensus. See
-	/// [`max_validators`](https://github.com/paritytech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
+	/// [`max_validators`](https://github.com/paritytech/kvp/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148).
 	///
 	/// Therefore:
 	/// ```ignore

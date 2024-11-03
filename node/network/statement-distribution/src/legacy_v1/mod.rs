@@ -1,22 +1,22 @@
 // Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use parity_scale_codec::Encode;
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	self as net_protocol,
 	grid_topology::{GridNeighbors, RequiredRouting, SessionBoundGridTopologyStorage},
 	peer_set::{IsAuthority, PeerSet, ValidationVersion},
@@ -24,19 +24,19 @@ use polkadot_node_network_protocol::{
 	vstaging as protocol_vstaging, IfDisconnected, PeerId, UnifiedReputationChange as Rep,
 	Versioned, View,
 };
-use polkadot_node_primitives::{
+use kvp_node_primitives::{
 	SignedFullStatement, Statement, StatementWithPVD, UncheckedSignedFullStatement,
 };
-use polkadot_node_subsystem_util::{
+use kvp_node_subsystem_util::{
 	self as util, rand, reputation::ReputationAggregator, MIN_GOSSIP_PEERS,
 };
 
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	jaeger,
 	messages::{CandidateBackingMessage, NetworkBridgeEvent, NetworkBridgeTxMessage},
 	overseer, ActivatedLeaf, PerLeafSpan, StatementDistributionSenderTrait,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	AuthorityDiscoveryId, CandidateHash, CommittedCandidateReceipt, CompactStatement, Hash,
 	Id as ParaId, IndexedVec, OccupiedCoreAssumption, PersistedValidationData, SignedStatement,
 	SigningContext, UncheckedSignedStatement, ValidatorId, ValidatorIndex, ValidatorSignature,
@@ -225,7 +225,7 @@ struct PeerRelayParentKnowledge {
 	/// How many large statements this peer already sent us.
 	///
 	/// Flood protection for large statements is rather hard and as soon as we get
-	/// `https://github.com/paritytech/polkadot/issues/2979` implemented also no longer necessary.
+	/// `https://github.com/paritytech/kvp/issues/2979` implemented also no longer necessary.
 	/// Reason: We keep messages around until we fetched the payload, but if a node makes up
 	/// statements and never provides the data, we will keep it around for the slot duration. Not
 	/// even signature checking would help, as the sender, if a validator, can just sign arbitrary
@@ -667,7 +667,7 @@ impl ActiveHeadData {
 	{
 		if let Entry::Vacant(entry) = self.cached_validation_data.entry(para_id) {
 			let persisted_validation_data =
-				polkadot_node_subsystem_util::request_persisted_validation_data(
+				kvp_node_subsystem_util::request_persisted_validation_data(
 					relay_parent,
 					para_id,
 					OccupiedCoreAssumption::Free,

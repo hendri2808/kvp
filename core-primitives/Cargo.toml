@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-core-primitives"
+name = "kvp-core-primitives"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true

@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! This subsystem is responsible for keeping track of session changes
 //! and issuing a connection request to the relevant validators
@@ -39,19 +39,19 @@ use sc_network::{config::parse_addr, Multiaddr};
 use sp_application_crypto::{AppCrypto, ByteArray};
 use sp_keystore::{Keystore, KeystorePtr};
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	authority_discovery::AuthorityDiscovery, peer_set::PeerSet, GossipSupportNetworkMessage,
 	PeerId, Versioned,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	messages::{
 		GossipSupportMessage, NetworkBridgeEvent, NetworkBridgeRxMessage, NetworkBridgeTxMessage,
 		RuntimeApiMessage, RuntimeApiRequest,
 	},
 	overseer, ActiveLeavesUpdate, FromOrchestra, OverseerSignal, SpawnedSubsystem, SubsystemError,
 };
-use polkadot_node_subsystem_util as util;
-use polkadot_primitives::{AuthorityDiscoveryId, Hash, SessionIndex, SessionInfo, ValidatorIndex};
+use kvp_node_subsystem_util as util;
+use kvp_primitives::{AuthorityDiscoveryId, Hash, SessionIndex, SessionInfo, ValidatorIndex};
 
 #[cfg(test)]
 mod tests;
@@ -278,8 +278,8 @@ where
 		Ok(())
 	}
 
-	// Checks if the node is an authority and also updates `polkadot_node_is_authority` and
-	// `polkadot_node_is_parachain_validator` metrics accordingly.
+	// Checks if the node is an authority and also updates `kvp_node_is_authority` and
+	// `kvp_node_is_parachain_validator` metrics accordingly.
 	// On success, returns the index of our keys in `session_info.discovery_keys`.
 	fn get_key_index_and_update_metrics(
 		&mut self,
@@ -298,7 +298,7 @@ where
 
 				// First `maxValidators` entries are the parachain validators. We'll check
 				// if our index is in this set to avoid searching for the keys.
-				// https://github.com/paritytech/polkadot/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148
+				// https://github.com/paritytech/kvp/blob/a52dca2be7840b23c19c153cf7e110b1e3e475f8/runtime/parachains/src/configuration.rs#L148
 				if *index < parachain_validators_this_session {
 					gum::trace!(target: LOG_TARGET, "We are now a parachain validator",);
 					self.metrics.on_is_parachain_validator();
@@ -470,7 +470,7 @@ where
 			.filter(|(a, _)| !self.connected_authorities.contains_key(a));
 		// TODO: Make that warning once connectivity issues are fixed (no point in warning, if
 		// we already know it is broken.
-		// https://github.com/paritytech/polkadot/issues/3921
+		// https://github.com/paritytech/kvp/issues/3921
 		if connected_ratio <= LOW_CONNECTIVITY_WARN_THRESHOLD {
 			gum::debug!(
 				target: LOG_TARGET,
@@ -543,7 +543,7 @@ fn remove_all_controlled(
 /// but formed randomly via BABE randomness from two epochs ago.
 /// This limits the amount of gossip peers to 2 * `sqrt(len)` and ensures the diameter of 2.
 ///
-/// [web3]: https://research.web3.foundation/en/latest/polkadot/networking/3-avail-valid.html#topology
+/// [web3]: https://research.web3.foundation/en/latest/kvp/networking/3-avail-valid.html#topology
 async fn update_gossip_topology(
 	sender: &mut impl overseer::GossipSupportSenderTrait,
 	our_index: usize,
@@ -555,7 +555,7 @@ async fn update_gossip_topology(
 	let random_seed = {
 		let (tx, rx) = oneshot::channel();
 
-		// TODO https://github.com/paritytech/polkadot/issues/5316:
+		// TODO https://github.com/paritytech/kvp/issues/5316:
 		// get the random seed from the `SessionInfo` instead.
 		sender
 			.send_message(RuntimeApiMessage::Request(

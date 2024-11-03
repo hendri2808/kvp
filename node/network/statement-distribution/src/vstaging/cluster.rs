@@ -1,18 +1,18 @@
 // Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Direct distribution of statements within a cluster,
 //! even those concerning candidates which are not yet backed.
@@ -55,7 +55,7 @@
 //! and to keep track of what we have sent to other validators in the group and what we may
 //! continue to send them.
 
-use polkadot_primitives::vstaging::{CandidateHash, CompactStatement, ValidatorIndex};
+use kvp_primitives::vstaging::{CandidateHash, CompactStatement, ValidatorIndex};
 
 use std::collections::{HashMap, HashSet};
 
@@ -459,7 +459,7 @@ pub enum RejectOutgoing {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use polkadot_primitives::vstaging::Hash;
+	use kvp_primitives::vstaging::Hash;
 
 	#[test]
 	fn rejects_incoming_outside_of_group() {

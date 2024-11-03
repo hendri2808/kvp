@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-overseer"
+name = "kvp-overseer"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -11,11 +11,11 @@ sp-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
 futures = "0.3.21"
 futures-timer = "3.0.2"
 parking_lot = "0.12.0"
-polkadot-node-network-protocol = { path = "../network/protocol" }
-polkadot-node-primitives = { path = "../primitives" }
-polkadot-node-subsystem-types = { path = "../subsystem-types" }
-polkadot-node-metrics = { path = "../metrics" }
-polkadot-primitives = { path = "../../primitives" }
+kvp-node-network-protocol = { path = "../network/protocol" }
+kvp-node-primitives = { path = "../primitives" }
+kvp-node-subsystem-types = { path = "../subsystem-types" }
+kvp-node-metrics = { path = "../metrics" }
+kvp-primitives = { path = "../../primitives" }
 orchestra = "0.0.5"
 gum = { package = "tracing-gum", path = "../gum" }
 lru = "0.11.0"
@@ -30,7 +30,7 @@ sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
 futures = { version = "0.3.21", features = ["thread-pool"] }
 femme = "2.2.1"
 assert_matches = "1.4.0"
-test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../primitives/test-helpers" }
+test-helpers = { package = "kvp-primitives-test-helpers", path = "../../primitives/test-helpers" }
 
 [target.'cfg(target_os = "linux")'.dependencies]
 tikv-jemalloc-ctl = "0.5.0"

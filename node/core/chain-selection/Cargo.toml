@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-core-chain-selection"
+name = "kvp-node-core-chain-selection"
 description = "Chain Selection Subsystem"
 version.workspace = true
 authors.workspace = true
@@ -10,16 +10,16 @@ license.workspace = true
 futures = "0.3.21"
 futures-timer = "3"
 gum = { package = "tracing-gum", path = "../../gum" }
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-node-primitives = { path = "../../primitives" }
-polkadot-node-subsystem = { path = "../../subsystem" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util" }
+kvp-primitives = { path = "../../../primitives" }
+kvp-node-primitives = { path = "../../primitives" }
+kvp-node-subsystem = { path = "../../subsystem" }
+kvp-node-subsystem-util = { path = "../../subsystem-util" }
 kvdb = "0.13.0"
 thiserror = "1.0.31"
 parity-scale-codec = "3.6.1"
 
 [dev-dependencies]
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+kvp-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
 sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
 parking_lot = "0.12.0"
 assert_matches = "1"

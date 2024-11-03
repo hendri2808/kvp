@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-core-runtime-api"
+name = "kvp-node-core-runtime-api"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -12,10 +12,10 @@ lru = "0.11.0"
 
 sp-consensus-babe = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-node-metrics = { path = "../../metrics" }
-polkadot-node-subsystem = { path = "../../subsystem" }
-polkadot-node-subsystem-types = { path = "../../subsystem-types" }
+kvp-primitives = { path = "../../../primitives" }
+kvp-node-metrics = { path = "../../metrics" }
+kvp-node-subsystem = { path = "../../subsystem" }
+kvp-node-subsystem-types = { path = "../../subsystem-types" }
 
 [dev-dependencies]
 sp-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
@@ -23,6 +23,6 @@ sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
 async-trait = "0.1.57"
 futures = { version = "0.3.21", features = ["thread-pool"] }
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
-polkadot-node-primitives = { path = "../../primitives" }
-test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../../primitives/test-helpers" }
+kvp-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+kvp-node-primitives = { path = "../../primitives" }
+test-helpers = { package = "kvp-primitives-test-helpers", path = "../../../primitives/test-helpers" }

@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-rpc"
+name = "kvp-rpc"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -7,7 +7,7 @@ license.workspace = true
 
 [dependencies]
 jsonrpsee = { version = "0.16.2", features = ["server"] }
-polkadot-primitives = { path = "../primitives" }
+kvp-primitives = { path = "../primitives" }
 sc-client-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }

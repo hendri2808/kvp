@@ -1,6 +1,6 @@
 [package]
-name = "polkadot-node-core-pvf-prepare-worker"
-description = "Polkadot crate that contains the logic for preparing PVFs. Used by the polkadot-prepare-worker binary."
+name = "kvp-node-core-pvf-prepare-worker"
+description = "kvp crate that contains the logic for preparing PVFs. Used by the kvp-prepare-worker binary."
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -16,9 +16,9 @@ tokio = { version = "1.24.2", features = ["fs", "process"] }
 
 parity-scale-codec = { version = "3.6.1", default-features = false, features = ["derive"] }
 
-polkadot-node-core-pvf-common = { path = "../common" }
-polkadot-parachain = { path = "../../../../parachain" }
-polkadot-primitives = { path = "../../../../primitives" }
+kvp-node-core-pvf-common = { path = "../common" }
+kvp-parachain = { path = "../../../../parachain" }
+kvp-primitives = { path = "../../../../primitives" }
 
 sc-executor = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sc-executor-common = { git = "https://github.com/paritytech/substrate", branch = "master" }

@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The Candidate Validation subsystem.
 //!
@@ -23,14 +23,14 @@
 #![deny(unused_crate_dependencies, unused_results)]
 #![warn(missing_docs)]
 
-use polkadot_node_core_pvf::{
+use kvp_node_core_pvf::{
 	InternalValidationError, InvalidCandidate as WasmInvalidCandidate, PrepareError,
 	PrepareJobKind, PrepareStats, PvfPrepData, ValidationError, ValidationHost,
 };
-use polkadot_node_primitives::{
+use kvp_node_primitives::{
 	BlockData, InvalidCandidate, PoV, ValidationResult, POV_BOMB_LIMIT, VALIDATION_CODE_BOMB_LIMIT,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	errors::RuntimeApiError,
 	messages::{
 		CandidateValidationMessage, PreCheckOutcome, RuntimeApiMessage, RuntimeApiRequest,
@@ -39,9 +39,9 @@ use polkadot_node_subsystem::{
 	overseer, FromOrchestra, OverseerSignal, SpawnedSubsystem, SubsystemError, SubsystemResult,
 	SubsystemSender,
 };
-use polkadot_node_subsystem_util::executor_params_at_relay_parent;
-use polkadot_parachain::primitives::{ValidationParams, ValidationResult as WasmValidationResult};
-use polkadot_primitives::{
+use kvp_node_subsystem_util::executor_params_at_relay_parent;
+use kvp_parachain::primitives::{ValidationParams, ValidationResult as WasmValidationResult};
+use kvp_primitives::{
 	CandidateCommitments, CandidateDescriptor, CandidateReceipt, ExecutorParams, Hash,
 	OccupiedCoreAssumption, PersistedValidationData, PvfExecTimeoutKind, PvfPrepTimeoutKind,
 	ValidationCode, ValidationCodeHash,
@@ -106,7 +106,7 @@ pub struct CandidateValidationSubsystem {
 	#[allow(missing_docs)]
 	pub metrics: Metrics,
 	#[allow(missing_docs)]
-	pub pvf_metrics: polkadot_node_core_pvf::Metrics,
+	pub pvf_metrics: kvp_node_core_pvf::Metrics,
 	config: Option<Config>,
 }
 
@@ -118,7 +118,7 @@ impl CandidateValidationSubsystem {
 	pub fn with_config(
 		config: Option<Config>,
 		metrics: Metrics,
-		pvf_metrics: polkadot_node_core_pvf::Metrics,
+		pvf_metrics: kvp_node_core_pvf::Metrics,
 	) -> Self {
 		CandidateValidationSubsystem { config, metrics, pvf_metrics }
 	}
@@ -133,7 +133,7 @@ impl<Context> CandidateValidationSubsystem {
 				.boxed();
 			SpawnedSubsystem { name: "candidate-validation-subsystem", future }
 		} else {
-			polkadot_overseer::DummySubsystem.start(ctx)
+			kvp_overseer::DummySubsystem.start(ctx)
 		}
 	}
 }
@@ -142,11 +142,11 @@ impl<Context> CandidateValidationSubsystem {
 async fn run<Context>(
 	mut ctx: Context,
 	metrics: Metrics,
-	pvf_metrics: polkadot_node_core_pvf::Metrics,
+	pvf_metrics: kvp_node_core_pvf::Metrics,
 	Config { artifacts_cache_path, node_version, prep_worker_path, exec_worker_path }: Config,
 ) -> SubsystemResult<()> {
-	let (validation_host, task) = polkadot_node_core_pvf::start(
-		polkadot_node_core_pvf::Config::new(
+	let (validation_host, task) = kvp_node_core_pvf::start(
+		kvp_node_core_pvf::Config::new(
 			artifacts_cache_path,
 			node_version,
 			prep_worker_path,
@@ -821,7 +821,7 @@ impl ValidationBackend for ValidationHost {
 		exec_timeout: Duration,
 		encoded_params: Vec<u8>,
 	) -> Result<WasmValidationResult, ValidationError> {
-		let priority = polkadot_node_core_pvf::Priority::Normal;
+		let priority = kvp_node_core_pvf::Priority::Normal;
 
 		let (tx, rx) = oneshot::channel();
 		if let Err(err) = self.execute_pvf(pvf, exec_timeout, encoded_params, priority, tx).await {

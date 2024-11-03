@@ -1,23 +1,23 @@
 // Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Implementation of the v2 statement distribution protocol,
 //! designed for asynchronous backing.
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	self as net_protocol,
 	grid_topology::SessionGridTopology,
 	peer_set::ValidationVersion,
@@ -30,21 +30,21 @@ use polkadot_node_network_protocol::{
 	vstaging::{self as protocol_vstaging, StatementFilter},
 	IfDisconnected, PeerId, UnifiedReputationChange as Rep, Versioned, View,
 };
-use polkadot_node_primitives::{
+use kvp_node_primitives::{
 	SignedFullStatementWithPVD, StatementWithPVD as FullStatementWithPVD,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	messages::{
 		CandidateBackingMessage, HypotheticalCandidate, HypotheticalFrontierRequest,
 		NetworkBridgeEvent, NetworkBridgeTxMessage, ProspectiveParachainsMessage,
 	},
 	overseer, ActivatedLeaf,
 };
-use polkadot_node_subsystem_util::{
+use kvp_node_subsystem_util::{
 	backing_implicit_view::View as ImplicitView, reputation::ReputationAggregator,
 	runtime::ProspectiveParachainsMode,
 };
-use polkadot_primitives::vstaging::{
+use kvp_primitives::vstaging::{
 	AuthorityDiscoveryId, CandidateHash, CompactStatement, CoreIndex, CoreState, GroupIndex,
 	GroupRotationInfo, Hash, Id as ParaId, IndexedVec, SessionIndex, SessionInfo, SignedStatement,
 	SigningContext, UncheckedSignedStatement, ValidatorId, ValidatorIndex,
@@ -170,7 +170,7 @@ impl PerSessionState {
 			authority_lookup.insert(ad, ValidatorIndex(i as _));
 		}
 
-		let local_validator = polkadot_node_subsystem_util::signing_key_and_index(
+		let local_validator = kvp_node_subsystem_util::signing_key_and_index(
 			session_info.validators.iter(),
 			keystore,
 		);
@@ -370,7 +370,7 @@ pub(crate) async fn handle_network_update<Context>(
 				per_session.supply_topology(&new_topology);
 			}
 
-			// TODO [https://github.com/paritytech/polkadot/issues/6194]
+			// TODO [https://github.com/paritytech/kvp/issues/6194]
 			// technically, we should account for the fact that the session topology might
 			// come late, and for all relay-parents with this session, send all grid peers
 			// any `BackedCandidateInv` messages they might need.
@@ -454,7 +454,7 @@ pub(crate) async fn handle_active_leaves_update<Context>(
 		// New leaf: fetch info from runtime API and initialize
 		// `per_relay_parent`.
 
-		let session_index = polkadot_node_subsystem_util::request_session_index_for_child(
+		let session_index = kvp_node_subsystem_util::request_session_index_for_child(
 			new_relay_parent,
 			ctx.sender(),
 		)
@@ -463,7 +463,7 @@ pub(crate) async fn handle_active_leaves_update<Context>(
 		.map_err(JfyiError::RuntimeApiUnavailable)?
 		.map_err(JfyiError::FetchSessionIndex)?;
 
-		let availability_cores = polkadot_node_subsystem_util::request_availability_cores(
+		let availability_cores = kvp_node_subsystem_util::request_availability_cores(
 			new_relay_parent,
 			ctx.sender(),
 		)
@@ -473,7 +473,7 @@ pub(crate) async fn handle_active_leaves_update<Context>(
 		.map_err(JfyiError::FetchAvailabilityCores)?;
 
 		let group_rotation_info =
-			polkadot_node_subsystem_util::request_validator_groups(new_relay_parent, ctx.sender())
+			kvp_node_subsystem_util::request_validator_groups(new_relay_parent, ctx.sender())
 				.await
 				.await
 				.map_err(JfyiError::RuntimeApiUnavailable)?
@@ -481,7 +481,7 @@ pub(crate) async fn handle_active_leaves_update<Context>(
 				.1;
 
 		if !state.per_session.contains_key(&session_index) {
-			let session_info = polkadot_node_subsystem_util::request_session_info(
+			let session_info = kvp_node_subsystem_util::request_session_info(
 				new_relay_parent,
 				session_index,
 				ctx.sender(),
@@ -2502,7 +2502,7 @@ pub(crate) async fn dispatch_requests<Context>(ctx: &mut Context, state: &mut St
 		Some(RequestProperties {
 			unwanted_mask,
 			backing_threshold: if require_backing {
-				Some(polkadot_node_primitives::minimum_votes(group.len()))
+				Some(kvp_node_primitives::minimum_votes(group.len()))
 			} else {
 				None
 			},

@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Overview over request/responses as used in `Polkadot`.
+//! Overview over request/responses as used in `kvp`.
 //!
 //! `enum Protocol` .... List of all supported protocols.
 //!
@@ -34,7 +34,7 @@
 
 use std::{collections::HashMap, time::Duration, u64};
 
-use polkadot_primitives::{MAX_CODE_SIZE, MAX_POV_SIZE};
+use kvp_primitives::{MAX_CODE_SIZE, MAX_POV_SIZE};
 use strum::{EnumIter, IntoEnumIterator};
 
 pub use sc_network::{config as network, config::RequestResponseConfig, ProtocolName};
@@ -119,7 +119,7 @@ const STATEMENTS_TIMEOUT: Duration = Duration::from_secs(1);
 /// We supply leniency because there are often large candidates and asynchronous
 /// backing allows them to be included over a longer window of time. Exponential back-off
 /// up to a maximum of 10 seconds would be ideal, but isn't supported by the
-/// infrastructure here yet: see https://github.com/paritytech/polkadot/issues/6009
+/// infrastructure here yet: see https://github.com/paritytech/kvp/issues/6009
 const ATTESTED_CANDIDATE_TIMEOUT: Duration = Duration::from_millis(2500);
 
 /// We don't want a slow peer to slow down all the others, at the same time we want to get out the
@@ -336,12 +336,12 @@ impl Protocol {
 	/// Legacy protocol name associated with each peer set, if any.
 	const fn get_legacy_name(self) -> Option<&'static str> {
 		match self {
-			Protocol::ChunkFetchingV1 => Some("/polkadot/req_chunk/1"),
-			Protocol::CollationFetchingV1 => Some("/polkadot/req_collation/1"),
-			Protocol::PoVFetchingV1 => Some("/polkadot/req_pov/1"),
-			Protocol::AvailableDataFetchingV1 => Some("/polkadot/req_available_data/1"),
-			Protocol::StatementFetchingV1 => Some("/polkadot/req_statement/1"),
-			Protocol::DisputeSendingV1 => Some("/polkadot/send_dispute/1"),
+			Protocol::ChunkFetchingV1 => Some("/kvp/req_chunk/1"),
+			Protocol::CollationFetchingV1 => Some("/kvp/req_collation/1"),
+			Protocol::PoVFetchingV1 => Some("/kvp/req_pov/1"),
+			Protocol::AvailableDataFetchingV1 => Some("/kvp/req_available_data/1"),
+			Protocol::StatementFetchingV1 => Some("/kvp/req_statement/1"),
+			Protocol::DisputeSendingV1 => Some("/kvp/send_dispute/1"),
 
 			// Introduced after legacy names became legacy.
 			Protocol::AttestedCandidateVStaging => None,

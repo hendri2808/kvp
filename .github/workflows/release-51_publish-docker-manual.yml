@@ -37,12 +37,12 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          file: scripts/ci/dockerfiles/polkadot/polkadot_injected_debian.Dockerfile
+          file: scripts/ci/dockerfiles/kvp/kvp_injected_debian.Dockerfile
           tags: |
-            parity/polkadot:latest
-            parity/polkadot:${{ github.event.inputs.version }}
+            parity/kvp:latest
+            parity/kvp:${{ github.event.inputs.version }}
           build-args: |
-            POLKADOT_VERSION=${{ github.event.inputs.version }}
+            kvp_VERSION=${{ github.event.inputs.version }}
             VCS_REF=${{ github.ref }}
             BUILD_DATE=${{ github.event.inputs.date }}
           cache-from: type=local,src=/tmp/.buildx-cache

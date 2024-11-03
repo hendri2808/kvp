@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Types that we don't fetch from a particular runtime and just assume that they are constant all
 //! of the place.
@@ -38,7 +38,7 @@ pub type Block = core_primitives::Block;
 pub use sp_runtime::traits::{Block as BlockT, Header as HeaderT};
 
 /// Default URI to connect to.
-pub const DEFAULT_URI: &str = "wss://rpc.polkadot.io:443";
+pub const DEFAULT_URI: &str = "wss://rpc.kvp.io:443";
 /// The logging target.
 pub const LOG_TARGET: &str = "staking-miner";
 

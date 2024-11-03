@@ -1,36 +1,36 @@
 // Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use assert_matches::assert_matches;
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	errors::RuntimeApiError,
 	messages::{
 		AllMessages, HypotheticalFrontierRequest, ProspectiveParachainsMessage,
 		ProspectiveValidationDataRequest,
 	},
 };
-use polkadot_node_subsystem_test_helpers as test_helpers;
-use polkadot_node_subsystem_types::{jaeger, ActivatedLeaf, LeafStatus};
-use polkadot_primitives::{
+use kvp_node_subsystem_test_helpers as test_helpers;
+use kvp_node_subsystem_types::{jaeger, ActivatedLeaf, LeafStatus};
+use kvp_primitives::{
 	vstaging::{AsyncBackingParams, BackingState, Constraints, InboundHrmpLimitations},
 	CommittedCandidateReceipt, HeadData, Header, PersistedValidationData, ScheduledCore,
 	ValidationCodeHash,
 };
-use polkadot_primitives_test_helpers::make_candidate;
+use kvp_primitives_test_helpers::make_candidate;
 use std::sync::Arc;
 
 const ALLOWED_ANCESTRY_LEN: u32 = 3;

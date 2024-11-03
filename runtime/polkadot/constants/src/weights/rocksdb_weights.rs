@@ -18,21 +18,21 @@
 //! THIS FILE WAS AUTO-GENERATED USING THE SUBSTRATE BENCHMARK CLI VERSION 4.0.0-dev
 //! DATE: 2022-03-29 (Y/M/D)
 //!
-//! DATABASE: `RocksDb`, RUNTIME: `Polkadot`
+//! DATABASE: `RocksDb`, RUNTIME: `kvp`
 //! BLOCK-NUM: `BlockId::Number(9643856)`
 //! SKIP-WRITE: `false`, SKIP-READ: `false`, WARMUPS: `1`
 //! STATE-VERSION: `V0`, STATE-CACHE-SIZE: `0`
-//! WEIGHT-PATH: `runtime/polkadot/constants/src/weights/`
+//! WEIGHT-PATH: `runtime/kvp/constants/src/weights/`
 //! METRIC: `Average`, WEIGHT-MUL: `1.1`, WEIGHT-ADD: `0`
 
 // Executed Command:
-//   ./target/production/polkadot
+//   ./target/production/kvp
 //   benchmark-storage
 //   --state-version=0
 //   --mul=1.1
-//   --weight-path=runtime/polkadot/constants/src/weights/
+//   --weight-path=runtime/kvp/constants/src/weights/
 
-/// Storage DB weights for the `Polkadot` runtime and `RocksDb`.
+/// Storage DB weights for the `kvp` runtime and `RocksDb`.
 pub mod constants {
 	use frame_support::{
 		parameter_types,

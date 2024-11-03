@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-node-core-chain-api"
+name = "kvp-node-core-chain-api"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -9,9 +9,9 @@ license.workspace = true
 futures = "0.3.21"
 gum = { package = "tracing-gum", path = "../../gum" }
 sp-blockchain = { git = "https://github.com/paritytech/substrate", branch = "master" }
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-node-metrics = { path = "../../metrics" }
-polkadot-node-subsystem = {path = "../../subsystem" }
+kvp-primitives = { path = "../../../primitives" }
+kvp-node-metrics = { path = "../../metrics" }
+kvp-node-subsystem = {path = "../../subsystem" }
 sc-client-api = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sc-consensus-babe = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
@@ -19,6 +19,6 @@ sc-consensus-babe = { git = "https://github.com/paritytech/substrate", branch = 
 futures = { version = "0.3.21", features = ["thread-pool"] }
 maplit = "1.0.2"
 parity-scale-codec = "3.6.1"
-polkadot-node-primitives = { path = "../../primitives" }
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+kvp-node-primitives = { path = "../../primitives" }
+kvp-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
 sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }

@@ -1,4 +1,4 @@
-# checks all networks we care about (kusama, polkadot, westend) and ensures
+# checks all networks we care about (kusama, kvp, westend) and ensures
 # the bootnodes in their respective chainspecs are contactable
 
 name: Check all bootnodes
@@ -13,19 +13,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        runtime: [westend, kusama, polkadot]
+        runtime: [westend, kusama, kvp]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout sources
         uses: actions/checkout@v3
-      - name: Install polkadot
+      - name: Install kvp
         shell: bash
         run: |
-          curl -L "$(curl -s https://api.github.com/repos/paritytech/polkadot/releases/latest \
-          | jq -r '.assets | .[] | select(.name == "polkadot").browser_download_url')" \
-          | sudo tee /usr/local/bin/polkadot > /dev/null
-          sudo chmod +x /usr/local/bin/polkadot
-          polkadot --version
+          curl -L "$(curl -s https://api.github.com/repos/paritytech/kvp/releases/latest \
+          | jq -r '.assets | .[] | select(.name == "kvp").browser_download_url')" \
+          | sudo tee /usr/local/bin/kvp > /dev/null
+          sudo chmod +x /usr/local/bin/kvp
+          kvp --version
       - name: Check ${{ matrix.runtime }} bootnodes
         shell: bash
         run: scripts/ci/github/check_bootnodes.sh node/service/chain-specs/${{ matrix.runtime }}.json

@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The inclusion pallet is responsible for inclusion and availability of scheduled parachains.
 //!
@@ -204,9 +204,9 @@ impl<H> Default for ProcessedCandidates<H> {
 /// WARNING: This check has to be kept in sync with the node side checks.
 pub fn minimum_backing_votes(n_validators: usize) -> usize {
 	// For considerations on this value see:
-	// https://github.com/paritytech/polkadot/pull/1656#issuecomment-999734650
+	// https://github.com/paritytech/kvp/pull/1656#issuecomment-999734650
 	// and
-	// https://github.com/paritytech/polkadot/issues/4386
+	// https://github.com/paritytech/kvp/issues/4386
 	sp_std::cmp::min(n_validators, 2)
 }
 
@@ -1177,7 +1177,7 @@ impl<T: Config> OnQueueChanged<AggregateMessageOrigin> for Pallet<T> {
 			AggregateMessageOrigin::Ump(UmpQueueId::Para(p)) => p,
 		};
 		let (count, size) = (count.saturated_into(), size.saturated_into());
-		// TODO paritytech/polkadot#6283: Remove all usages of `relay_dispatch_queue_size`
+		// TODO paritytech/kvp#6283: Remove all usages of `relay_dispatch_queue_size`
 		#[allow(deprecated)]
 		well_known_keys::relay_dispatch_queue_size_typed(para).set((count, size));
 

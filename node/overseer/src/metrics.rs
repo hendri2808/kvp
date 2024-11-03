@@ -1,23 +1,23 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Prometheus metrics related to the overseer and its channels.
 
 use super::*;
-pub use polkadot_node_metrics::metrics::{self, prometheus, Metrics as MetricsTrait};
+pub use kvp_node_metrics::metrics::{self, prometheus, Metrics as MetricsTrait};
 
 /// Overseer Prometheus metrics.
 #[derive(Clone)]
@@ -141,21 +141,21 @@ impl MetricsTrait for Metrics {
 		let metrics = MetricsInner {
 			activated_heads_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_activated_heads_total",
+					"kvp_parachain_activated_heads_total",
 					"Number of activated heads.",
 				)?,
 				registry,
 			)?,
 			deactivated_heads_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_deactivated_heads_total",
+					"kvp_parachain_deactivated_heads_total",
 					"Number of deactivated heads.",
 				)?,
 				registry,
 			)?,
 			messages_relayed_total: prometheus::register(
 				prometheus::Counter::new(
-					"polkadot_parachain_messages_relayed_total",
+					"kvp_parachain_messages_relayed_total",
 					"Number of messages relayed by Overseer.",
 				)?,
 				registry,
@@ -163,7 +163,7 @@ impl MetricsTrait for Metrics {
 			to_subsystem_bounded_tof: prometheus::register(
 				prometheus::HistogramVec::new(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_subsystem_bounded_tof",
+						"kvp_parachain_subsystem_bounded_tof",
 						"Duration spent in a particular channel from entrance to removal",
 					)
 					.buckets(vec![
@@ -177,7 +177,7 @@ impl MetricsTrait for Metrics {
 			to_subsystem_bounded_sent: prometheus::register(
 				prometheus::GaugeVec::<prometheus::U64>::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_subsystem_bounded_sent",
+						"kvp_parachain_subsystem_bounded_sent",
 						"Number of elements sent to subsystems' bounded queues",
 					),
 					&["subsystem_name"],
@@ -187,7 +187,7 @@ impl MetricsTrait for Metrics {
 			to_subsystem_bounded_received: prometheus::register(
 				prometheus::GaugeVec::<prometheus::U64>::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_subsystem_bounded_received",
+						"kvp_parachain_subsystem_bounded_received",
 						"Number of elements received by subsystems' bounded queues",
 					),
 					&["subsystem_name"],
@@ -197,7 +197,7 @@ impl MetricsTrait for Metrics {
 			to_subsystem_bounded_blocked: prometheus::register(
 				prometheus::GaugeVec::<prometheus::U64>::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_subsystem_bounded_blocked",
+						"kvp_parachain_subsystem_bounded_blocked",
 						"Number of times senders blocked while sending messages to a subsystem",
 					),
 					&["subsystem_name"],
@@ -207,7 +207,7 @@ impl MetricsTrait for Metrics {
 			to_subsystem_unbounded_tof: prometheus::register(
 				prometheus::HistogramVec::new(
 					prometheus::HistogramOpts::new(
-						"polkadot_parachain_subsystem_unbounded_tof",
+						"kvp_parachain_subsystem_unbounded_tof",
 						"Duration spent in a particular channel from entrance to removal",
 					)
 					.buckets(vec![
@@ -221,7 +221,7 @@ impl MetricsTrait for Metrics {
 			to_subsystem_unbounded_sent: prometheus::register(
 				prometheus::GaugeVec::<prometheus::U64>::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_subsystem_unbounded_sent",
+						"kvp_parachain_subsystem_unbounded_sent",
 						"Number of elements sent to subsystems' unbounded queues",
 					),
 					&["subsystem_name"],
@@ -231,7 +231,7 @@ impl MetricsTrait for Metrics {
 			to_subsystem_unbounded_received: prometheus::register(
 				prometheus::GaugeVec::<prometheus::U64>::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_subsystem_unbounded_received",
+						"kvp_parachain_subsystem_unbounded_received",
 						"Number of elements received by subsystems' unbounded queues",
 					),
 					&["subsystem_name"],
@@ -241,7 +241,7 @@ impl MetricsTrait for Metrics {
 			signals_sent: prometheus::register(
 				prometheus::GaugeVec::<prometheus::U64>::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_overseer_signals_sent",
+						"kvp_parachain_overseer_signals_sent",
 						"Number of signals sent by overseer to subsystems",
 					),
 					&["subsystem_name"],
@@ -251,7 +251,7 @@ impl MetricsTrait for Metrics {
 			signals_received: prometheus::register(
 				prometheus::GaugeVec::<prometheus::U64>::new(
 					prometheus::Opts::new(
-						"polkadot_parachain_overseer_signals_received",
+						"kvp_parachain_overseer_signals_received",
 						"Number of signals received by subsystems from overseer",
 					),
 					&["subsystem_name"],
@@ -261,7 +261,7 @@ impl MetricsTrait for Metrics {
 			#[cfg(any(target_os = "linux", feature = "jemalloc-allocator"))]
 			memory_stats_allocated: prometheus::register(
 				prometheus::Gauge::<prometheus::U64>::new(
-					"polkadot_memory_allocated",
+					"kvp_memory_allocated",
 					"Total bytes allocated by the node",
 				)?,
 				registry,
@@ -269,7 +269,7 @@ impl MetricsTrait for Metrics {
 			#[cfg(any(target_os = "linux", feature = "jemalloc-allocator"))]
 			memory_stats_resident: prometheus::register(
 				prometheus::Gauge::<prometheus::U64>::new(
-					"polkadot_memory_resident",
+					"kvp_memory_resident",
 					"Bytes allocated by the node, and held in RAM",
 				)?,
 				registry,

@@ -2,7 +2,7 @@
 # Here are all jobs that are executed during "short-benchmarks" stage
 
 # Run all pallet benchmarks only once to check if there are any errors
-short-benchmark-polkadot: &short-bench
+short-benchmark-kvp: &short-bench
   stage: short-benchmarks
   extends:
     - .test-pr-refs
@@ -12,9 +12,9 @@ short-benchmark-polkadot: &short-bench
     - job: build-short-benchmark
       artifacts: true
   variables:
-    RUNTIME: polkadot
+    RUNTIME: kvp
   script:
-    - ./artifacts/polkadot benchmark pallet --wasm-execution compiled --chain $RUNTIME-dev --pallet "*" --extrinsic "*" --steps 2 --repeat 1
+    - ./artifacts/kvp benchmark pallet --wasm-execution compiled --chain $RUNTIME-dev --pallet "*" --extrinsic "*" --steps 2 --repeat 1
 
 short-benchmark-kusama:
   <<: *short-bench

@@ -12,9 +12,9 @@ There are a few basic ground-rules for contributors (including the maintainer(s)
 
 ### Merging pull requests once CI is successful
 
-- A pull request that does not alter any logic (e.g. comments, dependencies, docs) may be tagged [`insubstantial`](https://github.com/paritytech/polkadot/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+label%3AA2-insubstantial) and merged by its author.
+- A pull request that does not alter any logic (e.g. comments, dependencies, docs) may be tagged [`insubstantial`](https://github.com/paritytech/kvp/pulls?utf8=%E2%9C%93&q=is%3Apr+is%3Aopen+label%3AA2-insubstantial) and merged by its author.
 - A pull request with no large change to logic that is an urgent fix may be merged after a non-author contributor has reviewed it well.
-- All other PRs should sit for 48 hours with the [`pleasereview`](https://github.com/paritytech/polkadot/pulls?q=is:pr+is:open+label:A0-pleasereview) tag in order to garner feedback.
+- All other PRs should sit for 48 hours with the [`pleasereview`](https://github.com/paritytech/kvp/pulls?q=is:pr+is:open+label:A0-pleasereview) tag in order to garner feedback.
 - No PR should be merged until all reviews' comments are addressed.
 
 ### Reviewing pull requests

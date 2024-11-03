@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Check for any changes in any runtime directories (e.g., ^runtime/polkadot) as
+# Check for any changes in any runtime directories (e.g., ^runtime/kvp) as
 # well as directories common to all runtimes (e.g., ^runtime/common). If there
 # are no changes, check if the Substrate git SHA in Cargo.lock has been
 # changed. If so, pull the repo and verify if {spec,impl}_versions have been
@@ -36,7 +36,7 @@ git fetch --depth="${GIT_DEPTH:-100}" origin master
 
 runtimes=(
   "kusama"
-  "polkadot"
+  "kvp"
   "westend"
   "rococo"
 )
@@ -105,7 +105,7 @@ EOT
 
   boldcat <<EOT
 spec_version or or impl_version have changed in substrate after updating Cargo.lock
-please make sure versions are bumped in polkadot accordingly
+please make sure versions are bumped in kvp accordingly
 EOT
 
 fi

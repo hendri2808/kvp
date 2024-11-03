@@ -1,12 +1,12 @@
 // Copyright 2022 Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -36,7 +36,7 @@ use super::{
 };
 use crate::LOG_TARGET;
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	request_response::{
 		outgoing::{Recipient as RequestRecipient, RequestError},
 		vstaging::{AttestedCandidateRequest, AttestedCandidateResponse},
@@ -45,7 +45,7 @@ use polkadot_node_network_protocol::{
 	vstaging::StatementFilter,
 	PeerId, UnifiedReputationChange as Rep,
 };
-use polkadot_primitives::vstaging::{
+use kvp_primitives::vstaging::{
 	CandidateHash, CommittedCandidateReceipt, CompactStatement, GroupIndex, Hash, ParaId,
 	PersistedValidationData, SessionIndex, SignedStatement, SigningContext, ValidatorId,
 	ValidatorIndex,
@@ -836,8 +836,8 @@ fn insert_or_update_priority(
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use polkadot_primitives::HeadData;
-	use polkadot_primitives_test_helpers as test_helpers;
+	use kvp_primitives::HeadData;
+	use kvp_primitives_test_helpers as test_helpers;
 
 	fn dummy_pvd() -> PersistedValidationData {
 		PersistedValidationData {

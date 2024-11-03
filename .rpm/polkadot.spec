@@ -1,7 +1,7 @@
 %define debug_package %{nil}
 
-Name: polkadot
-Summary: Implementation of a https://polkadot.network node in Rust based on the Substrate framework.
+Name: kvp
+Summary: Implementation of a https://kvp.network node in Rust based on the Substrate framework.
 Version: @@VERSION@@
 Release: @@RELEASE@@%{?dist}
 License: GPLv3
@@ -29,13 +29,13 @@ mkdir -p %{buildroot}
 cp -a * %{buildroot}
 
 %post
-config_file="/etc/default/polkadot"
-getent group polkadot >/dev/null || groupadd -r polkadot
-getent passwd polkadot >/dev/null || \
-    useradd -r -g polkadot -d /home/polkadot -m -s /sbin/nologin \
-    -c "User account for running polkadot as a service" polkadot
+config_file="/etc/default/kvp"
+getent group kvp >/dev/null || groupadd -r kvp
+getent passwd kvp >/dev/null || \
+    useradd -r -g kvp -d /home/kvp -m -s /sbin/nologin \
+    -c "User account for running kvp as a service" kvp
 if [ ! -e "$config_file" ]; then
-    echo 'POLKADOT_CLI_ARGS=""' > /etc/default/polkadot
+    echo 'kvp_CLI_ARGS=""' > /etc/default/kvp
 fi
 exit 0
 
@@ -45,4 +45,4 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root,-)
 %{_bindir}/*
-/usr/lib/systemd/system/polkadot.service
+/usr/lib/systemd/system/kvp.service

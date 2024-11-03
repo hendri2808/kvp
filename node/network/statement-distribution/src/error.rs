@@ -1,28 +1,28 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 //
 
 //! Error handling related code and Error/Result definitions.
 
-use polkadot_node_network_protocol::PeerId;
-use polkadot_node_subsystem::{RuntimeApiError, SubsystemError};
-use polkadot_node_subsystem_util::{
+use kvp_node_network_protocol::PeerId;
+use kvp_node_subsystem::{RuntimeApiError, SubsystemError};
+use kvp_node_subsystem_util::{
 	backing_implicit_view::FetchError as ImplicitViewFetchError, runtime,
 };
-use polkadot_primitives::{CandidateHash, Hash, Id as ParaId};
+use kvp_primitives::{CandidateHash, Hash, Id as ParaId};
 
 use futures::channel::oneshot;
 

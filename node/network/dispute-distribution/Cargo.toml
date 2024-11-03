@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-dispute-distribution"
+name = "kvp-dispute-distribution"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -11,12 +11,12 @@ futures-timer = "3.0.2"
 gum = { package = "tracing-gum", path = "../../gum" }
 derive_more = "0.99.17"
 parity-scale-codec = { version = "3.6.1", features = ["std"] }
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-erasure-coding = { path = "../../../erasure-coding" }
-polkadot-node-subsystem = {path = "../../subsystem" }
-polkadot-node-network-protocol = { path = "../../network/protocol" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util" }
-polkadot-node-primitives = { path = "../../primitives" }
+kvp-primitives = { path = "../../../primitives" }
+kvp-erasure-coding = { path = "../../../erasure-coding" }
+kvp-node-subsystem = {path = "../../subsystem" }
+kvp-node-network-protocol = { path = "../../network/protocol" }
+kvp-node-subsystem-util = { path = "../../subsystem-util" }
+kvp-node-primitives = { path = "../../primitives" }
 sc-network = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
@@ -28,11 +28,11 @@ indexmap = "1.9.1"
 [dev-dependencies]
 async-channel = "1.8.0"
 async-trait = "0.1.57"
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
+kvp-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers" }
 sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-tracing = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
 futures-timer = "3.0.2"
 assert_matches = "1.4.0"
 lazy_static = "1.4.0"
-polkadot-primitives-test-helpers = { path = "../../../primitives/test-helpers" }
+kvp-primitives-test-helpers = { path = "../../../primitives/test-helpers" }

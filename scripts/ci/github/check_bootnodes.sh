@@ -16,8 +16,8 @@ trap cleanup EXIT INT TERM
 
 cleanup(){
     echo "[+] Script interrupted or ended. Cleaning up..."
-    # Kill all the polkadot processes
-    killall polkadot > /dev/null 2>&1
+    # Kill all the kvp processes
+    killall kvp > /dev/null 2>&1
     exit $1
 }
 

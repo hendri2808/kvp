@@ -1,13 +1,13 @@
 [Unit]
-Description=Polkadot Node
+Description=kvp Node
 After=network.target
-Documentation=https://github.com/paritytech/polkadot
+Documentation=https://github.com/paritytech/kvp
 
 [Service]
-EnvironmentFile=-/etc/default/polkadot
-ExecStart=/usr/bin/polkadot $POLKADOT_CLI_ARGS
-User=polkadot
-Group=polkadot
+EnvironmentFile=-/etc/default/kvp
+ExecStart=/usr/bin/kvp $kvp_CLI_ARGS
+User=kvp
+Group=kvp
 Restart=always
 RestartSec=120
 CapabilityBoundingSet=

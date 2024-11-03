@@ -1,22 +1,22 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Contains the logic for executing PVFs. Used by the polkadot-execute-worker binary.
+//! Contains the logic for executing PVFs. Used by the kvp-execute-worker binary.
 
-pub use polkadot_node_core_pvf_common::executor_intf::Executor;
+pub use kvp_node_core_pvf_common::executor_intf::Executor;
 
 // NOTE: Initializing logging in e.g. tests will not have an effect in the workers, as they are
 //       separate spawned processes. Run with e.g. `RUST_LOG=parachain::pvf-execute-worker=trace`.
@@ -24,7 +24,7 @@ const LOG_TARGET: &str = "parachain::pvf-execute-worker";
 
 use cpu_time::ProcessTime;
 use parity_scale_codec::{Decode, Encode};
-use polkadot_node_core_pvf_common::{
+use kvp_node_core_pvf_common::{
 	error::InternalValidationError,
 	execute::{Handshake, Response},
 	executor_intf::NATIVE_STACK_MAX,
@@ -37,7 +37,7 @@ use polkadot_node_core_pvf_common::{
 		worker_event_loop,
 	},
 };
-use polkadot_parachain::primitives::ValidationResult;
+use kvp_parachain::primitives::ValidationResult;
 use std::{
 	path::PathBuf,
 	sync::{mpsc::channel, Arc},
@@ -189,7 +189,7 @@ pub fn worker_entrypoint(
 					move || {
 						// Try to enable landlock.
 						#[cfg(target_os = "linux")]
-					let landlock_status = polkadot_node_core_pvf_common::worker::security::landlock::try_restrict_thread()
+					let landlock_status = kvp_node_core_pvf_common::worker::security::landlock::try_restrict_thread()
 						.map(LandlockStatus::from_ruleset_status)
 						.map_err(|e| e.to_string());
 						#[cfg(not(target_os = "linux"))]

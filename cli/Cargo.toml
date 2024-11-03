@@ -1,6 +1,6 @@
 [package]
-name = "polkadot-cli"
-description = "Polkadot Relay-chain Client Node"
+name = "kvp-cli"
+description = "kvp Relay-chain Client Node"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -22,8 +22,8 @@ futures = "0.3.21"
 pyro = { package = "pyroscope", version = "0.5.3", optional = true }
 pyroscope_pprofrs = { version = "0.2", optional = true }
 
-service = { package = "polkadot-service", path = "../node/service", default-features = false, optional = true }
-polkadot-performance-test = { path = "../node/test/performance-test", optional = true }
+service = { package = "kvp-service", path = "../node/service", default-features = false, optional = true }
+kvp-performance-test = { path = "../node/test/performance-test", optional = true }
 
 sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-io = { git = "https://github.com/paritytech/substrate", branch = "master" }
@@ -33,7 +33,7 @@ frame-benchmarking-cli = { git = "https://github.com/paritytech/substrate", bran
 try-runtime-cli = { git = "https://github.com/paritytech/substrate", branch = "master", optional = true }
 sc-cli = { git = "https://github.com/paritytech/substrate", branch = "master", optional = true }
 sc-service = { git = "https://github.com/paritytech/substrate", branch = "master", optional = true }
-polkadot-node-metrics = { path = "../node/metrics" }
+kvp-node-metrics = { path = "../node/metrics" }
 sc-tracing = { git = "https://github.com/paritytech/substrate", branch = "master", optional = true }
 sc-sysinfo = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sc-executor = { git = "https://github.com/paritytech/substrate", branch = "master" }
@@ -56,23 +56,23 @@ cli = [
 ]
 runtime-benchmarks = [
 	"service/runtime-benchmarks",
-	"polkadot-node-metrics/runtime-benchmarks",
-	"polkadot-performance-test?/runtime-benchmarks"
+	"kvp-node-metrics/runtime-benchmarks",
+	"kvp-performance-test?/runtime-benchmarks"
 ]
 full-node = ["service/full-node"]
 try-runtime = ["service/try-runtime", "try-runtime-cli/try-runtime"]
 fast-runtime = ["service/fast-runtime"]
 pyroscope = ["pyro", "pyroscope_pprofrs"]
-hostperfcheck = ["polkadot-performance-test"]
+hostperfcheck = ["kvp-performance-test"]
 
-# Configure the native runtimes to use. Polkadot is enabled by default.
+# Configure the native runtimes to use. kvp is enabled by default.
 #
 # Validators require the native runtime currently
-polkadot-native = ["service/polkadot-native"]
+kvp-native = ["service/kvp-native"]
 kusama-native = ["service/kusama-native"]
 westend-native = ["service/westend-native"]
 rococo-native = ["service/rococo-native"]
 
 malus = ["full-node", "service/malus"]
-runtime-metrics = ["service/runtime-metrics", "polkadot-node-metrics/runtime-metrics"]
+runtime-metrics = ["service/runtime-metrics", "kvp-node-metrics/runtime-metrics"]
 network-protocol-staging = ["service/network-protocol-staging"]

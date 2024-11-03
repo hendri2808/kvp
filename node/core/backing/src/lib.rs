@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Implements the `CandidateBackingSubsystem`.
 //!
@@ -79,11 +79,11 @@ use futures::{
 };
 
 use error::{Error, FatalResult};
-use polkadot_node_primitives::{
+use kvp_node_primitives::{
 	minimum_votes, AvailableData, InvalidCandidate, PoV, SignedFullStatementWithPVD,
 	StatementWithPVD, ValidationResult,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	messages::{
 		AvailabilityDistributionMessage, AvailabilityStoreMessage, CanSecondRequest,
 		CandidateBackingMessage, CandidateValidationMessage, CollatorProtocolMessage,
@@ -93,7 +93,7 @@ use polkadot_node_subsystem::{
 	},
 	overseer, ActiveLeavesUpdate, FromOrchestra, OverseerSignal, SpawnedSubsystem, SubsystemError,
 };
-use polkadot_node_subsystem_util::{
+use kvp_node_subsystem_util::{
 	self as util,
 	backing_implicit_view::{FetchError as ImplicitViewFetchError, View as ImplicitView},
 	request_from_runtime, request_session_index_for_child, request_validator_groups,
@@ -101,7 +101,7 @@ use polkadot_node_subsystem_util::{
 	runtime::{prospective_parachains_mode, ProspectiveParachainsMode},
 	Validator,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	BackedCandidate, CandidateCommitments, CandidateHash, CandidateReceipt,
 	CommittedCandidateReceipt, CoreIndex, CoreState, Hash, Id as ParaId, PersistedValidationData,
 	PvfExecTimeoutKind, SigningContext, ValidationCode, ValidatorId, ValidatorIndex,

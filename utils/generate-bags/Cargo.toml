@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-voter-bags"
+name = "kvp-voter-bags"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -13,4 +13,4 @@ sp-io = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
 westend-runtime = { path = "../../runtime/westend" }
 kusama-runtime = { path = "../../runtime/kusama" }
-polkadot-runtime = { path = "../../runtime/polkadot" }
+kvp-runtime = { path = "../../runtime/kvp" }

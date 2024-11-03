@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Polkadot service. Specialized wrapper over substrate service.
+//! kvp service. Specialized wrapper over substrate service.
 
 #![deny(unused_results)]
 
@@ -40,17 +40,17 @@ mod tests;
 use {
 	grandpa::{self, FinalityProofProvider as GrandpaFinalityProofProvider},
 	gum::info,
-	polkadot_node_core_approval_voting::{
+	kvp_node_core_approval_voting::{
 		self as approval_voting_subsystem, Config as ApprovalVotingConfig,
 	},
-	polkadot_node_core_av_store::Config as AvailabilityConfig,
-	polkadot_node_core_av_store::Error as AvailabilityError,
-	polkadot_node_core_candidate_validation::Config as CandidateValidationConfig,
-	polkadot_node_core_chain_selection::{
+	kvp_node_core_av_store::Config as AvailabilityConfig,
+	kvp_node_core_av_store::Error as AvailabilityError,
+	kvp_node_core_candidate_validation::Config as CandidateValidationConfig,
+	kvp_node_core_chain_selection::{
 		self as chain_selection_subsystem, Config as ChainSelectionConfig,
 	},
-	polkadot_node_core_dispute_coordinator::Config as DisputeCoordinatorConfig,
-	polkadot_node_network_protocol::{
+	kvp_node_core_dispute_coordinator::Config as DisputeCoordinatorConfig,
+	kvp_node_network_protocol::{
 		peer_set::PeerSetProtocolNames, request_response::ReqProtocolNames,
 	},
 	sc_client_api::BlockBackend,
@@ -58,12 +58,12 @@ use {
 	sp_core::traits::SpawnNamed,
 };
 
-use polkadot_node_subsystem_util::database::Database;
+use kvp_node_subsystem_util::database::Database;
 
 #[cfg(feature = "full-node")]
 pub use {
-	polkadot_overseer::{Handle, Overseer, OverseerConnector, OverseerHandle},
-	polkadot_primitives::runtime_api::ParachainHost,
+	kvp_overseer::{Handle, Overseer, OverseerConnector, OverseerHandle},
+	kvp_primitives::runtime_api::ParachainHost,
 	relay_chain_selection::SelectRelayChain,
 	sc_client_api::AuxStore,
 	sp_authority_discovery::AuthorityDiscoveryApi,
@@ -72,7 +72,7 @@ pub use {
 };
 
 #[cfg(feature = "full-node")]
-use polkadot_node_subsystem::jaeger;
+use kvp_node_subsystem::jaeger;
 
 use std::{path::PathBuf, sync::Arc, time::Duration};
 
@@ -84,11 +84,11 @@ use telemetry::TelemetryWorker;
 #[cfg(feature = "full-node")]
 use telemetry::{Telemetry, TelemetryWorkerHandle};
 
-pub use chain_spec::{KusamaChainSpec, PolkadotChainSpec, RococoChainSpec, WestendChainSpec};
+pub use chain_spec::{KusamaChainSpec, kvpChainSpec, RococoChainSpec, WestendChainSpec};
 pub use consensus_common::{Proposal, SelectChain};
 use frame_benchmarking_cli::SUBSTRATE_REFERENCE_HARDWARE;
 use mmr_gadget::MmrGadget;
-pub use polkadot_primitives::{Block, BlockId, BlockNumber, CollatorPair, Hash, Id as ParaId};
+pub use kvp_primitives::{Block, BlockId, BlockNumber, CollatorPair, Hash, Id as ParaId};
 pub use sc_client_api::{Backend, CallExecutor};
 pub use sc_consensus::{BlockImport, LongestChain};
 pub use sc_executor::NativeExecutionDispatch;
@@ -106,8 +106,8 @@ pub use sp_runtime::{
 
 #[cfg(feature = "kusama-native")]
 pub use {kusama_runtime, kusama_runtime_constants};
-#[cfg(feature = "polkadot-native")]
-pub use {polkadot_runtime, polkadot_runtime_constants};
+#[cfg(feature = "kvp-native")]
+pub use {kvp_runtime, kvp_runtime_constants};
 #[cfg(feature = "rococo-native")]
 pub use {rococo_runtime, rococo_runtime_constants};
 #[cfg(feature = "westend-native")]
@@ -211,7 +211,7 @@ pub enum Error {
 	Consensus(#[from] consensus_common::Error),
 
 	#[error("Failed to create an overseer")]
-	Overseer(#[from] polkadot_overseer::SubsystemError),
+	Overseer(#[from] kvp_overseer::SubsystemError),
 
 	#[error(transparent)]
 	Prometheus(#[from] prometheus_endpoint::PrometheusError),
@@ -220,7 +220,7 @@ pub enum Error {
 	Telemetry(#[from] telemetry::Error),
 
 	#[error(transparent)]
-	Jaeger(#[from] polkadot_node_subsystem::jaeger::JaegerError),
+	Jaeger(#[from] kvp_node_subsystem::jaeger::JaegerError),
 
 	#[cfg(feature = "full-node")]
 	#[error(transparent)]
@@ -234,7 +234,7 @@ pub enum Error {
 	DatabasePathRequired,
 
 	#[cfg(feature = "full-node")]
-	#[error("Expected at least one of polkadot, kusama, westend or rococo runtime feature")]
+	#[error("Expected at least one of kvp, kusama, westend or rococo runtime feature")]
 	NoRuntime,
 
 	#[cfg(feature = "full-node")]
@@ -242,7 +242,7 @@ pub enum Error {
 	InvalidWorkerBinaries { prep_worker_path: PathBuf, exec_worker_path: PathBuf },
 
 	#[cfg(feature = "full-node")]
-	#[error("Worker binaries could not be found, make sure polkadot was built/installed correctly. If you ran with `cargo run`, please run `cargo build` first. Searched given workers path ({given_workers_path:?}), polkadot binary path ({current_exe_path:?}), and lib path (/usr/lib/polkadot), workers names: {workers_names:?}")]
+	#[error("Worker binaries could not be found, make sure kvp was built/installed correctly. If you ran with `cargo run`, please run `cargo build` first. Searched given workers path ({given_workers_path:?}), kvp binary path ({current_exe_path:?}), and lib path (/usr/lib/kvp), workers names: {workers_names:?}")]
 	MissingWorkerBinaries {
 		given_workers_path: Option<PathBuf>,
 		current_exe_path: PathBuf,
@@ -261,8 +261,8 @@ pub enum Error {
 /// Identifies the variant of the chain.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Chain {
-	/// Polkadot.
-	Polkadot,
+	/// kvp.
+	kvp,
 	/// Kusama.
 	Kusama,
 	/// Rococo or one of its derivations.
@@ -275,8 +275,8 @@ pub enum Chain {
 
 /// Can be called for a `Configuration` to identify which network the configuration targets.
 pub trait IdentifyVariant {
-	/// Returns if this is a configuration for the `Polkadot` network.
-	fn is_polkadot(&self) -> bool;
+	/// Returns if this is a configuration for the `kvp` network.
+	fn is_kvp(&self) -> bool;
 
 	/// Returns if this is a configuration for the `Kusama` network.
 	fn is_kusama(&self) -> bool;
@@ -301,8 +301,8 @@ pub trait IdentifyVariant {
 }
 
 impl IdentifyVariant for Box<dyn ChainSpec> {
-	fn is_polkadot(&self) -> bool {
-		self.id().starts_with("polkadot") || self.id().starts_with("dot")
+	fn is_kvp(&self) -> bool {
+		self.id().starts_with("kvp") || self.id().starts_with("dot")
 	}
 	fn is_kusama(&self) -> bool {
 		self.id().starts_with("kusama") || self.id().starts_with("ksm")
@@ -323,8 +323,8 @@ impl IdentifyVariant for Box<dyn ChainSpec> {
 		self.id().ends_with("dev")
 	}
 	fn identify_chain(&self) -> Chain {
-		if self.is_polkadot() {
-			Chain::Polkadot
+		if self.is_kvp() {
+			Chain::kvp
 		} else if self.is_kusama() {
 			Chain::Kusama
 		} else if self.is_westend() {
@@ -362,7 +362,7 @@ pub fn open_database(db_source: &DatabaseSource) -> Result<Arc<dyn Database>, Er
 			}
 		},
 		DatabaseSource::Custom { .. } => {
-			unimplemented!("No polkadot subsystem db for custom source.");
+			unimplemented!("No kvp subsystem db for custom source.");
 		},
 	};
 	Ok(parachains_db)
@@ -478,9 +478,9 @@ fn new_partial<ChainSelection>(
 		sc_transaction_pool::FullPool<Block, FullClient>,
 		(
 			impl Fn(
-				polkadot_rpc::DenyUnsafe,
-				polkadot_rpc::SubscriptionTaskExecutor,
-			) -> Result<polkadot_rpc::RpcExtension, SubstrateServiceError>,
+				kvp_rpc::DenyUnsafe,
+				kvp_rpc::SubscriptionTaskExecutor,
+			) -> Result<kvp_rpc::RpcExtension, SubstrateServiceError>,
 			(
 				babe::BabeBlockImport<
 					Block,
@@ -581,26 +581,26 @@ where
 		let backend = backend.clone();
 
 		move |deny_unsafe,
-		      subscription_executor: polkadot_rpc::SubscriptionTaskExecutor|
-		      -> Result<polkadot_rpc::RpcExtension, service::Error> {
-			let deps = polkadot_rpc::FullDeps {
+		      subscription_executor: kvp_rpc::SubscriptionTaskExecutor|
+		      -> Result<kvp_rpc::RpcExtension, service::Error> {
+			let deps = kvp_rpc::FullDeps {
 				client: client.clone(),
 				pool: transaction_pool.clone(),
 				select_chain: select_chain.clone(),
 				chain_spec: chain_spec.cloned_box(),
 				deny_unsafe,
-				babe: polkadot_rpc::BabeDeps {
+				babe: kvp_rpc::BabeDeps {
 					babe_worker_handle: babe_worker_handle.clone(),
 					keystore: keystore.clone(),
 				},
-				grandpa: polkadot_rpc::GrandpaDeps {
+				grandpa: kvp_rpc::GrandpaDeps {
 					shared_voter_state: shared_voter_state.clone(),
 					shared_authority_set: shared_authority_set.clone(),
 					justification_stream: justification_stream.clone(),
 					subscription_executor: subscription_executor.clone(),
 					finality_provider: finality_proof_provider.clone(),
 				},
-				beefy: polkadot_rpc::BeefyDeps {
+				beefy: kvp_rpc::BeefyDeps {
 					beefy_finality_proof_stream: beefy_rpc_links.from_voter_justif_stream.clone(),
 					beefy_best_block_stream: beefy_rpc_links.from_voter_best_beefy_stream.clone(),
 					subscription_executor,
@@ -608,7 +608,7 @@ where
 				backend: backend.clone(),
 			};
 
-			polkadot_rpc::create_full(deps).map_err(Into::into)
+			kvp_rpc::create_full(deps).map_err(Into::into)
 		}
 	};
 
@@ -710,7 +710,7 @@ pub const AVAILABILITY_CONFIG: AvailabilityConfig = AvailabilityConfig {
 /// a better choice.
 ///
 /// `workers_path` is used to get the path to the directory where auxiliary worker binaries reside.
-/// If not specified, the main binary's directory is searched first, then `/usr/lib/polkadot` is
+/// If not specified, the main binary's directory is searched first, then `/usr/lib/kvp` is
 /// searched. If the path points to an executable rather then directory, that executable is used
 /// both as preparation and execution worker (supposed to be used for tests only).
 #[cfg(feature = "full-node")]
@@ -731,7 +731,7 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 		hwbench,
 	}: NewFullParams<OverseerGenerator>,
 ) -> Result<NewFull, Error> {
-	use polkadot_node_network_protocol::request_response::IncomingRequest;
+	use kvp_node_network_protocol::request_response::IncomingRequest;
 	use sc_network_common::sync::warp::WarpSyncParams;
 
 	let is_offchain_indexing_enabled = config.offchain_worker.indexing_enabled;
@@ -753,9 +753,9 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 		Some(backoff)
 	};
 
-	// Warn the user that BEEFY is still experimental for Polkadot.
-	if enable_beefy && config.chain_spec.is_polkadot() {
-		gum::warn!("BEEFY is still experimental, usage on Polkadot network is discouraged.");
+	// Warn the user that BEEFY is still experimental for kvp.
+	if enable_beefy && config.chain_spec.is_kvp() {
+		gum::warn!("BEEFY is still experimental, usage on kvp network is discouraged.");
 	}
 
 	let disable_grandpa = config.disable_grandpa;
@@ -777,7 +777,7 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 
 	let select_chain = if auth_or_collator {
 		let metrics =
-			polkadot_node_subsystem_util::metrics::Metrics::register(prometheus_registry.as_ref())?;
+			kvp_node_subsystem_util::metrics::Metrics::register(prometheus_registry.as_ref())?;
 
 		SelectRelayChain::new_with_overseer(
 			basics.backend.clone(),
@@ -806,7 +806,7 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 
 	let genesis_hash = client.block_hash(0).ok().flatten().expect("Genesis block exists; qed");
 
-	// Note: GrandPa is pushed before the Polkadot-specific protocols. This doesn't change
+	// Note: GrandPa is pushed before the kvp-specific protocols. This doesn't change
 	// anything in terms of behaviour, but makes the logs more consistent with the other
 	// Substrate nodes.
 	let grandpa_protocol_name = grandpa::protocol_standard_name(&genesis_hash, &config.chain_spec);
@@ -842,7 +842,7 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 	// Collators and parachain full nodes require the collator and validator networking to send
 	// collations and to be able to recover PoVs.
 	if role.is_authority() || is_parachain_node.is_running_alongside_parachain_node() {
-		use polkadot_network_bridge::{peer_sets_info, IsAuthority};
+		use kvp_network_bridge::{peer_sets_info, IsAuthority};
 		let is_authority = if role.is_authority() { IsAuthority::Yes } else { IsAuthority::No };
 		for config in peer_sets_info(is_authority, &peerset_protocol_names) {
 			net_config.add_notification_protocol(config);
@@ -976,7 +976,7 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 		if !SUBSTRATE_REFERENCE_HARDWARE.check_hardware(&hwbench) && role.is_authority() {
 			log::warn!(
 				"⚠️  The hardware does not meet the minimal requirements for role 'Authority' find out more at:\n\
-				https://wiki.polkadot.network/docs/maintain-guides-how-to-validate-polkadot#reference-hardware"
+				https://wiki.kvp.network/docs/maintain-guides-how-to-validate-kvp#reference-hardware"
 			);
 		}
 
@@ -1090,7 +1090,7 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 				Box::pin(async move {
 					use futures::{pin_mut, select, FutureExt};
 
-					let forward = polkadot_overseer::forward_events(overseer_client, handle);
+					let forward = kvp_overseer::forward_events(overseer_client, handle);
 
 					let forward = forward.fuse();
 					let overseer_fut = overseer.run().fuse();
@@ -1142,7 +1142,7 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 
 				async move {
 					let parachain =
-						polkadot_node_core_parachains_inherent::ParachainsInherentDataProvider::new(
+						kvp_node_core_parachains_inherent::ParachainsInherentDataProvider::new(
 							client_clone,
 							overseer_handle,
 							parent,
@@ -1222,7 +1222,7 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 	let config = grandpa::Config {
 		// FIXME substrate#1578 make this available through chainspec
 		// Grandpa performance can be improved a bit by tuning this parameter, see:
-		// https://github.com/paritytech/polkadot/issues/5464
+		// https://github.com/paritytech/kvp/issues/5464
 		gossip_duration: Duration::from_millis(1000),
 		justification_generation_period: GRANDPA_JUSTIFICATION_PERIOD,
 		name: Some(name),
@@ -1345,19 +1345,19 @@ pub fn new_chain_ops(
 
 /// Build a full node.
 ///
-/// The actual "flavor", aka if it will use `Polkadot`, `Rococo` or `Kusama` is determined based on
+/// The actual "flavor", aka if it will use `kvp`, `Rococo` or `Kusama` is determined based on
 /// [`IdentifyVariant`] using the chain spec.
 #[cfg(feature = "full-node")]
 pub fn build_full<OverseerGenerator: OverseerGen>(
 	config: Configuration,
 	mut params: NewFullParams<OverseerGenerator>,
 ) -> Result<NewFull, Error> {
-	let is_polkadot = config.chain_spec.is_polkadot();
+	let is_kvp = config.chain_spec.is_kvp();
 
 	params.overseer_message_channel_capacity_override =
 		params.overseer_message_channel_capacity_override.map(move |capacity| {
-			if is_polkadot {
-				gum::warn!("Channel capacity should _never_ be tampered with on polkadot!");
+			if is_kvp {
+				gum::warn!("Channel capacity should _never_ be tampered with on kvp!");
 			}
 			capacity
 		});

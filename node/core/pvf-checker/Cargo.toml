@@ -1,6 +1,6 @@
 [package]
-name = "polkadot-node-core-pvf-checker"
-description = "Polkadot crate that implements the PVF pre-checking subsystem. Responsible for checking and voting for PVFs that are pending approval."
+name = "kvp-node-core-pvf-checker"
+description = "kvp crate that implements the PVF pre-checking subsystem. Responsible for checking and voting for PVFs that are pending approval."
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -11,11 +11,11 @@ futures = "0.3.21"
 thiserror = "1.0.31"
 gum = { package = "tracing-gum", path = "../../gum" }
 
-polkadot-node-primitives = { path = "../../primitives" }
-polkadot-node-subsystem = { path = "../../subsystem" }
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-node-subsystem-util = { path = "../../subsystem-util" }
-polkadot-overseer = { path = "../../overseer" }
+kvp-node-primitives = { path = "../../primitives" }
+kvp-node-subsystem = { path = "../../subsystem" }
+kvp-primitives = { path = "../../../primitives" }
+kvp-node-subsystem-util = { path = "../../subsystem-util" }
+kvp-overseer = { path = "../../overseer" }
 
 sp-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
 
@@ -24,7 +24,7 @@ sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sc-keystore = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-keyring = { git = "https://github.com/paritytech/substrate", branch = "master" }
-polkadot-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers"}
-test-helpers = { package = "polkadot-primitives-test-helpers", path = "../../../primitives/test-helpers" }
+kvp-node-subsystem-test-helpers = { path = "../../subsystem-test-helpers"}
+test-helpers = { package = "kvp-primitives-test-helpers", path = "../../../primitives/test-helpers" }
 sp-application-crypto = { git = "https://github.com/paritytech/substrate", branch = "master" }
 futures-timer = "3.0.2"

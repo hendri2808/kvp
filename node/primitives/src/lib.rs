@@ -1,22 +1,22 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Primitive types used on the node-side.
 //!
-//! Unlike the `polkadot-primitives` crate, these primitives are only used on the node-side,
+//! Unlike the `kvp-primitives` crate, these primitives are only used on the node-side,
 //! not shared between the node and the runtime. This crate builds on top of the primitives defined
 //! there.
 
@@ -29,7 +29,7 @@ use futures::Future;
 use parity_scale_codec::{Decode, Encode, Error as CodecError, Input};
 use serde::{de, Deserialize, Deserializer, Serialize, Serializer};
 
-use polkadot_primitives::{
+use kvp_primitives::{
 	BlakeTwo256, BlockNumber, CandidateCommitments, CandidateHash, CollatorPair,
 	CommittedCandidateReceipt, CompactStatement, EncodeAs, Hash, HashT, HeadData, Id as ParaId,
 	PersistedValidationData, SessionIndex, Signed, UncheckedSigned, ValidationCode,
@@ -39,7 +39,7 @@ pub use sp_consensus_babe::{
 	AllowedSlots as BabeAllowedSlots, BabeEpochConfiguration, Epoch as BabeEpoch,
 };
 
-pub use polkadot_parachain::primitives::{BlockData, HorizontalMessages, UpwardMessages};
+pub use kvp_parachain::primitives::{BlockData, HorizontalMessages, UpwardMessages};
 
 pub mod approval;
 
@@ -122,7 +122,7 @@ macro_rules! new_session_window_size {
 }
 
 /// It would be nice to draw this from the chain state, but we have no tools for it right now.
-/// On Polkadot this is 1 day, and on Kusama it's 6 hours.
+/// On kvp this is 1 day, and on Kusama it's 6 hours.
 ///
 /// Number of sessions we want to consider in disputes.
 pub const DISPUTE_WINDOW: SessionWindowSize = new_session_window_size!(6);
@@ -409,11 +409,11 @@ impl MaybeCompressedPoV {
 ///
 /// This differs from `CandidateCommitments` in two ways:
 ///
-/// - does not contain the erasure root; that's computed at the Polkadot level, not at Cumulus
+/// - does not contain the erasure root; that's computed at the kvp level, not at Cumulus
 /// - contains a proof of validity.
 #[derive(Debug, Clone, Encode, Decode)]
 #[cfg(not(target_os = "unknown"))]
-pub struct Collation<BlockNumber = polkadot_primitives::BlockNumber> {
+pub struct Collation<BlockNumber = kvp_primitives::BlockNumber> {
 	/// Messages destined to be interpreted by the Relay chain itself.
 	pub upward_messages: UpwardMessages,
 	/// The horizontal messages sent by the parachain.

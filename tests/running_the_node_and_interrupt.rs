@@ -37,7 +37,7 @@ async fn running_the_node_works_and_can_be_interrupted() {
 	async fn run_command_and_kill(signal: Signal) {
 		let tmpdir = tempdir().expect("coult not create temp dir");
 
-		let mut cmd = Command::new(cargo_bin("polkadot"))
+		let mut cmd = Command::new(cargo_bin("kvp"))
 			.stdout(process::Stdio::piped())
 			.stderr(process::Stdio::piped())
 			.args(["--dev", "-d"])

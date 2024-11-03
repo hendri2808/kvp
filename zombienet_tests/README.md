@@ -16,17 +16,17 @@ _The content of this directory is meant to be used by Parity's private CI/CD inf
 
 To run any test locally use the native provider (`zombienet test -p native ...`) you need first build the binaries. They are:
 
-* adder-collator -> polkadot/target/testnet/adder-collator
-* malus -> polkadot/target/testnet/malus
-* polkadot -> polkadot/target/testnet/polkadot, polkadot/target/testnet/polkadot-prepare-worker, polkadot/target/testnet/polkadot-execute-worker
-* polkadot-collator -> cumulus/target/release/polkadot-parachain
-* undying-collator -> polkadot/target/testnet/undying-collator
+* adder-collator -> kvp/target/testnet/adder-collator
+* malus -> kvp/target/testnet/malus
+* kvp -> kvp/target/testnet/kvp, kvp/target/testnet/kvp-prepare-worker, kvp/target/testnet/kvp-execute-worker
+* kvp-collator -> cumulus/target/release/kvp-parachain
+* undying-collator -> kvp/target/testnet/undying-collator
 
 To build them use:
 * adder-collator -> `cargo build --profile testnet -p test-parachain-adder-collator`
 * undying-collator -> `cargo build --profile testnet -p test-parachain-undying-collator`
-* malus -> `cargo build --profile testnet -p polkadot-test-malus`
-* polkadot (in polkadot repo) and polkadot-collator (in cumulus repo) -> `cargo build --profile testnet`
+* malus -> `cargo build --profile testnet -p kvp-test-malus`
+* kvp (in kvp repo) and kvp-collator (in cumulus repo) -> `cargo build --profile testnet`
 
 One solution is to use the `.set_env` file (from this directory) and fill the `CUSTOM_PATHS` before *source* it to patch the PATH of your system to find the binaries you just built.
 
@@ -36,8 +36,8 @@ $ cat .set_env
 (...)
 # by the order of this array
 CUSTOM_PATHS=(
-  "~/polkadot/target/release"
-  "~/polkadot/target/testnet"
+  "~/kvp/target/release"
+  "~/kvp/target/testnet"
   "~/cumulus/target/release"
 )
 (...)

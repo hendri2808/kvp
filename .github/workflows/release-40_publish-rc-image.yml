@@ -58,7 +58,7 @@ jobs:
 
     strategy:
       matrix:
-        binary: ["polkadot", "staking-miner"]
+        binary: ["kvp", "staking-miner"]
 
     steps:
       - name: Checkout sources

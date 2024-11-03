@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! The Network Bridge Subsystem - protocol multiplexer for Polkadot.
+//! The Network Bridge Subsystem - protocol multiplexer for kvp.
 //!
 //! Split into incoming (`..In`) and outgoing (`..Out`) subsystems.
 
@@ -27,7 +27,7 @@ use parking_lot::Mutex;
 
 use sp_consensus::SyncOracle;
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	peer_set::{PeerSet, ProtocolVersion},
 	PeerId, UnifiedReputationChange as Rep, View,
 };
@@ -35,7 +35,7 @@ use polkadot_node_network_protocol::{
 /// Peer set info for network initialization.
 ///
 /// To be passed to [`FullNetworkConfiguration::add_notification_protocol`]().
-pub use polkadot_node_network_protocol::peer_set::{peer_sets_info, IsAuthority};
+pub use kvp_node_network_protocol::peer_set::{peer_sets_info, IsAuthority};
 
 use std::{collections::HashMap, sync::Arc};
 

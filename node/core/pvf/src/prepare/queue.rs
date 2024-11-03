@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! A queue that handles requests for PVF preparation.
 
@@ -20,7 +20,7 @@ use super::pool::{self, Worker};
 use crate::{artifacts::ArtifactId, metrics::Metrics, Priority, LOG_TARGET};
 use always_assert::{always, never};
 use futures::{channel::mpsc, stream::StreamExt as _, Future, SinkExt};
-use polkadot_node_core_pvf_common::{error::PrepareResult, pvf::PvfPrepData};
+use kvp_node_core_pvf_common::{error::PrepareResult, pvf::PvfPrepData};
 use std::{
 	collections::{HashMap, VecDeque},
 	path::PathBuf,
@@ -491,7 +491,7 @@ mod tests {
 	use crate::host::tests::TEST_PREPARATION_TIMEOUT;
 	use assert_matches::assert_matches;
 	use futures::{future::BoxFuture, FutureExt};
-	use polkadot_node_core_pvf_common::{error::PrepareError, prepare::PrepareStats};
+	use kvp_node_core_pvf_common::{error::PrepareError, prepare::PrepareStats};
 	use slotmap::SlotMap;
 	use std::task::Poll;
 

@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! Availability Recovery Subsystem of Polkadot.
+//! Availability Recovery Subsystem of kvp.
 
 #![warn(missing_docs)]
 
@@ -39,28 +39,28 @@ use lru::LruCache;
 use rand::seq::SliceRandom;
 
 use fatality::Nested;
-use polkadot_erasure_coding::{
+use kvp_erasure_coding::{
 	branch_hash, branches, obtain_chunks_v1, recovery_threshold, Error as ErasureEncodingError,
 };
 #[cfg(not(test))]
-use polkadot_node_network_protocol::request_response::CHUNK_REQUEST_TIMEOUT;
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::request_response::CHUNK_REQUEST_TIMEOUT;
+use kvp_node_network_protocol::{
 	request_response::{
 		self as req_res, outgoing::RequestError, v1 as request_v1, IncomingRequestReceiver,
 		OutgoingRequest, Recipient, Requests,
 	},
 	IfDisconnected, UnifiedReputationChange as Rep,
 };
-use polkadot_node_primitives::{AvailableData, ErasureChunk};
-use polkadot_node_subsystem::{
+use kvp_node_primitives::{AvailableData, ErasureChunk};
+use kvp_node_subsystem::{
 	errors::RecoveryError,
 	jaeger,
 	messages::{AvailabilityRecoveryMessage, AvailabilityStoreMessage, NetworkBridgeTxMessage},
 	overseer, ActiveLeavesUpdate, FromOrchestra, OverseerSignal, SpawnedSubsystem, SubsystemError,
 	SubsystemResult,
 };
-use polkadot_node_subsystem_util::request_session_info;
-use polkadot_primitives::{
+use kvp_node_subsystem_util::request_session_info;
+use kvp_primitives::{
 	AuthorityDiscoveryId, BlakeTwo256, BlockNumber, CandidateHash, CandidateReceipt, GroupIndex,
 	Hash, HashT, IndexedVec, SessionIndex, SessionInfo, ValidatorId, ValidatorIndex,
 };
@@ -1403,7 +1403,7 @@ async fn erasure_task_thread(
 	loop {
 		match ingress.next().await {
 			Some(ErasureTask::Reconstruct(n_validators, chunks, sender)) => {
-				let _ = sender.send(polkadot_erasure_coding::reconstruct_v1(
+				let _ = sender.send(kvp_erasure_coding::reconstruct_v1(
 					n_validators,
 					chunks.values().map(|c| (&c.chunk[..], c.index.0 as usize)),
 				));

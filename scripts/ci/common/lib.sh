@@ -73,7 +73,7 @@ github_label () {
     -F "ref=master" \
     -F "variables[LABEL]=${1}" \
     -F "variables[PRNO]=${CI_COMMIT_REF_NAME}" \
-    -F "variables[PROJECT]=paritytech/polkadot" \
+    -F "variables[PROJECT]=paritytech/kvp" \
     "${GITLAB_API}/projects/${GITHUB_API_PROJECT}/trigger/pipeline"
 }
 
@@ -104,7 +104,7 @@ boldprint () { printf "|\n| \033[1m%s\033[0m\n|\n" "${@}"; }
 boldcat () { printf "|\n"; while read -r l; do printf "| \033[1m%s\033[0m\n" "${l}"; done; printf "|\n" ; }
 
 skip_if_companion_pr() {
-  url="https://api.github.com/repos/paritytech/polkadot/pulls/${CI_COMMIT_REF_NAME}"
+  url="https://api.github.com/repos/paritytech/kvp/pulls/${CI_COMMIT_REF_NAME}"
   echo "[+] API URL: $url"
 
   pr_title=$(curl -sSL -H "Authorization: token ${GITHUB_PR_TOKEN}" "$url" | jq -r .title)
@@ -120,7 +120,7 @@ skip_if_companion_pr() {
 
 # Fetches the tag name of the latest release from a repository
 # repo: 'organisation/repo'
-# Usage: latest_release 'paritytech/polkadot'
+# Usage: latest_release 'paritytech/kvp'
 latest_release() {
   curl -s "$api_base/$1/releases/latest" | jq -r '.tag_name'
 }
@@ -132,7 +132,7 @@ has_runtime_changes() {
   to=$2
 
   if git diff --name-only "${from}...${to}" \
-    | grep -q -e '^runtime/polkadot' -e '^runtime/kusama' -e '^primitives/src/' -e '^runtime/common'
+    | grep -q -e '^runtime/kvp' -e '^runtime/kusama' -e '^primitives/src/' -e '^runtime/common'
   then
     return 0
   else
@@ -144,8 +144,8 @@ has_runtime_changes() {
 # with only the bootnode specified and test whether that bootnode provides peers
 # The optional third argument is the index of the bootnode in the list of bootnodes, this is just used to pick an ephemeral
 # port for the node to run on. If you're only testing one, it'll just use the first ephemeral port
-# BOOTNODE: /dns/polkadot-connect-0.parity.io/tcp/443/wss/p2p/12D3KooWEPmjoRpDSUuiTjvyNDd8fejZ9eNWH5bE965nyBMDrB4o
-# CHAINSPEC_FILE: /path/to/polkadot.json
+# BOOTNODE: /dns/kvp-connect-0.parity.io/tcp/443/wss/p2p/12D3KooWEPmjoRpDSUuiTjvyNDd8fejZ9eNWH5bE965nyBMDrB4o
+# CHAINSPEC_FILE: /path/to/kvp.json
 check_bootnode(){
     BOOTNODE=$1
     BASE_CHAINSPEC=$2
@@ -161,10 +161,10 @@ check_bootnode(){
     RPC_PORT=$(python -c "import socket; s=socket.socket(); s.bind(('', 0)); print(s.getsockname()[1]); s.close()")
 
     echo "[+] Checking bootnode $BOOTNODE"
-    polkadot --chain "$TMP_CHAINSPEC_FILE" --no-mdns --rpc-port="$RPC_PORT" --tmp > /dev/null 2>&1 &
+    kvp --chain "$TMP_CHAINSPEC_FILE" --no-mdns --rpc-port="$RPC_PORT" --tmp > /dev/null 2>&1 &
     # Wait a few seconds for the node to start up
     sleep 5
-    POLKADOT_PID=$!
+    kvp_PID=$!
 
     MAX_POLLS=10
     TIME_BETWEEN_POLLS=3
@@ -179,14 +179,14 @@ check_bootnode(){
       if [ "$PEERS" -ge $MIN_PEERS ]; then
         echo "[+] $PEERS peers found for $BOOTNODE"
         echo "    Bootnode appears contactable"
-        kill $POLKADOT_PID
+        kill $kvp_PID
         # Delete the temporary chainspec file now we're done running the node
         rm "$TMP_CHAINSPEC_FILE"
         return 0
       fi
       sleep "$TIME_BETWEEN_POLLS"
     done
-    kill $POLKADOT_PID
+    kill $kvp_PID
     # Delete the temporary chainspec file now we're done running the node
     rm "$TMP_CHAINSPEC_FILE"
     echo "[!] No peers found for $BOOTNODE"
@@ -197,7 +197,7 @@ check_bootnode(){
 # Assumes the ENV are set:
 # - RELEASE_ID
 # - GITHUB_TOKEN
-# - REPO in the form paritytech/polkadot
+# - REPO in the form paritytech/kvp
 fetch_release_artifacts() {
   echo "Release ID : $RELEASE_ID"
   echo "Repo       : $REPO"

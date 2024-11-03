@@ -1,19 +1,19 @@
 {% import "high_priority.md.tera" as m_p -%}
 ## Upgrade Priority
 
-{%- set polkadot_prio = 0 -%}
+{%- set kvp_prio = 0 -%}
 {%- set substrate_prio = 0 -%}
 
 {# We fetch the various priorities #}
-{%- if polkadot.meta.C -%}
-    {%- set polkadot_prio = polkadot.meta.C.max -%}
+{%- if kvp.meta.C -%}
+    {%- set kvp_prio = kvp.meta.C.max -%}
 {%- endif -%}
 {%- if substrate.meta.C -%}
     {%- set substrate_prio = substrate.meta.C.max -%}
 {%- endif -%}
 
 {# We compute the global priority #}
-{%- set global_prio = polkadot_prio -%}
+{%- set global_prio = kvp_prio -%}
 {%- if substrate_prio > global_prio -%}
     {%- set global_prio = substrate_prio -%}
 {%- endif -%}

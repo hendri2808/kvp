@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-test-service"
+name = "kvp-test-service"
 publish = false
 version.workspace = true
 authors.workspace = true
@@ -14,18 +14,18 @@ rand = "0.8.5"
 tempfile = "3.2.0"
 tokio = "1.24.2"
 
-# Polkadot dependencies
-polkadot-overseer = { path = "../../overseer" }
-polkadot-primitives = { path = "../../../primitives" }
-polkadot-parachain = { path = "../../../parachain" }
-polkadot-rpc = { path = "../../../rpc" }
-polkadot-runtime-common = { path = "../../../runtime/common" }
-polkadot-service = { path = "../../service" }
-polkadot-node-subsystem = { path = "../../subsystem" }
-polkadot-node-primitives = { path = "../../primitives" }
-polkadot-test-runtime = { path = "../../../runtime/test-runtime" }
+# kvp dependencies
+kvp-overseer = { path = "../../overseer" }
+kvp-primitives = { path = "../../../primitives" }
+kvp-parachain = { path = "../../../parachain" }
+kvp-rpc = { path = "../../../rpc" }
+kvp-runtime-common = { path = "../../../runtime/common" }
+kvp-service = { path = "../../service" }
+kvp-node-subsystem = { path = "../../subsystem" }
+kvp-node-primitives = { path = "../../primitives" }
+kvp-test-runtime = { path = "../../../runtime/test-runtime" }
 test-runtime-constants = { path = "../../../runtime/test-runtime/constants" }
-polkadot-runtime-parachains = { path = "../../../runtime/parachains" }
+kvp-runtime-parachains = { path = "../../../runtime/parachains" }
 
 # Substrate dependencies
 sp-authority-discovery = { git = "https://github.com/paritytech/substrate", branch = "master" }
@@ -63,8 +63,8 @@ substrate-test-utils = { git = "https://github.com/paritytech/substrate", branch
 tokio = { version = "1.24.2", features = ["macros"] }
 
 [features]
-runtime-metrics=["polkadot-test-runtime/runtime-metrics"]
+runtime-metrics=["kvp-test-runtime/runtime-metrics"]
 runtime-benchmarks=[
-	"polkadot-test-runtime/runtime-benchmarks",
-	"polkadot-service/runtime-benchmarks",
+	"kvp-test-runtime/runtime-benchmarks",
+	"kvp-service/runtime-benchmarks",
 ]

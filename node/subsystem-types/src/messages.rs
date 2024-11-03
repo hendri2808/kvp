@@ -1,24 +1,24 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Message types for the overseer and subsystems.
 //!
 //! These messages are intended to define the protocol by which different subsystems communicate
 //! with each other and signals that they receive from an overseer to coordinate their work.
-//! This is intended for use with the `polkadot-overseer` crate.
+//! This is intended for use with the `kvp-overseer` crate.
 //!
 //! Subsystems' APIs are defined separately from their implementation, leading to easier mocking.
 
@@ -28,17 +28,17 @@ use thiserror::Error;
 
 pub use sc_network::IfDisconnected;
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	self as net_protocol, peer_set::PeerSet, request_response::Requests, PeerId,
 };
-use polkadot_node_primitives::{
+use kvp_node_primitives::{
 	approval::{BlockApprovalMeta, IndirectAssignmentCert, IndirectSignedApprovalVote},
 	AvailableData, BabeEpoch, BlockWeight, CandidateVotes, CollationGenerationConfig,
 	CollationSecondedSignal, DisputeMessage, DisputeStatus, ErasureChunk, PoV,
 	SignedDisputeStatement, SignedFullStatement, SignedFullStatementWithPVD, SubmitCollationParams,
 	ValidationResult,
 };
-use polkadot_primitives::{
+use kvp_primitives::{
 	slashing, vstaging as vstaging_primitives, AuthorityDiscoveryId, BackedCandidate, BlockNumber,
 	CandidateEvent, CandidateHash, CandidateIndex, CandidateReceipt, CollatorId,
 	CommittedCandidateReceipt, CoreState, DisputeState, ExecutorParams, GroupIndex,
@@ -48,7 +48,7 @@ use polkadot_primitives::{
 	SignedAvailabilityBitfields, ValidationCode, ValidationCodeHash, ValidatorId, ValidatorIndex,
 	ValidatorSignature,
 };
-use polkadot_statement_table::v2::Misbehavior;
+use kvp_statement_table::v2::Misbehavior;
 use std::{
 	collections::{BTreeMap, HashMap, HashSet},
 	sync::Arc,
@@ -628,7 +628,7 @@ pub enum RuntimeApiRequest {
 	/// Sends back `true` if the validation outputs pass all acceptance criteria checks.
 	CheckValidationOutputs(
 		ParaId,
-		polkadot_primitives::CandidateCommitments,
+		kvp_primitives::CandidateCommitments,
 		RuntimeApiSender<bool>,
 	),
 	/// Get the session index that a child of the block will have.
@@ -661,7 +661,7 @@ pub enum RuntimeApiRequest {
 	/// Get information about the BABE epoch the block was included in.
 	CurrentBabeEpoch(RuntimeApiSender<BabeEpoch>),
 	/// Get all disputes in relation to a relay parent.
-	FetchOnChainVotes(RuntimeApiSender<Option<polkadot_primitives::ScrapedOnChainVotes>>),
+	FetchOnChainVotes(RuntimeApiSender<Option<kvp_primitives::ScrapedOnChainVotes>>),
 	/// Submits a PVF pre-checking statement into the transaction pool.
 	SubmitPvfCheckStatement(PvfCheckStatement, ValidatorSignature, RuntimeApiSender<()>),
 	/// Returns code hashes of PVFs that require pre-checking by validators in the active set.

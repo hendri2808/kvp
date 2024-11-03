@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 
@@ -29,26 +29,26 @@ use sp_core::crypto::Pair;
 use sp_keyring::Sr25519Keyring;
 use sp_runtime::traits::AppVerify;
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	our_view,
 	peer_set::CollationVersion,
 	request_response::{IncomingRequest, ReqProtocolNames},
 	view,
 };
-use polkadot_node_primitives::BlockData;
-use polkadot_node_subsystem::{
+use kvp_node_primitives::BlockData;
+use kvp_node_subsystem::{
 	errors::RuntimeApiError,
 	jaeger,
 	messages::{AllMessages, ReportPeerMessage, RuntimeApiMessage, RuntimeApiRequest},
 	ActivatedLeaf, ActiveLeavesUpdate, LeafStatus,
 };
-use polkadot_node_subsystem_test_helpers as test_helpers;
-use polkadot_node_subsystem_util::{reputation::add_reputation, TimeoutExt};
-use polkadot_primitives::{
+use kvp_node_subsystem_test_helpers as test_helpers;
+use kvp_node_subsystem_util::{reputation::add_reputation, TimeoutExt};
+use kvp_primitives::{
 	AuthorityDiscoveryId, CollatorPair, GroupIndex, GroupRotationInfo, IndexedVec, ScheduledCore,
 	SessionIndex, SessionInfo, ValidatorId, ValidatorIndex,
 };
-use polkadot_primitives_test_helpers::TestCandidateBuilder;
+use kvp_primitives_test_helpers::TestCandidateBuilder;
 
 mod prospective_parachains;
 
@@ -222,7 +222,7 @@ fn test_harness<T: Future<Output = TestHarness>>(
 ) {
 	let _ = env_logger::builder()
 		.is_test(true)
-		.filter(Some("polkadot_collator_protocol"), log::LevelFilter::Trace)
+		.filter(Some("kvp_collator_protocol"), log::LevelFilter::Trace)
 		.filter(Some(LOG_TARGET), log::LevelFilter::Trace)
 		.try_init();
 
@@ -474,7 +474,7 @@ async fn connect_peer(
 		virtual_overseer,
 		CollatorProtocolMessage::NetworkBridgeUpdate(NetworkBridgeEvent::PeerConnected(
 			peer,
-			polkadot_node_network_protocol::ObservedRole::Authority,
+			kvp_node_network_protocol::ObservedRole::Authority,
 			version.into(),
 			authority_id.map(|v| HashSet::from([v])),
 		)),

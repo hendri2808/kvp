@@ -1,12 +1,12 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -325,7 +325,7 @@ mod tests {
 	fn test_rocksdb_migrate_1_to_2() {
 		use kvdb::{DBKey, DBOp};
 		use kvdb_rocksdb::{Database, DatabaseConfig};
-		use polkadot_node_subsystem_util::database::{
+		use kvp_node_subsystem_util::database::{
 			kvdb_impl::DbAdapter, DBTransaction, KeyValueDB,
 		};
 

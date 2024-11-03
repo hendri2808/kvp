@@ -30,9 +30,9 @@ sp-tracing = { branch = "master", git = "https://github.com/paritytech/substrate
 xcm = { path = ".." }
 # temp
 pallet-xcm = { path = "../pallet-xcm" }
-polkadot-runtime-common = { path = "../../runtime/common" }
+kvp-runtime-common = { path = "../../runtime/common" }
 # westend-runtime = { path = "../../runtime/westend", features = ["runtime-benchmarks"] }
-polkadot-primitives = { path = "../../primitives" }
+kvp-primitives = { path = "../../primitives" }
 
 [features]
 default = ["std"]

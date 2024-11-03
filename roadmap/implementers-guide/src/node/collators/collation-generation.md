@@ -44,7 +44,7 @@ The process of generating a collation for a parachain is very parachain-specific
 ///
 /// This differs from `CandidateCommitments` in two ways:
 ///
-/// - does not contain the erasure root; that's computed at the Polkadot level, not at Cumulus
+/// - does not contain the erasure root; that's computed at the kvp level, not at Cumulus
 /// - contains a proof of validity.
 pub struct Collation {
   /// Messages destined to be interpreted by the Relay chain itself.

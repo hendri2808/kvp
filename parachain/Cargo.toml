@@ -1,5 +1,5 @@
 [package]
-name = "polkadot-parachain"
+name = "kvp-parachain"
 description = "Types and utilities for creating and working with parachains"
 authors.workspace = true
 edition.workspace = true
@@ -16,7 +16,7 @@ sp-std = { git = "https://github.com/paritytech/substrate", branch = "master", d
 sp-runtime = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false, features = ["serde"] }
 sp-core = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false, features = ["serde"] }
 frame-support = { git = "https://github.com/paritytech/substrate", branch = "master", default-features = false }
-polkadot-core-primitives = { path = "../core-primitives", default-features = false }
+kvp-core-primitives = { path = "../core-primitives", default-features = false }
 derive_more = "0.99.11"
 bounded-collections = { version = "0.1.8", default-features = false, features = ["serde"] }
 
@@ -34,7 +34,7 @@ std = [
 	"sp-std/std",
 	"sp-runtime/std",
 	"sp-core/std",
-	"polkadot-core-primitives/std",
+	"kvp-core-primitives/std",
 	"frame-support/std",
 ]
 runtime-benchmarks = []

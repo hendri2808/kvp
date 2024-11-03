@@ -1,29 +1,29 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! The Network Bridge Subsystem - handles _outgoing_ messages, from subsystem to the network.
 use super::*;
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	peer_set::{CollationVersion, PeerSet, PeerSetProtocolNames, ValidationVersion},
 	request_response::ReqProtocolNames,
 	v1 as protocol_v1, vstaging as protocol_vstaging, PeerId, Versioned,
 };
 
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	errors::SubsystemError,
 	messages::{NetworkBridgeTxMessage, ReportPeerMessage},
 	overseer, FromOrchestra, OverseerSignal, SpawnedSubsystem,
@@ -32,7 +32,7 @@ use polkadot_node_subsystem::{
 /// Peer set info for network initialization.
 ///
 /// To be passed to [`FullNetworkConfiguration::add_notification_protocol`]().
-pub use polkadot_node_network_protocol::peer_set::{peer_sets_info, IsAuthority};
+pub use kvp_node_network_protocol::peer_set::{peer_sets_info, IsAuthority};
 use sc_network::ReputationChange;
 
 use crate::validator_discovery;

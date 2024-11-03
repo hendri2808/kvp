@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Validation host - is the primary interface for this crate. It allows the clients to enqueue
 //! jobs for PVF execution or preparation.
@@ -31,11 +31,11 @@ use futures::{
 	channel::{mpsc, oneshot},
 	Future, FutureExt, SinkExt, StreamExt,
 };
-use polkadot_node_core_pvf_common::{
+use kvp_node_core_pvf_common::{
 	error::{PrepareError, PrepareResult},
 	pvf::PvfPrepData,
 };
-use polkadot_parachain::primitives::ValidationResult;
+use kvp_parachain::primitives::ValidationResult;
 use std::{
 	collections::HashMap,
 	path::{Path, PathBuf},
@@ -53,10 +53,10 @@ pub const PREPARE_FAILURE_COOLDOWN: Duration = Duration::from_millis(200);
 pub const NUM_PREPARE_RETRIES: u32 = 5;
 
 /// The name of binary spawned to prepare a PVF artifact
-pub const PREPARE_BINARY_NAME: &str = "polkadot-prepare-worker";
+pub const PREPARE_BINARY_NAME: &str = "kvp-prepare-worker";
 
 /// The name of binary spawned to execute a PVF
-pub const EXECUTE_BINARY_NAME: &str = "polkadot-execute-worker";
+pub const EXECUTE_BINARY_NAME: &str = "kvp-execute-worker";
 
 /// An alias to not spell the type for the oneshot sender for the PVF execution result.
 pub(crate) type ResultSender = oneshot::Sender<Result<ValidationResult, ValidationError>>;
@@ -877,7 +877,7 @@ fn pulse_every(interval: std::time::Duration) -> impl futures::Stream<Item = ()>
 fn warn_if_no_landlock() {
 	#[cfg(target_os = "linux")]
 	{
-		use polkadot_node_core_pvf_common::worker::security::landlock;
+		use kvp_node_core_pvf_common::worker::security::landlock;
 		let status = landlock::get_status();
 		if !landlock::status_is_fully_enabled(&status) {
 			let abi = landlock::LANDLOCK_ABI as u8;
@@ -903,7 +903,7 @@ pub(crate) mod tests {
 	use crate::InvalidCandidate;
 	use assert_matches::assert_matches;
 	use futures::future::BoxFuture;
-	use polkadot_node_core_pvf_common::{error::PrepareError, prepare::PrepareStats};
+	use kvp_node_core_pvf_common::{error::PrepareError, prepare::PrepareStats};
 
 	const TEST_EXECUTION_TIMEOUT: Duration = Duration::from_secs(3);
 	pub(crate) const TEST_PREPARATION_TIMEOUT: Duration = Duration::from_secs(30);

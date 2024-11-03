@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! A module that is responsible for migration of storage.
 
@@ -273,15 +273,15 @@ mod tests {
 		// Example how to get new `raw_config`:
 		// We'll obtain the raw_config at a specified a block
 		// Steps:
-		// 1. Go to Polkadot.js -> Developer -> Chain state -> Storage: https://polkadot.js.org/apps/#/chainstate
+		// 1. Go to kvp.js -> Developer -> Chain state -> Storage: https://kvp.js.org/apps/#/chainstate
 		// 2. Set these parameters:
 		//   2.1. selected state query: configuration; activeConfig():
-		// PolkadotRuntimeParachainsConfigurationHostConfiguration   2.2. blockhash to query at:
+		// kvpRuntimeParachainsConfigurationHostConfiguration   2.2. blockhash to query at:
 		// 0xf89d3ab5312c5f70d396dc59612f0aa65806c798346f9db4b35278baed2e0e53 (the hash of the
 		// block)   2.3. Note the value of encoded storage key ->
 		// 0x06de3d8a54d27e44a9d5ce189618f22db4b49d95320d9021994c850f25b8e385 for the referenced
 		// block.   2.4. You'll also need the decoded values to update the test.
-		// 3. Go to Polkadot.js -> Developer -> Chain state -> Raw storage
+		// 3. Go to kvp.js -> Developer -> Chain state -> Raw storage
 		//   3.1 Enter the encoded storage key and you get the raw config.
 
 		// This exceeds the maximal line width length, but that's fine, since this is not code and

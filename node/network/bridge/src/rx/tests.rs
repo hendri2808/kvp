@@ -1,23 +1,23 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 use super::*;
 use futures::{channel::oneshot, executor, stream::BoxStream};
-use polkadot_node_network_protocol::{self as net_protocol, OurView};
-use polkadot_node_subsystem::{messages::NetworkBridgeEvent, ActivatedLeaf};
+use kvp_node_network_protocol::{self as net_protocol, OurView};
+use kvp_node_subsystem::{messages::NetworkBridgeEvent, ActivatedLeaf};
 
 use assert_matches::assert_matches;
 use async_trait::async_trait;
@@ -30,12 +30,12 @@ use std::{
 
 use sc_network::{Event as NetworkEvent, IfDisconnected, ProtocolName, ReputationChange};
 
-use polkadot_node_network_protocol::{
+use kvp_node_network_protocol::{
 	peer_set::PeerSetProtocolNames,
 	request_response::{outgoing::Requests, ReqProtocolNames},
 	view, ObservedRole, Versioned,
 };
-use polkadot_node_subsystem::{
+use kvp_node_subsystem::{
 	jaeger,
 	messages::{
 		AllMessages, ApprovalDistributionMessage, BitfieldDistributionMessage,
@@ -43,11 +43,11 @@ use polkadot_node_subsystem::{
 	},
 	ActiveLeavesUpdate, FromOrchestra, LeafStatus, OverseerSignal,
 };
-use polkadot_node_subsystem_test_helpers::{
+use kvp_node_subsystem_test_helpers::{
 	SingleItemSink, SingleItemStream, TestSubsystemContextHandle,
 };
-use polkadot_node_subsystem_util::metered;
-use polkadot_primitives::{AuthorityDiscoveryId, CandidateHash, Hash};
+use kvp_node_subsystem_util::metered;
+use kvp_primitives::{AuthorityDiscoveryId, CandidateHash, Hash};
 
 use sc_network::Multiaddr;
 use sp_keyring::Sr25519Keyring;
@@ -86,7 +86,7 @@ struct TestNetworkHandle {
 fn new_test_network(
 	protocol_names: PeerSetProtocolNames,
 ) -> (TestNetwork, TestNetworkHandle, TestAuthorityDiscovery) {
-	let (net_tx, net_rx) = polkadot_node_subsystem_test_helpers::single_item_sink();
+	let (net_tx, net_rx) = kvp_node_subsystem_test_helpers::single_item_sink();
 	let (action_tx, action_rx) = metered::unbounded();
 
 	(
@@ -337,7 +337,7 @@ fn test_harness<T: Future<Output = VirtualOverseer>>(
 	let pool = sp_core::testing::TaskExecutor::new();
 	let (mut network, network_handle, discovery) = new_test_network(peerset_protocol_names.clone());
 	let (context, virtual_overseer) =
-		polkadot_node_subsystem_test_helpers::make_subsystem_context(pool);
+		kvp_node_subsystem_test_helpers::make_subsystem_context(pool);
 	let network_stream = network.event_stream();
 	let shared = Shared::default();
 

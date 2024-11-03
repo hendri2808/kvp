@@ -1,17 +1,17 @@
 [package]
-name = "polkadot-node-jaeger"
+name = "kvp-node-jaeger"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
 license.workspace = true
-description = "Polkadot Jaeger primitives, but equally useful for Grafana/Tempo"
+description = "kvp Jaeger primitives, but equally useful for Grafana/Tempo"
 
 [dependencies]
 mick-jaeger = "0.1.8"
 lazy_static = "1.4"
 parking_lot = "0.12.0"
-polkadot-primitives = { path = "../../primitives" }
-polkadot-node-primitives = { path = "../primitives" }
+kvp-primitives = { path = "../../primitives" }
+kvp-node-primitives = { path = "../primitives" }
 sc-network = { git = "https://github.com/paritytech/substrate", branch = "master" }
 sp-core = { git = "https://github.com/paritytech/substrate", branch = "master" }
 thiserror = "1.0.31"

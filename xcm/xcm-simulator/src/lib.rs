@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of Polkadot.
+// This file is part of kvp.
 
-// Polkadot is free software: you can redistribute it and/or modify
+// kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// Polkadot is distributed in the hope that it will be useful,
+// kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with Polkadot.  If not, see <http://www.gnu.org/licenses/>.
+// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! Test kit to simulate cross-chain message passing and XCM execution.
 
@@ -26,12 +26,12 @@ pub use frame_support::{
 pub use sp_io::{hashing::blake2_256, TestExternalities};
 pub use sp_std::{cell::RefCell, collections::vec_deque::VecDeque, marker::PhantomData};
 
-pub use polkadot_core_primitives::BlockNumber as RelayBlockNumber;
-pub use polkadot_parachain::primitives::{
+pub use kvp_core_primitives::BlockNumber as RelayBlockNumber;
+pub use kvp_parachain::primitives::{
 	DmpMessageHandler as DmpMessageHandlerT, Id as ParaId, XcmpMessageFormat,
 	XcmpMessageHandler as XcmpMessageHandlerT,
 };
-pub use polkadot_runtime_parachains::{
+pub use kvp_runtime_parachains::{
 	dmp,
 	inclusion::{AggregateMessageOrigin, UmpQueueId},
 };
