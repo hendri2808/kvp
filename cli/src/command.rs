@@ -145,7 +145,7 @@ impl SubstrateCli for Cli {
 			path => {
 				let path = std::path::PathBuf::from(path);
 
-				let chain_spec = Box::new(service::kvpChainSpec::from_json_file(path.clone())?)
+				let chain_spec = Box::new(service::KvpChainSpec::from_json_file(path.clone())?)
 					as Box<dyn service::ChainSpec>;
 
 				// When `force_*` is given or the file name starts with the name of one of the known
@@ -174,7 +174,7 @@ fn set_default_ss58_version(spec: &Box<dyn service::ChainSpec>) {
 	} else if spec.is_westend() {
 		Ss58AddressFormatRegistry::SubstrateAccount
 	} else {
-		Ss58AddressFormatRegistry::kvpAccount
+		Ss58AddressFormatRegistry::SubstrateAccount
 	}
 	.into();
 
@@ -389,7 +389,7 @@ pub fn run() -> Result<()> {
 
 			Ok(runner.async_run(|mut config| {
 				let (client, _, _, task_manager) =
-					service::new_chain_ops(&mut config, None).map_err(Error::kvpService)?;
+					service::new_chain_ops(&mut config, None).map_err(Error::KvpService)?;
 				Ok((cmd.run(client, config.database).map_err(Error::SubstrateCli), task_manager))
 			})?)
 		},

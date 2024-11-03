@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of kvp.
+// This file is part of Kvp.
 
-// kvp is free software: you can redistribute it and/or modify
+// Kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// kvp is distributed in the hope that it will be useful,
+// Kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! kvp chain configurations.
+//! Kvp chain configurations.
 
 use beefy_primitives::ecdsa_crypto::AuthorityId as BeefyId;
 use grandpa::AuthorityId as GrandpaId;
@@ -105,14 +105,14 @@ pub struct Extensions {
 
 /// The `ChainSpec` parameterized for the kvp runtime.
 #[cfg(feature = "kvp-native")]
-pub type kvpChainSpec = service::GenericChainSpec<kvp::RuntimeGenesisConfig, Extensions>;
+pub type KvpChainSpec = service::GenericChainSpec<kvp::RuntimeGenesisConfig, Extensions>;
 
 // Dummy chain spec, in case when we don't have the native runtime.
 pub type DummyChainSpec = service::GenericChainSpec<(), Extensions>;
 
 // Dummy chain spec, but that is fine when we don't have the native runtime.
 #[cfg(not(feature = "kvp-native"))]
-pub type kvpChainSpec = DummyChainSpec;
+pub type KvpChainSpec = DummyChainSpec;
 
 /// The `ChainSpec` parameterized for the kusama runtime.
 #[cfg(feature = "kusama-native")]
@@ -170,8 +170,8 @@ impl sp_runtime::BuildStorage for RococoGenesisExt {
 	}
 }
 
-pub fn kvp_config() -> Result<kvpChainSpec, String> {
-	kvpChainSpec::from_json_bytes(&include_bytes!("../chain-specs/kvp.json")[..])
+pub fn kvp_config() -> Result<KvpChainSpec, String> {
+	KvpChainSpec::from_json_bytes(&include_bytes!("../chain-specs/kvp.json")[..])
 }
 
 pub fn kusama_config() -> Result<KusamaChainSpec, String> {
@@ -1062,7 +1062,7 @@ fn rococo_staging_testnet_config_genesis(
 	}
 }
 
-/// Returns the properties for the [`kvpChainSpec`].
+/// Returns the properties for the [`KvpChainSpec`].
 pub fn kvp_chain_spec_properties() -> serde_json::map::Map<String, serde_json::Value> {
 	serde_json::json!({
 		"tokenDecimals": 10,
@@ -1654,10 +1654,10 @@ fn rococo_development_config_genesis(wasm_binary: &[u8]) -> rococo_runtime::Runt
 
 /// kvp development config (single validator Alice)
 #[cfg(feature = "kvp-native")]
-pub fn kvp_development_config() -> Result<kvpChainSpec, String> {
+pub fn kvp_development_config() -> Result<KvpChainSpec, String> {
 	let wasm_binary = kvp::WASM_BINARY.ok_or("kvp development wasm not available")?;
 
-	Ok(kvpChainSpec::from_genesis(
+	Ok(KvpChainSpec::from_genesis(
 		"Development",
 		"kvp_dev",
 		ChainType::Development,
@@ -1794,10 +1794,10 @@ fn kvp_local_testnet_genesis(wasm_binary: &[u8]) -> kvp::RuntimeGenesisConfig {
 
 /// kvp local testnet config (multivalidator Alice + Bob)
 #[cfg(feature = "kvp-native")]
-pub fn kvp_local_testnet_config() -> Result<kvpChainSpec, String> {
+pub fn kvp_local_testnet_config() -> Result<KvpChainSpec, String> {
 	let wasm_binary = kvp::WASM_BINARY.ok_or("kvp development wasm not available")?;
 
-	Ok(kvpChainSpec::from_genesis(
+	Ok(KvpChainSpec::from_genesis(
 		"Local Testnet",
 		"local_testnet",
 		ChainType::Local,

@@ -1,12 +1,12 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of kvp.
+// This file is part of Kvp.
 
-// kvp is free software: you can redistribute it and/or modify
+// Kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// kvp is distributed in the hope that it will be useful,
+// Kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
@@ -34,7 +34,7 @@ macro_rules! identify_chain {
 		$generic_code:expr $(,)*
 	) => {
 		match $chain {
-			Chain::kvp => {
+			Chain::Kvp => {
 				#[cfg(feature = "kvp-native")]
 				{
 					use kvp_runtime as runtime;

@@ -54,7 +54,7 @@ parameter_types! {
 	/// the context".
 	pub const TokenLocation: MultiLocation = Here.into_location();
 	/// The kvp network ID. This is named.
-	pub const ThisNetwork: NetworkId = NetworkId::kvp;
+	pub const ThisNetwork: NetworkId = NetworkId::Kvp;
 	/// Our location in the universe of consensus systems.
 	pub const UniversalLocation: InteriorMultiLocation = X1(GlobalConsensus(ThisNetwork::get()));
 	/// The Checking Account, which holds any native assets that have been teleported out and not back in (yet).
@@ -325,7 +325,7 @@ impl xcm_executor::Config for XcmConfig {
 	type UniversalLocation = UniversalLocation;
 	type Barrier = Barrier;
 	type Weigher = WeightInfoBounds<
-		crate::weights::xcm::kvpXcmWeight<RuntimeCall>,
+		crate::weights::xcm::KvpXcmWeight<RuntimeCall>,
 		RuntimeCall,
 		MaxInstructions,
 	>;
@@ -408,7 +408,7 @@ impl pallet_xcm::Config for Runtime {
 	type XcmTeleportFilter = Everything; // == Allow All
 	type XcmReserveTransferFilter = Everything; // == Allow All
 	type Weigher = WeightInfoBounds<
-		crate::weights::xcm::kvpXcmWeight<RuntimeCall>,
+		crate::weights::xcm::KvpXcmWeight<RuntimeCall>,
 		RuntimeCall,
 		MaxInstructions,
 	>;

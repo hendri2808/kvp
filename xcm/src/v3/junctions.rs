@@ -1,18 +1,18 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of kvp.
+// This file is part of Kvp.
 
-// kvp is free software: you can redistribute it and/or modify
+// Kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// kvp is distributed in the hope that it will be useful,
+// Kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 //! XCM `Junctions`/`InteriorMultiLocation` datatype.
 
@@ -647,7 +647,7 @@ mod tests {
 	fn relative_to_works() {
 		use Junctions::*;
 		use NetworkId::*;
-		assert_eq!(X1(kvp.into()).relative_to(&X1(Kusama.into())), (Parent, kvp).into());
+		assert_eq!(X1(Kvp.into()).relative_to(&X1(Kusama.into())), (Parent, Kvp).into());
 		let base = X3(Kusama.into(), Parachain(1), PalletInstance(1));
 
 		// Ancestors.
@@ -661,8 +661,8 @@ mod tests {
 
 		// Ancestors with one child.
 		assert_eq!(
-			X1(kvp.into()).relative_to(&base),
-			(Parent, Parent, Parent, kvp).into()
+			X1(Kvp.into()).relative_to(&base),
+			(Parent, Parent, Parent, Kvp).into()
 		);
 		assert_eq!(
 			X2(Kusama.into(), Parachain(2)).relative_to(&base),
@@ -679,8 +679,8 @@ mod tests {
 
 		// Ancestors with grandchildren.
 		assert_eq!(
-			X2(kvp.into(), Parachain(1)).relative_to(&base),
-			(Parent, Parent, Parent, kvp, Parachain(1)).into()
+			X2(Kvp.into(), Parachain(1)).relative_to(&base),
+			(Parent, Parent, Parent, Kvp, Parachain(1)).into()
 		);
 		assert_eq!(
 			X3(Kusama.into(), Parachain(2), PalletInstance(1)).relative_to(&base),
@@ -701,7 +701,7 @@ mod tests {
 	fn global_consensus_works() {
 		use Junctions::*;
 		use NetworkId::*;
-		assert_eq!(X1(kvp.into()).global_consensus(), Ok(kvp));
+		assert_eq!(X1(Kvp.into()).global_consensus(), Ok(Kvp));
 		assert_eq!(X2(Kusama.into(), 1u64.into()).global_consensus(), Ok(Kusama));
 		assert_eq!(Here.global_consensus(), Err(()));
 		assert_eq!(X1(1u64.into()).global_consensus(), Err(()));
@@ -711,11 +711,11 @@ mod tests {
 	#[test]
 	fn test_conversion() {
 		use super::{Junction::*, Junctions::*, NetworkId::*};
-		let x: Junctions = GlobalConsensus(kvp).into();
-		assert_eq!(x, X1(GlobalConsensus(kvp)));
-		let x: Junctions = kvp.into();
-		assert_eq!(x, X1(GlobalConsensus(kvp)));
-		let x: Junctions = (kvp, Kusama).into();
-		assert_eq!(x, X2(GlobalConsensus(kvp), GlobalConsensus(Kusama)));
+		let x: Junctions = GlobalConsensus(Kvp).into();
+		assert_eq!(x, X1(GlobalConsensus(Kvp)));
+		let x: Junctions = Kvp.into();
+		assert_eq!(x, X1(GlobalConsensus(Kvp)));
+		let x: Junctions = (Kvp, Kusama).into();
+		assert_eq!(x, X2(GlobalConsensus(Kvp), GlobalConsensus(Kusama)));
 	}
 }

@@ -110,8 +110,8 @@ pub enum NetworkId {
 	Any,
 	/// Some named network.
 	Named(WeakBoundedVec<u8, ConstU32<32>>),
-	/// The kvp Relay chain
-	kvp,
+	/// The Kvp Relay chain
+	Kvp,
 	/// Kusama.
 	Kusama,
 }
@@ -131,7 +131,7 @@ impl TryFrom<NewNetworkId> for NetworkId {
 	fn try_from(new: NewNetworkId) -> result::Result<NetworkId, ()> {
 		use NewNetworkId::*;
 		match new {
-			kvp => Ok(NetworkId::kvp),
+			Kvp => Ok(NetworkId::Kvp),
 			Kusama => Ok(NetworkId::Kusama),
 			_ => Err(()),
 		}
@@ -148,23 +148,23 @@ pub enum BodyId {
 	Named(WeakBoundedVec<u8, ConstU32<32>>),
 	/// An indexed body.
 	Index(#[codec(compact)] u32),
-	/// The unambiguous executive body (for kvp, this would be the kvp council).
+	/// The unambiguous executive body (for Kvp, this would be the Kvp council).
 	Executive,
-	/// The unambiguous technical body (for kvp, this would be the Technical Committee).
+	/// The unambiguous technical body (for Kvp, this would be the Technical Committee).
 	Technical,
-	/// The unambiguous legislative body (for kvp, this could be considered the opinion of a
+	/// The unambiguous legislative body (for Kvp, this could be considered the opinion of a
 	/// majority of lock-voters).
 	Legislative,
-	/// The unambiguous judicial body (this doesn't exist on kvp, but if it were to get a
+	/// The unambiguous judicial body (this doesn't exist on Kvp, but if it were to get a
 	/// "grand oracle", it may be considered as that).
 	Judicial,
-	/// The unambiguous defense body (for kvp, an opinion on the topic given via a public
+	/// The unambiguous defense body (for Kvp, an opinion on the topic given via a public
 	/// referendum on the `staking_admin` track).
 	Defense,
-	/// The unambiguous administration body (for kvp, an opinion on the topic given via a
+	/// The unambiguous administration body (for Kvp, an opinion on the topic given via a
 	/// public referendum on the `general_admin` track).
 	Administration,
-	/// The unambiguous treasury body (for kvp, an opinion on the topic given via a public
+	/// The unambiguous treasury body (for Kvp, an opinion on the topic given via a public
 	/// referendum on the `treasurer` track).
 	Treasury,
 }

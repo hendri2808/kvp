@@ -1,6 +1,6 @@
 Dear contributors and users,
 
-We would like to inform you that we have recently made significant changes to our repository structure. In order to streamline our development process and foster better contributions, we have merged three separate repositories Cumulus, Substrate and kvp into a single new repository: [the kvp SDK](https://github.com/paritytech/kvp-sdk). Go ahead and make sure to support us by giving a star ⭐️ to the new repo.
+We would like to inform you that we have recently made significant changes to our repository structure. In order to streamline our development process and foster better contributions, we have merged three separate repositories Cumulus, Substrate and kvp into a single new repository: [the Kvp SDK](https://github.com/paritytech/kvp-sdk). Go ahead and make sure to support us by giving a star ⭐️ to the new repo.
 
 By consolidating our codebase, we aim to enhance collaboration and provide a more efficient platform for future development.
 

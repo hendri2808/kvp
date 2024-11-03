@@ -1,6 +1,6 @@
 [package]
 name = "kvp-cli"
-description = "kvp Relay-chain Client Node"
+description = "Kvp Relay-chain Client Node"
 version.workspace = true
 authors.workspace = true
 edition.workspace = true
@@ -65,7 +65,7 @@ fast-runtime = ["service/fast-runtime"]
 pyroscope = ["pyro", "pyroscope_pprofrs"]
 hostperfcheck = ["kvp-performance-test"]
 
-# Configure the native runtimes to use. kvp is enabled by default.
+# Configure the native runtimes to use. Kvp is enabled by default.
 #
 # Validators require the native runtime currently
 kvp-native = ["service/kvp-native"]

@@ -1,23 +1,23 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of kvp.
+// This file is part of Kvp.
 
-// kvp is free software: you can redistribute it and/or modify
+// Kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// kvp is distributed in the hope that it will be useful,
+// Kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kvp.  If not, see <http://www.gnu.org/licenses/>.
 
 #[derive(thiserror::Error, Debug)]
 pub enum Error {
 	#[error(transparent)]
-	kvpService(#[from] service::Error),
+	KvpService(#[from] service::Error),
 
 	#[error(transparent)]
 	SubstrateCli(#[from] sc_cli::Error),

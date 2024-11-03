@@ -1,20 +1,20 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
-// This file is part of kvp.
+// This file is part of Kvp.
 
-// kvp is free software: you can redistribute it and/or modify
+// Kvp is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
 
-// kvp is distributed in the hope that it will be useful,
+// Kvp is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with kvp.  If not, see <http://www.gnu.org/licenses/>.
+// along with Kvp.  If not, see <http://www.gnu.org/licenses/>.
 
-//! kvp service. Specialized wrapper over substrate service.
+//! Kvp service. Specialized wrapper over substrate service.
 
 #![deny(unused_results)]
 
@@ -84,7 +84,7 @@ use telemetry::TelemetryWorker;
 #[cfg(feature = "full-node")]
 use telemetry::{Telemetry, TelemetryWorkerHandle};
 
-pub use chain_spec::{KusamaChainSpec, kvpChainSpec, RococoChainSpec, WestendChainSpec};
+pub use chain_spec::{KusamaChainSpec, KvpChainSpec, RococoChainSpec, WestendChainSpec};
 pub use consensus_common::{Proposal, SelectChain};
 use frame_benchmarking_cli::SUBSTRATE_REFERENCE_HARDWARE;
 use mmr_gadget::MmrGadget;
@@ -261,8 +261,8 @@ pub enum Error {
 /// Identifies the variant of the chain.
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub enum Chain {
-	/// kvp.
-	kvp,
+	/// Kvp.
+	Kvp,
 	/// Kusama.
 	Kusama,
 	/// Rococo or one of its derivations.
@@ -275,7 +275,7 @@ pub enum Chain {
 
 /// Can be called for a `Configuration` to identify which network the configuration targets.
 pub trait IdentifyVariant {
-	/// Returns if this is a configuration for the `kvp` network.
+	/// Returns if this is a configuration for the `Kvp` network.
 	fn is_kvp(&self) -> bool;
 
 	/// Returns if this is a configuration for the `Kusama` network.
@@ -324,7 +324,7 @@ impl IdentifyVariant for Box<dyn ChainSpec> {
 	}
 	fn identify_chain(&self) -> Chain {
 		if self.is_kvp() {
-			Chain::kvp
+			Chain::Kvp
 		} else if self.is_kusama() {
 			Chain::Kusama
 		} else if self.is_westend() {
@@ -710,7 +710,7 @@ pub const AVAILABILITY_CONFIG: AvailabilityConfig = AvailabilityConfig {
 /// a better choice.
 ///
 /// `workers_path` is used to get the path to the directory where auxiliary worker binaries reside.
-/// If not specified, the main binary's directory is searched first, then `/usr/lib/kvp` is
+/// If not specified, the main binary's directory is searched first, then `/usr/lib/Kvp` is
 /// searched. If the path points to an executable rather then directory, that executable is used
 /// both as preparation and execution worker (supposed to be used for tests only).
 #[cfg(feature = "full-node")]
@@ -753,7 +753,7 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 		Some(backoff)
 	};
 
-	// Warn the user that BEEFY is still experimental for kvp.
+	// Warn the user that BEEFY is still experimental for Kvp.
 	if enable_beefy && config.chain_spec.is_kvp() {
 		gum::warn!("BEEFY is still experimental, usage on kvp network is discouraged.");
 	}
@@ -806,7 +806,7 @@ pub fn new_full<OverseerGenerator: OverseerGen>(
 
 	let genesis_hash = client.block_hash(0).ok().flatten().expect("Genesis block exists; qed");
 
-	// Note: GrandPa is pushed before the kvp-specific protocols. This doesn't change
+	// Note: GrandPa is pushed before the Kvp-specific protocols. This doesn't change
 	// anything in terms of behaviour, but makes the logs more consistent with the other
 	// Substrate nodes.
 	let grandpa_protocol_name = grandpa::protocol_standard_name(&genesis_hash, &config.chain_spec);

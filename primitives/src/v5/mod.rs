@@ -1230,9 +1230,9 @@ pub enum UpgradeGoAhead {
 }
 
 /// Consensus engine id for kvp v1 consensus engine.
-pub const kvp_ENGINE_ID: runtime_primitives::ConsensusEngineId = *b"POL1";
+pub const KVP_ENGINE_ID: runtime_primitives::ConsensusEngineId = *b"POL1";
 
-/// A consensus log item for kvp validation. To be used with [`kvp_ENGINE_ID`].
+/// A consensus log item for kvp validation. To be used with [`KVP_ENGINE_ID`].
 #[derive(Decode, Encode, Clone, PartialEq, Eq)]
 pub enum ConsensusLog {
 	/// A parachain upgraded its code.
@@ -1263,7 +1263,7 @@ impl ConsensusLog {
 		digest_item: &runtime_primitives::DigestItem,
 	) -> Result<Option<Self>, parity_scale_codec::Error> {
 		match digest_item {
-			runtime_primitives::DigestItem::Consensus(id, encoded) if id == &kvp_ENGINE_ID =>
+			runtime_primitives::DigestItem::Consensus(id, encoded) if id == &KVP_ENGINE_ID =>
 				Ok(Some(Self::decode(&mut &encoded[..])?)),
 			_ => Ok(None),
 		}
@@ -1272,7 +1272,7 @@ impl ConsensusLog {
 
 impl From<ConsensusLog> for runtime_primitives::DigestItem {
 	fn from(c: ConsensusLog) -> runtime_primitives::DigestItem {
-		Self::Consensus(kvp_ENGINE_ID, c.encode())
+		Self::Consensus(KVP_ENGINE_ID, c.encode())
 	}
 }
 
